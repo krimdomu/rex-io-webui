@@ -27,7 +27,10 @@ sub root {
                                        {
                                           '$ref' => $cur_server . "/" . $_
                                        }
-                                    } keys %{ $all_server->{$_} }
+                                    } grep {
+                                          # don't list name and type as children
+                                          $_ ne "type" && $_ ne "name"
+                                       } keys %{ $all_server->{$_} }
                                  ]
                               } } keys %{ $all_server };
 
@@ -67,6 +70,7 @@ sub child {
    my $ret = {
       id          => $key_str,
       name        => $path[-1],
+      plugin      => $path[4],
       hasChildren => (ref($key) eq "HASH" ? Mojo::JSON->true : Mojo::JSON->false),
       childrenRef => [
          map {
