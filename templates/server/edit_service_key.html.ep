@@ -4,9 +4,9 @@
    <% for my $_k (keys %{ $variables }) { %>
       <div class="col-first"><%= $_k %></div>
       <div class="col">
-         <input type="text" name="<%= $_k %>" value="<%= (ref($variables->{$_k})?join(", ", @{ $variables->{$_k} }):$variables->{$_k}) %>"
+         <input type="text" name="<%= $name %>_<%= $_k %>" value="<%= (ref($variables->{$_k})?join(", ", @{ $variables->{$_k} }):$variables->{$_k}) %>"
              data-dojo-type="dijit.form.TextBox"
-             data-dojo-props="trim:true" id="<%= $_k %>">
+             data-dojo-props="trim:true" id="<%= $name %>_<%= $_k %>">
       </div>
       <div class="col-last">&nbsp;</div>
       <div class="mclearfix"></div>
