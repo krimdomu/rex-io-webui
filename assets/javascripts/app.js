@@ -15,7 +15,9 @@ require(
       "dijit/PopupMenuBarItem",
       "dijit/DropDownMenu",
       "dijit/MenuItem",
-      "dijit/TitlePane"
+      "dijit/TitlePane",
+      "dijit/form/Button",
+      "dijit/form/TextBox"
    ],
 
    function(declare) {

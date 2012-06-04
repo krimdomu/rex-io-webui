@@ -1,5 +1,24 @@
 <div data-dojo-type="dijit.TitlePane" data-dojo-props="title: 'Edit <%= $key %>'">
-   foo
+
+   <div class="top-line"></div>
+   <% for my $_k (keys %{ $variables }) { %>
+      <div class="col-first"><%= $_k %></div>
+      <div class="col">
+         <input type="text" name="<%= $_k %>" value="<%= (ref($variables->{$_k})?join(", ", @{ $variables->{$_k} }):$variables->{$_k}) %>"
+             data-dojo-type="dijit.form.TextBox"
+             data-dojo-props="trim:true" id="<%= $_k %>">
+      </div>
+      <div class="col-last">&nbsp;</div>
+      <div class="mclearfix"></div>
+   <% } %>
+
+   <div class="line"></div>
+
+   <button data-dojo-type="dijit.form.Button" type="button">Save
+      <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
+         console.log("Saving...");
+      </script>
+   </button>
 </div>
 
 

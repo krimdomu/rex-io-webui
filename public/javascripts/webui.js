@@ -14,7 +14,9 @@ require(
       "dijit/PopupMenuBarItem",
       "dijit/DropDownMenu",
       "dijit/MenuItem",
-      "dijit/TitlePane"
+      "dijit/TitlePane",
+      "dijit/form/Button",
+      "dijit/form/TextBox"
    ],
 
    function(declare) {
@@ -105,22 +107,22 @@ require(
 
             var tabcontainer = dijit.byId("tabContainer");
             var server_tab = dijit.byId(server + "_ServiceTab");
+
             if(server_tab) {
                server_tab.set("href", "/server/" + item.id);
-               tabcontainer.selectChild(server_tab);
             }
             else {
-
-               var newtab = new dijit.layout.ContentPane({
+               server_tab = new dijit.layout.ContentPane({
                   id: server + "_ServiceTab",
                   title: server,
                   href: "/server/" + item.id,
                   closable: true
                });
 
-               tabcontainer.addChild(newtab);
-               tabcontainer.selectChild(newtab);
+               tabcontainer.addChild(server_tab);
             }
+
+            tabcontainer.selectChild(server_tab);
          }
       })
    }
