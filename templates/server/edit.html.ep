@@ -1,0 +1,5 @@
+<div data-dojo-type="dijit.TitlePane" data-dojo-props="title: 'General Information'">
+   Hostname: <%= $name %>
+</div>
+
+

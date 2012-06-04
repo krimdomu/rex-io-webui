@@ -1,0 +1,5 @@
+<div data-dojo-type="dijit.TitlePane" data-dojo-props="title: 'Edit <%= $key %>'">
+   foo
+</div>
+
+

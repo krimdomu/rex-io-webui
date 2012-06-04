@@ -16,6 +16,10 @@ sub startup {
    $r->get("/")->to("dashboard#index");
    $r->get("/server/tree/root")->to("server-tree#root");
    $r->get("/server/tree/:name/*")->to("server-tree#child");
+
+   # edit server
+   $r->get("/server/:name/edit")->to("server#edit");
+   $r->get("/server/:name/service/:service/*")->to("server#edit_service_key");
 }
 
 1;

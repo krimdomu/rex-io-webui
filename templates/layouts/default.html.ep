@@ -12,16 +12,28 @@
       <div id="appLayout" class="demoLayout" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline'">
 
          <!-- content bereich -->
-         <div class="centerPanel" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', tabPosition: 'bottom'">
+         <div id="tabContainer" class="centerPanel" data-dojo-type="dijit.layout.TabContainer" data-dojo-props="region: 'center', tabPosition: 'bottom'">
             <div data-dojo-type="dijit.layout.ContentPane" title="Desktop">
-               <h4>Group 1 Content</h4>
-               <p>center bereich</p>
+
+               <div data-dojo-type="dijit.TitlePane" data-dojo-props="title: 'Rex.IO - Desktop'">
+                  Welcome to Rex.IO
+               </div>
+
             </div>
          </div>
 
          <!-- header (menu) -->
          <div class="edgePanel" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region: 'top'">
-            Header content (top)
+
+            <div data-dojo-type="dijit.MenuBar" id="navMenu">
+                <div data-dojo-type="dijit.PopupMenuBarItem">
+                    <span>File</span>
+                    <div data-dojo-type="dijit.DropDownMenu" id="fileMenu">
+                        <div data-dojo-type="dijit.MenuItem" data-dojo-props="onClick:function(){}">Logout</div>
+                    </div>
+                </div>
+            </div>
+
          </div>
 
          <!-- sidebar -->

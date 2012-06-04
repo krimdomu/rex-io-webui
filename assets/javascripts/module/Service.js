@@ -1,0 +1,40 @@
+/*
+ * Module: Service.js
+ *
+ * This module handles the content area when clicked on a service key
+ */
+
+require(
+   [
+      "dojo/_base/declare",
+   ],
+
+   function(declare) {
+      declare("org.rexops.webui.module.Service", null, {
+         constructor: function(item) {
+            var server = item.root_id;
+
+            var tabcontainer = dijit.byId("tabContainer");
+            var server_tab = dijit.byId(server + "_ServiceTab");
+
+            if(server_tab) {
+               server_tab.set("href", "/server/" + item.id);
+               tabcontainer.selectChild(server_tab);
+            }
+            else {
+               var newtab = new dijit.layout.ContentPane({
+                  id: server + "_ServiceTab",
+                  title: server,
+                  href: "/server/" + item.id,
+                  closable: true
+               });
+
+               tabcontainer.addChild(newtab);
+               tabcontainer.selectChild(newtab);
+            }
+         }
+      })
+   }
+);
+
+

@@ -10,7 +10,6 @@ use Mojo::Base 'Mojolicious::Controller';
 use Mojo::JSON;
 use Data::Dumper;
 
-# This action will render a template
 sub root {
    my $self = shift;
 
@@ -21,6 +20,8 @@ sub root {
                               {
                                  id    => $all_server->{$_}->{name},
                                  name  => $all_server->{$_}->{name},
+                                 root_id => $all_server->{$_}->{name},
+                                 module => "\userver",
                                  hasChildren => Mojo::JSON->true,
                                  childrenRef => [
                                     map {
@@ -69,8 +70,9 @@ sub child {
 
    my $ret = {
       id          => $key_str,
+      root_id     => $self->stash("name"),
       name        => $path[-1],
-      plugin      => $path[4],
+      module      => "\u$path[4]",
       hasChildren => (ref($key) eq "HASH" ? Mojo::JSON->true : Mojo::JSON->false),
       childrenRef => [
          map {
