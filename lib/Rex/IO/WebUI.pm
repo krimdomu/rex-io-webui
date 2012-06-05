@@ -17,6 +17,9 @@ sub startup {
    $r->get("/server/tree/root")->to("server-tree#root");
    $r->get("/server/tree/:name/*")->to("server-tree#child");
 
+   $r->get("/service/tree/root")->to("service-tree#root");
+   $r->get("/service/tree/:name/*")->to("service-tree#child");
+
    # edit server
    $r->get("/server/:name/edit")->to("server#edit");
    $r->get("/server/:name/service/:service/*")->to("server#edit_service_key");

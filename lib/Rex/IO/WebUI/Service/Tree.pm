@@ -4,7 +4,7 @@
 # vim: set ts=3 sw=3 tw=0:
 # vim: set expandtab:
    
-package Rex::IO::WebUI::Server::Tree;
+package Rex::IO::WebUI::Service::Tree;
 use Mojo::Base 'Mojolicious::Controller';
 
 use Mojo::JSON;
@@ -13,44 +13,44 @@ use Data::Dumper;
 sub root {
    my $self = shift;
 
-   my $all_server = $self->rexio->list_server()->{data};
+   my $all_service = $self->rexio->list_service()->{data};
 
-   my @server_names = map { 
-                              my $cur_server = $_;
+   my @service_names = map { 
+                              my $cur_service = $_;
                               {
-                                 id    => $all_server->{$_}->{name},
-                                 name  => $all_server->{$_}->{name},
-                                 root_id => $all_server->{$_}->{name},
-                                 module => "Server",
+                                 id    => $all_service->{$_}->{name},
+                                 name  => $all_service->{$_}->{name},
+                                 root_id => $all_service->{$_}->{name},
+                                 module => "Service",
                                  hasChildren => Mojo::JSON->true,
                                  childrenRef => [
                                     map {
                                        {
-                                          '$ref' => $cur_server . "/" . $_
+                                          '$ref' => $cur_service . "/" . $_
                                        }
                                     } grep {
                                           # don't list name and type as children
                                           $_ ne "type" && $_ ne "name"
-                                       } keys %{ $all_server->{$_} }
+                                       } keys %{ $all_service->{$_} }
                                  ]
-                              } } keys %{ $all_server };
+                              } } keys %{ $all_service };
 
-   $self->render_json(\@server_names);
+   $self->render_json(\@service_names);
 }
 
 sub child {
    my $self = shift;
 
-   my $server = $self->rexio->get_server($self->stash("name"));
+   my $service = $self->rexio->get_service($self->stash("name"));
    my @path = split("/", $self->req->url);
    my $path_str = $self->req->url;
-   my ($key_str) = ($path_str =~ m{^/server/tree/(.*)$}); 
+   my ($key_str) = ($path_str =~ m{^/service/tree/(.*)$}); 
 
    # make a variable out of the path
    # eonar/service/ntp/configuration
-   # $server->{service}->{ntp}->{configuration}
+   # $service->{service}->{ntp}->{configuration}
    my @eval_arr = split(/\//, $key_str);
-   my $eval_str = '$server->';
+   my $eval_str = '$service->';
 
    shift @eval_arr;
 
@@ -72,7 +72,7 @@ sub child {
       id          => $key_str,
       root_id     => $self->stash("name"),
       name        => $path[-1],
-      module      => "Server_\u$path[4]",
+      module      => "Service_\u$path[4]",
       hasChildren => (ref($key) eq "HASH" ? Mojo::JSON->true : Mojo::JSON->false),
       childrenRef => [
          map {
