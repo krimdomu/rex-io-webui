@@ -1,9 +1,0 @@
-=pod
-
-=head2 Rex::IO::WebUI
-
-This is a webui for the Rex.IO infrastructure.
-
-This is work in progress!
-
-
