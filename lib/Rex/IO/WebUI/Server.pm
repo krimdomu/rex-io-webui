@@ -34,13 +34,47 @@ sub edit_service_key {
 
    $self->stash("variables", $ret);
 
-   print STDERR Dumper($ret);
-
    if($self->req->param("store") && $self->req->param("store") eq "1") {
       $self->render_json($ret);
    }
    else {
       $self->render;
+   }
+}
+
+sub save_service_key {
+   my $self = shift;
+
+   my $json = $self->req->json;
+
+   my $key = $json->{service_key};
+   delete $json->{service_key};
+
+   my ($service, $section) = split(/\//, $key);
+
+   for my $_k (keys %{$json}) {
+      my $data = $json->{$_k};
+      if($data =~ m/^[\[\{]/) {
+         $data = Mojo::JSON->new->decode($data);
+         $json->{$_k} = $data;
+      }
+   }
+
+   eval {
+      my $ret = $self->rexio->configure_service_of_server(
+         $self->stash("name"),
+         $service,
+         $section,
+         $json
+      );
+
+      if(ref($ret)) {
+         $self->render_json({ok => Mojo::JSON->true});
+      }
+   };
+
+   if($@) {
+      $self->render_json({ok => Mojo::JSON->false}, status => 500);
    }
 }
 

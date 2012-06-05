@@ -1,22 +1,41 @@
+% use Mojo::JSON;
 <div data-dojo-type="dijit.TitlePane" data-dojo-props="title: 'Edit <%= $key %>'">
 
-   <div class="top-line"></div>
-   <% for my $_k (keys %{ $variables }) { %>
-      <div class="col-first"><%= $_k %></div>
-      <div class="col">
-         <input type="text" name="<%= $name %>_<%= $_k %>" value="<%= (ref($variables->{$_k})?join(", ", @{ $variables->{$_k} }):$variables->{$_k}) %>"
-             data-dojo-type="dijit.form.TextBox"
-             data-dojo-props="trim:true" id="<%= $name %>_<%= $_k %>">
-      </div>
-      <div class="col-last">&nbsp;</div>
-      <div class="mclearfix"></div>
-   <% } %>
+   <form id="service_form" action="">
 
-   <div class="line"></div>
+      <input type="hidden" name="service_key" value="<%= $key %>" />
+
+      <div class="top-line"></div>
+      <% for my $_k (keys %{ $variables }) { %>
+         <div class="col-first"><%= $_k %></div>
+         <div class="col">
+            <input type="text" name="<%= $_k %>" value="<%= (ref($variables->{$_k})? Mojo::JSON->new->encode($variables->{$_k}):$variables->{$_k}) %>"
+                data-dojo-type="dijit.form.TextBox"
+                data-dojo-props="trim:true" id="<%= $name %>_<%= $_k %>">
+         </div>
+         <div class="col-last">&nbsp;</div>
+         <div class="mclearfix"></div>
+      <% } %>
+
+      <div class="line"></div>
+
+   </form>
 
    <button data-dojo-type="dijit.form.Button" type="button">Save
       <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
-         console.log("Saving...");
+         var xhrArgs = {
+            url: "<%= $url %>",
+            postData: dojo.toJson(dojo.formToObject("service_form")),
+            handleAs: "json",
+            load: function(data) {
+               alert("saved...");
+            },
+            error: function(error) {
+               alert(error);
+            }
+         };
+
+         dojo.xhrPost(xhrArgs);
       </script>
    </button>
 </div>

@@ -20,6 +20,7 @@ sub startup {
    # edit server
    $r->get("/server/:name/edit")->to("server#edit");
    $r->get("/server/:name/service/:service/*")->to("server#edit_service_key");
+   $r->post("/server/:name/service/:service/*")->to("server#save_service_key");
 }
 
 1;
