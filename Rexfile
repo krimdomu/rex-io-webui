@@ -14,7 +14,7 @@ task build => sub {
    sass "assets/stylesheets",
       out => "public/stylesheets";
 
-   sprocketize ["assets/javascripts/app.js", "assets/javascripts/module/*.js"],
+   sprocketize ["assets/javascripts/app.js", "assets/javascripts/module/*.js", "assets/javascripts/module/*/*.js"],
       out => "public/javascripts/webui.js";
 
 };
