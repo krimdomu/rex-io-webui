@@ -44,7 +44,10 @@ require(
                model: treeModel,
                showRoot:false,
                onClick: function(item, node) {
-                  new org.rexops.webui.module[item.module](item);
+                  var mod = new org.rexops.webui.module[item.module]();
+                  if(mod.can_run(item)) {
+                     mod.run(item);
+                  }
                }
             }, "tree");
 

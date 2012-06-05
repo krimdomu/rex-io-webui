@@ -12,6 +12,17 @@ require(
    function(declare) {
       declare("org.rexops.webui.module.Service", null, {
          constructor: function(item) {
+         },
+
+         can_run: function(item) {
+            if(item.hasChildren && item.name == "variables") {
+               return true;
+            }
+
+            return false;
+         },
+
+         run: function(item) {
             var server = item.root_id;
 
             var tabcontainer = dijit.byId("tabContainer");
