@@ -12,7 +12,26 @@ use Data::Dumper;
 
 sub edit {
    my $self = shift;
+
+   my $all_service = $self->rexio->list_service()->{data};
+   $self->stash("services", [keys %{$all_service}]);
+
    $self->render;
+}
+
+sub add_service {
+   my $self = shift;
+
+   my $json = $self->req->json;
+
+   eval {
+      my $ret = $self->rexio->add_service_to_server($self->stash("name"), $json->{new_service});
+      $self->render_json($ret);
+   };
+
+   if($@) {
+      $self->render_json({ok => Mojo::JSON->false}, status => 500);
+   }
 }
 
 sub edit_service_key {
