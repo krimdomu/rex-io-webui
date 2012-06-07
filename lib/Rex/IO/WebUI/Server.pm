@@ -24,10 +24,20 @@ sub add_service {
 
    my $json = $self->req->json;
 
-   eval {
-      my $ret = $self->rexio->add_service_to_server($self->stash("name"), $json->{new_service});
-      $self->render_json($ret);
-   };
+   my $server = $self->rexio->get_server($self->stash("name"));
+
+   if( ! exists $server->{service}->{$json->{new_service}}) {
+      eval {
+         my $ret = $self->rexio->add_service_to_server($self->stash("name"), $json->{new_service});
+         $self->render_json($ret);
+      };
+   }
+   else {
+      eval {
+         my $ret = $self->rexio->remove_service_from_server($self->stash("name"), $json->{new_service});
+         $self->render_json($ret);
+      };
+   }
 
    if($@) {
       $self->render_json({ok => Mojo::JSON->false}, status => 500);

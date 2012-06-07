@@ -9,7 +9,7 @@
          <% } %>
       </select>
 
-      <button data-dojo-type="dijit.form.Button" type="button">Add Service
+      <button data-dojo-type="dijit.form.Button" type="button">Add or Remove Service
          <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
             var xhrArgs = {
                url: "/server/<%= $name %>/service",
