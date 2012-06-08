@@ -8,6 +8,7 @@ sub startup {
    # Documentation browser under "/perldoc"
    $self->plugin('PODRenderer');
    $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer");
+   $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::CHI");
 
    # Router
    my $r = $self->routes;

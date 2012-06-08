@@ -13,7 +13,12 @@ use Data::Dumper;
 sub root {
    my $self = shift;
 
-   my $all_server = $self->rexio->list_server()->{data};
+   my $all_server = $self->chi->get("list_server");
+
+   if(!$all_server) {
+      $all_server = $self->rexio->list_server()->{data};
+      $self->chi->set("list_server", $all_server);
+   }
 
    my @server_names = map { 
                               my $cur_server = $_;
@@ -41,7 +46,13 @@ sub root {
 sub child {
    my $self = shift;
 
-   my $server = $self->rexio->get_server($self->stash("name"));
+   my $server = $self->chi->get($self->stash("name"));
+   
+   if(!$server) {
+      $server = $self->rexio->get_server($self->stash("name"));
+      $self->chi->set($self->stash("name"), $server);
+   }
+
    my @path = split("/", $self->req->url);
    my $path_str = $self->req->url;
    my ($key_str) = ($path_str =~ m{^/server/tree/(.*)$}); 
@@ -68,12 +79,24 @@ sub child {
 
    my $key = eval $eval_str;
 
+   # try to load a plugin
+   eval "use Rex::IO::WebUI::Plugin::\u$path[4];";
+   my $plugin;
+   if($@){
+      eval "use Rex::IO::WebUI::Plugin::Default;";
+      $plugin = Rex::IO::WebUI::Plugin::Default->new;
+   }
+   else {
+      my $class_name = "Rex::IO::WebUI::Plugin::\u$path[4]";
+      $plugin = $class_name->new;
+   }
+
    my $ret = {
       id          => $key_str,
       root_id     => $self->stash("name"),
       name        => $path[-1],
       module      => "Server_\u$path[4]",
-      hasChildren => (ref($key) eq "HASH" ? Mojo::JSON->true : Mojo::JSON->false),
+      hasChildren => (ref($key) eq "HASH" && $plugin->show_children ? Mojo::JSON->true : Mojo::JSON->false),
       childrenRef => [
          map {
             {
