@@ -7,6 +7,7 @@
       <script src="/javascripts/webui.js"></script>
       <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dijit/themes/claro/claro.css" media="screen">
       <link rel="stylesheet" href="/stylesheets/webui.css" type="text/css" media="screen" charset="utf-8">
+      <link rel="stylesheet" href="/stylesheets/module/inventory.css" type="text/css" media="screen" charset="utf-8">
    </head>
    <body class="claro">
       <div id="appLayout" class="demoLayout" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design: 'headline'">

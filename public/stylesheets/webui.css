@@ -37,3 +37,7 @@ html, body {
   border-bottom: 1px solid #e3e3e3;
   margin-top: 25px;
   margin-bottom: 10px; }
+
+.spacing {
+  margin-top: 10px;
+  margin-bottom: 10px; }

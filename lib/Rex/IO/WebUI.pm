@@ -22,6 +22,7 @@ sub startup {
    $r->get("/service/tree/:name/*")->to("service-tree#child");
 
    # edit server
+   $r->get("/server/:name/inventory")->to("server-inventory#get");
    $r->get("/server/:name/edit")->to("server#edit");
    $r->get("/server/:name/service/:service/*")->to("server#edit_service_key");
 
