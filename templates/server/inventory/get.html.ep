@@ -34,7 +34,7 @@
             <tr>
                <td class="col-img"></td>
                <td class="col-class">CPU</td>
-               <td class="col-info"><%= $cpu->{NAME} %> (<%= $cpu->{CORE} %> Cores / <%= $cpu->{THREAD} %> Threads)</td>
+               <td class="col-info"><%= $cpu->{NAME} %> (<%= $cpu->{CORE} %> Core(s) / <%= $cpu->{THREAD} %> Thread(s))</td>
             </tr>
             <% } %>
 
@@ -51,7 +51,7 @@
             <tr>
                <td class="col-img"></td>
                <td class="col-class">Storage</td>
-               <td class="col-info"><%= $storage->{MANUFACTURER} %> <%= $storage->{MODEL} %> (<%= $storage->{DESCRIPTION} %>)</td>
+               <td class="col-info"><%= $storage->{MANUFACTURER} %> / <%= $storage->{MODEL} %> (<%= $storage->{DESCRIPTION} %>)</td>
             </tr>
             <% } %>
 

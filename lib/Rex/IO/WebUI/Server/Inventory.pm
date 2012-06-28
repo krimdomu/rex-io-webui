@@ -34,6 +34,10 @@ sub get {
 
    $server->{inventory}->{NETWORKCARDS} = [ grep { $_->{TYPE} eq "Network controller" || $_->{TYPE} eq "Ethernet controller" } @{ $server->{inventory}->{CONTROLLERS} } ];
 
+   map { $_->{CORE} ||= 1; $_->{THREAD} ||= 1; $_->{NAME} ||= "Unknown" } @{ $server->{inventory}->{CPUS} };
+
+   map { $_->{MANUFACTURER} ||= "Unknown"; $_->{MODEL} ||= "Unknown Model"; } @{ $server->{inventory}->{STORAGES} };
+
    $self->stash("inventory", $server->{inventory});
 
    $self->render;

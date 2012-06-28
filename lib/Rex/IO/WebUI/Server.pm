@@ -26,6 +26,10 @@ sub add_service {
 
    my $server = $self->rexio->get_server($self->stash("name"));
 
+   if(! exists $server->{service} || ref($server->{service}) ne "HASH") {
+      $server->{service} = {};
+   }
+
    if( ! exists $server->{service}->{$json->{new_service}}) {
       eval {
          my $ret = $self->rexio->add_service_to_server($self->stash("name"), $json->{new_service});
