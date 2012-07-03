@@ -32,7 +32,7 @@
 
             <% for my $cpu (@{ $inventory->{CPUS} }) { %>
             <tr>
-               <td class="col-img"></td>
+               <td class="col-img"><img src="/icons/cpu.png" /></td>
                <td class="col-class">CPU</td>
                <td class="col-info"><%= $cpu->{NAME} %> (<%= $cpu->{CORE} %> Core(s) / <%= $cpu->{THREAD} %> Thread(s))</td>
             </tr>
@@ -41,7 +41,7 @@
             <% for my $memory (@{ $inventory->{MEMORIES} }) { %>
             <% next if($memory->{CAPACITY} eq "No"); %>
             <tr>
-               <td class="col-img"></td>
+               <td class="col-img"><img src="/icons/memory.png" /></td>
                <td class="col-class">Memory</td>
                <td class="col-info"><%= $memory->{SERIALNUMBER} %> <%= $memory->{DESCRIPTION} %> (<%= $memory->{CAPACITY} %> MB / <%= $memory->{SPEED} %> Speed)</td>
             </tr>
@@ -49,7 +49,7 @@
 
             <% for my $storage (@{ $inventory->{STORAGES} }) { %>
             <tr>
-               <td class="col-img"></td>
+               <td class="col-img"><img src="/icons/hdd.png" /></td>
                <td class="col-class">Storage</td>
                <td class="col-info"><%= $storage->{MANUFACTURER} %> / <%= $storage->{MODEL} %> (<%= $storage->{DESCRIPTION} %>)</td>
             </tr>
@@ -57,7 +57,7 @@
 
             <% for my $nwdev (@{ $inventory->{NETWORKCARDS} }) { %>
             <tr>
-               <td class="col-img"></td>
+               <td class="col-img"><img src="/icons/netdev.png" /></td>
                <td class="col-class">Network Card</td>
                <td class="col-info"><%= $nwdev->{MANUFACTURER} %> <%= $nwdev->{NAME} %> (<%= $nwdev->{CAPTION} %>)</td>
             </tr>
