@@ -13,7 +13,12 @@ use Data::Dumper;
 sub edit {
    my $self = shift;
 
-   my $all_service = $self->rexio->list_service()->{data};
+   my $all_service = {};
+
+   eval {
+      $all_service = $self->rexio->list_service()->{data};
+   };
+
    $self->stash("services", [keys %{$all_service}]);
 
    $self->render;
