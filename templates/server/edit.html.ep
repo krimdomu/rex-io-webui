@@ -2,6 +2,7 @@
    Hostname: <%= $name %>
    <div class="line"></div>
 
+   % if(@{ $services }) {
    <form id="<%= $name %>_add_service_form">
       <select name="new_service" data-dojo-type="dijit.form.Select">
          <% for my $service (@{$services}) { %>
@@ -28,6 +29,7 @@
          </script>
       </button>
    </form>
+   % }
 
 </div>
 
