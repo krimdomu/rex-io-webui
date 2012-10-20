@@ -5,24 +5,24 @@
 # vim: set expandtab:
    
 package Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer;
-   
-use strict;
-use warnings;
 
 use strict;
 use warnings;
 
-use Mojolicious::Plugin;
 use Rex::IO::Client;
-use base 'Mojolicious::Plugin';
+use Mojolicious::Plugin;
+use base qw(Mojolicious::Plugin);
 
 sub register {
-   my ( $plugin, $app ) = @_;
+   my ($plugin, $app) = @_;
 
    $app->helper(
       rexio => sub {
          my $self = shift;
-         return Rex::IO::Client->new;
+         my $cl = Rex::IO::Client->create(protocol => 1);
+         $cl->endpoint = "http://127.0.0.1:5000";
+
+         return $cl;
       }
    );
 }

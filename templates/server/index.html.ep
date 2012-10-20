@@ -1,0 +1,16 @@
+<div id="tabs">
+
+   <ul>
+      <li><a href="#info-tab">Information</a></li>
+   </ul>
+
+   <div id="info-tab">
+      <div id="hw-info">
+         <h3>Hardware</h3>
+         <div>
+            die hardware...
+         </div>
+      </div>
+   </div>
+
+</div>

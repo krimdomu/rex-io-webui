@@ -1,0 +1,70 @@
+/*
+ * default rules
+ */
+html, * {
+   font-family: Verdana;
+   font-size: 0.95em;
+}
+
+/*
+ * light background
+ */
+
+.light-background {
+
+   background-color: #f0efef;
+
+}
+
+/*
+ * 100% width
+ */
+.w100per {
+   width: 100%;
+}
+
+.search_box {
+   margin-bottom: 15px;
+}
+
+/*
+ * Search Result widget
+ */
+.search_result {
+   background-color: #ffffff;
+   border: 1px solid #cccccc;
+   padding: 3px;
+}
+
+.search_result_entry {
+   border-bottom: 1px dotted #cccccc;
+}
+
+.search_result_entry:last-child {
+   border-bottom: 1px dotted #ffffff;
+}
+
+.search_result_entry a {
+   display: block;
+   padding-top: 2px;
+   padding-bottom: 2px;
+}
+
+/*
+ * link layout
+ */
+a,
+a:link,
+a:visited,
+a:active {
+   font-size: 0.95em;
+   font-family: Verdana;
+   color: #418aec;
+   text-decoration: none;
+}
+
+a:hover {
+   font-size: 0.95em;
+   font-family: Verdana;
+   color: #343483;
+}
