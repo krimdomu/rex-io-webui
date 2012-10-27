@@ -12,6 +12,7 @@
       <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
+      <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
       
    </head>
    <body>
@@ -46,4 +47,5 @@
    </script>
    <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
 </html>
