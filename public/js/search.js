@@ -7,28 +7,31 @@
          select: function(event, ui) {
             $("#content_area").load("/server/" + ui.item.srv_id, null, function() {
                $("#tabs").tabs();
-               $("#hw-info").accordion({
-                  collapsible: true
-               });
+               $("#hw-info").accordion();
+
+               $("#general-info").accordion();
 
                $("#tabs > .ui-tabs-panel").height($("#content_area").height() 
                         - $("#tabs > .ui-tabs-nav").height() 
                         - 45
                   );
 
-               $(window).on("resize", function() {
-
-                  window.setTimeout(function() {
-                     $("#tabs > .ui-tabs-panel").height($("#content_area").height() 
-                        - $("#tabs > .ui-tabs-nav").height() 
-                        - 45
-                     );
-                  }, 200);
-
-               });
+               $("SELECT").selectBox();
             });
          },
       });
+
+      $(window).on("resize", function() {
+
+         window.setTimeout(function() {
+            $("#tabs > .ui-tabs-panel").height($("#content_area").height() 
+               - $("#tabs > .ui-tabs-nav").height() 
+               - 45
+            );
+         }, 200);
+
+      });
+
    });
 
 })();

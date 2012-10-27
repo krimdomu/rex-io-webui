@@ -23,6 +23,10 @@ html, * {
    width: 100%;
 }
 
+.space15 {
+   margin-top: 15px;
+}
+
 .search_box {
    margin-bottom: 15px;
 }
@@ -68,3 +72,32 @@ a:hover {
    font-family: Verdana;
    color: #343483;
 }
+
+/*
+ * ICONS
+ */
+
+.td-icon {
+   width: 16px;
+   height: 16px;
+   background-repeat: no-repeat;
+   background-position: 0px 2px;
+}
+
+.icon-cpu {
+   background-image: url(/icons/cpu.png);
+}
+
+.icon-memory {
+   background-image: url(/icons/memory.png);
+}
+
+.icon-hdd {
+   background-image: url(/icons/hdd.png);
+}
+
+.icon-eth {
+   background-image: url(/icons/netdev.png);
+}
+
+
