@@ -1,0 +1,21 @@
+<table border="0" id="table_entries" style="width: 100%;">
+   <thead>
+      <tr>
+         <td>Name</td>
+         <td>IP</td>
+         <td>Type</td>
+         <td>TTL</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->get_dns_tld(param("tld"));
+      % foreach my $entry (values %{ $entries }) {
+      <tr>
+         <td><%= $entry->{name} %></td>
+         <td><%= $entry->{ip} %></td>
+         <td><%= $entry->{type} %></td>
+         <td><%= $entry->{ttl} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>

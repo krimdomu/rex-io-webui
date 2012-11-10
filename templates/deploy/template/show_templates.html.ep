@@ -1,0 +1,49 @@
+% my $templates = rexio->get_deploy_oses;
+
+<div id="template-tabs" style="width: 100%">
+
+   <ul>
+      % for my $os (@{ $templates }) {
+      <li><a href="#template-<%= $os->{id} %>"><%= $os->{name} %></a></li>
+      % }
+   </ul>
+
+   % for my $os (@{ $templates }) {
+   <div id="template-<%= $os->{id} %>" class="reiter">
+      <form action="/deploy/template/<%= $os->{id} %>" method="post" accept-charset="utf-8">
+         <table border="0" width="100%">
+            <tr>
+               <td style="width: 120px">Name:</td>
+               <td><input type="text" name="name" value="<%= $os->{name} %>" style="width: 100%;" /></td>
+            </tr>
+            <tr>
+               <td>Kernel:</td>
+               <td><input type="text" name="kernel" value="<%= $os->{kernel} %>" style="width: 100%;" /></td>
+            </tr>
+            <tr>
+               <td>Initial Ramdisk:</td>
+               <td><input type="text" name="initrd" value="<%= $os->{initrd} %>" style="width: 100%;" /></td>
+            </tr>
+            <tr>
+               <td valign="top">Append:</td>
+               <td><textarea name="append" style="width: 100%; <% if($os->{append}) { %>height: 80px<% } else { %>height: 40px<% } %>"><%= $os->{append} %></textarea></td>
+            </tr>
+            <tr>
+               <td valign="top">Template:</td>
+               <td><textarea name="template" style="width: 100%; <% if($os->{template}) { %>height: 310px<% } else { %>height: 40px<% } %>"><%= $os->{template} %></textarea></td>
+            </tr>
+            <tr>
+               <td valign="top">iPXE:</td>
+               <td><textarea name="ipxe" style="width: 100%; <% if($os->{ipxe}) { %>height: 100px<% } else { %>height: 40px<% } %>"><%= $os->{ipxe} %></textarea></td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+               <td><button id="save_template">Save</button></td>
+            </tr>
+         </table>
+
+      </form>
+   </div>
+   % }
+
+</div>

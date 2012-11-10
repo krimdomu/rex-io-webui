@@ -1,0 +1,17 @@
+<table border="0" id="table_entries" style="width: 100%;">
+   <thead>
+      <tr>
+         <td>MAC</td>
+         <td>IP</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->get_dhcp_leases;
+      % foreach my $ip (keys %{ $entries }) {
+      <tr>
+         <td><%= $entries->{$ip}->{mac} %></td>
+         <td><%= $ip %></td>
+      </tr>
+      % }
+   </tbody>
+</table>

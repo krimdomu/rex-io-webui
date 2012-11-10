@@ -20,11 +20,12 @@
                <tr>
                   <td class="col-info">Current Boottype:</td>
                   <td class="col-text">
-                     <select name="next_boot_target">
+                     <select name="next_boot_target" id="next_boot_target">
                         <% for my $os (@{ $os_templates }) { %>
                         <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
                         <% } %>
                      </select>
+                     <button id="save_boot_target">Save</button>
                   </td>
                </tr>
             </table>
