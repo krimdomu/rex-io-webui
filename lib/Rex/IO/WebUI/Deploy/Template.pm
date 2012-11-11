@@ -8,4 +8,11 @@ sub show_templates {
    $self->render;
 }
 
+sub update {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->save_deploy_os($self->param("id"), %{ $self->req->json });
+   $self->render_json($ret);
+}
+
 1;

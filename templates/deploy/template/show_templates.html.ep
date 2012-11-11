@@ -10,35 +10,35 @@
 
    % for my $os (@{ $templates }) {
    <div id="template-<%= $os->{id} %>" class="reiter">
-      <form action="/deploy/template/<%= $os->{id} %>" method="post" accept-charset="utf-8">
+      <form action="/deploy/template/<%= $os->{id} %>" method="put" accept-charset="utf-8">
          <table border="0" width="100%">
             <tr>
                <td style="width: 120px">Name:</td>
-               <td><input type="text" name="name" value="<%= $os->{name} %>" style="width: 100%;" /></td>
+            <td><input type="text" name="name_<%= $os->{id} %>" id="name_<%= $os->{id} %>" value="<%= $os->{name} %>" style="width: 100%;" /></td>
             </tr>
             <tr>
                <td>Kernel:</td>
-               <td><input type="text" name="kernel" value="<%= $os->{kernel} %>" style="width: 100%;" /></td>
+               <td><input type="text" name="kernel<%= $os->{id} %>" id="kernel_<%= $os->{id} %>" value="<%= $os->{kernel} %>" style="width: 100%;" /></td>
             </tr>
             <tr>
                <td>Initial Ramdisk:</td>
-               <td><input type="text" name="initrd" value="<%= $os->{initrd} %>" style="width: 100%;" /></td>
+               <td><input type="text" name="initrd<%= $os->{id} %>" id="initrd_<%= $os->{id} %>" value="<%= $os->{initrd} %>" style="width: 100%;" /></td>
             </tr>
             <tr>
                <td valign="top">Append:</td>
-               <td><textarea name="append" style="width: 100%; <% if($os->{append}) { %>height: 80px<% } else { %>height: 40px<% } %>"><%= $os->{append} %></textarea></td>
+               <td><textarea name="append<%= $os->{id} %>" id="append_<%= $os->{id} %>" style="width: 100%; <% if($os->{append}) { %>height: 80px<% } else { %>height: 40px<% } %>"><%= $os->{append} %></textarea></td>
             </tr>
             <tr>
                <td valign="top">Template:</td>
-               <td><textarea name="template" style="width: 100%; <% if($os->{template}) { %>height: 310px<% } else { %>height: 40px<% } %>"><%= $os->{template} %></textarea></td>
+               <td><textarea name="template<%= $os->{id} %>" id="template_<%= $os->{id} %>" style="width: 100%; <% if($os->{template}) { %>height: 310px<% } else { %>height: 40px<% } %>"><%= $os->{template} %></textarea></td>
             </tr>
             <tr>
                <td valign="top">iPXE:</td>
-               <td><textarea name="ipxe" style="width: 100%; <% if($os->{ipxe}) { %>height: 100px<% } else { %>height: 40px<% } %>"><%= $os->{ipxe} %></textarea></td>
+               <td><textarea name="ipxe<%= $os->{id} %>" id="ipxe_<%= $os->{id} %>" style="width: 100%; <% if($os->{ipxe}) { %>height: 100px<% } else { %>height: 40px<% } %>"><%= $os->{ipxe} %></textarea></td>
             </tr>
             <tr>
                <td>&nbsp;</td>
-               <td><button id="save_template">Save</button></td>
+               <td><button id="save_template_<%= $os->{id} %>" class="save_button" template_id="<%= $os->{id} %>">Save</button></td>
             </tr>
          </table>
 

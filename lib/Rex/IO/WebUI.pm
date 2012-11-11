@@ -31,6 +31,7 @@ sub startup {
 
    # templates
    $r->get("/deploy/template")->to("deploy-template#show_templates");
+   $r->put("/deploy/template/:id")->to("deploy-template#update");
 }
 
 1;
