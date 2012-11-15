@@ -31,6 +31,12 @@
                </div>
             </div>
 
+            <h3>Server</h3>
+            <div>
+               <p><a href="#" class="server-list-link">List Server</a></p>
+               <p><a href="#" class="server-add-link">Add new Server</a></p>
+            </div>
+
             <h3>DNS</h3>
             <div>
                % my $tlds = rexio->get_dns_tlds;

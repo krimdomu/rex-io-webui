@@ -6,6 +6,29 @@
 
    $(document).ready(function() {
 
+      $("a.new-template-link").click(function() {
+         $("#content_area").load("/deploy/template/new", null, function() {
+            $(".save_button").button().click(function(event) {
+               event.preventDefault();
+               $.log("creating new template");
+               $.ajax({
+                  "type": "POST",
+                  "url": "/deploy/template",
+                  "data": JSON.stringify({
+                     "name": $("#name").val(),
+                     "kernel": $("#kernel").val(),
+                     "initrd": $("#initrd").val(),
+                     "append": $("#append").val(),
+                     "ipxe": $("#ipxe").val(),
+                     "template": $("#template").val()
+                  })
+               }).done(function(data) {
+                  $.log("Created new template\nGot Data: " + JSON.stringify(data));
+               });
+            });
+         });
+      });
+
       $("a.template-link").click(function() {
          $("#content_area").load("/deploy/template", null, function() {
             $("#template-tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
@@ -25,7 +48,7 @@
                      "append": $("#append_" + id).val(),
                      "ipxe": $("#ipxe_" + id).val(),
                      "template": $("#template_" + id).val()
-                  }),
+                  })
                }).done(function(data) {
                   $.log("Saved template: " + id + "\nGot Data: " + JSON.stringify(data));
                });
