@@ -26,4 +26,20 @@ sub list {
    $self->render;
 }
 
+sub add {
+   my ($self) = @_;
+   $self->render;
+}
+
+sub add_new {
+   my ($self) = @_;
+
+   my $json = $self->req->json;
+   my $mac = $json->{mac};
+   delete $json->{mac};
+   my $ret = $self->rexio->add_server($mac, %{ $json });
+
+   $self->render_json($ret);
+}
+
 1;

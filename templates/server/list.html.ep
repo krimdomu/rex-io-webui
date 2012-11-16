@@ -2,6 +2,7 @@
    <thead>
       <tr>
          <td>Name</td>
+         <td>Boot MAC</td>
          <td>OS</td>
          <td>State</td>
          <td>Boot State</td>
@@ -13,15 +14,17 @@
       % foreach my $entry (@{ $entries->{data} }) {
       <tr>
          <td><a href="#" class="server-link" srv_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
-         <td><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>)</td>
+         <td><%= $entry->{mac} %></td>
+         <td><% if($entry->{os}->{name}) { %><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>) <% } else { %>UNKNOWN<% } %></td>
          <td><%= $entry->{state} %></td>
          <td>
-            <select name="next_boot_target" id="next_boot_target">
+            <select name="next_boot_target" id="next_boot_target_<%= $entry->{id} %>">
+               <option <% if( ! $entry->{os_template}->{id}) { %>selected<% } %> value="-1">UNKNOWN</option>
             <% for my $os (@{ $os_templates }) { %>
                <option <% if($os->{id} == $entry->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
             <% } %>
             </select>
-            <button id="save_boot_target" srv_id="<%= $entry->{id} %>">Save</button>
+            <button class="save_button" srv_id="<%= $entry->{id} %>">Save</button>
          </td>
       </tr>
       % }

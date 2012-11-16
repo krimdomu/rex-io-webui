@@ -17,6 +17,8 @@ sub startup {
    $r->get("/dashboard")->to("dashboard#view");
 
    # server
+   $r->get("/server/new")->to("server#add");
+   $r->post("/server/new")->to("server#add_new");
    $r->get("/server/:id")->to("server#index");
    $r->post("/server/:server/:boot")->to("server#set_next_boot");
    $r->get("/server")->to("server#list");

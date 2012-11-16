@@ -1,0 +1,19 @@
+<h3>Add new Server</h3>
+
+<form action="/server/new" method="post" accept-charset="utf-8">
+   <table border="0" width="100%">
+      <tr>
+         <td style="width: 120px">Name:</td>
+      <td><input type="text" name="name" id="name" value="" style="width: 100%;" /></td>
+      </tr>
+      <tr>
+         <td>Boot Device MAC:</td>
+         <td><input type="text" name="mac" id="mac" value="" style="width: 100%;" /></td>
+      </tr>
+      <tr>
+         <td>&nbsp;</td>
+         <td><button id="save_server" class="save_button">Save</button></td>
+      </tr>
+   </table>
+
+</form>
