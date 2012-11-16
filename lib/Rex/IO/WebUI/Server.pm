@@ -21,4 +21,9 @@ sub set_next_boot {
    $self->render_json($data);
 }
 
+sub list {
+   my ($self) = @_;
+   $self->render;
+}
+
 1;

@@ -16,8 +16,10 @@ sub startup {
    $r->get("/")->to("dashboard#index");
    $r->get("/dashboard")->to("dashboard#view");
 
+   # server
    $r->get("/server/:id")->to("server#index");
    $r->post("/server/:server/:boot")->to("server#set_next_boot");
+   $r->get("/server")->to("server#list");
 
    # search
    $r->get("/search")->to("search#index");

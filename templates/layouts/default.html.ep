@@ -81,6 +81,7 @@
    </script>
    <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/server.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dns.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dhcp.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
