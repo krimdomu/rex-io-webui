@@ -88,10 +88,16 @@ function list_server() {
 function load_server(srv_id) {
 
    $("#content_area").load("/server/" + srv_id, null, function() {
-      $("#tabs").tabs();
+      $("#tabs").tabs({
+         "activate": function(event, ui) {
+            $.log("Tab changed");
+            $(".is_accordion").accordion();
+         }
+      });
       $("#hw-info").accordion();
 
       $("#general-info").accordion();
+      //$("#network-info").accordion(); -- wenn hier, dann bug im jqueryui, hoehe passt nicht
 
       $("#tabs > .ui-tabs-panel").height($("#content_area").height() 
                - $("#tabs > .ui-tabs-nav").height() 
@@ -99,6 +105,11 @@ function load_server(srv_id) {
          );
 
       $("SELECT").selectBox();
+
+      $(".save_network_button").button().click(function(event) {
+         event.preventDefault();
+      });
+
       $("#save_boot_target").button().click(function(event) {
          event.preventDefault();
          $.log("server_id: " + srv_id);
