@@ -24,7 +24,10 @@ sub create_new {
 
 sub post_new {
    my ($self) = @_;
-   $self->render_json({ok => Mojo::JSON->true});
+
+   my $ret = $self->rexio->add_os_template(%{ $self->req->json });
+
+   $self->render_json($ret);
 }
 
 1;
