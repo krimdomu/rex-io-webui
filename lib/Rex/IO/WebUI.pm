@@ -22,6 +22,7 @@ sub startup {
    $r->get("/server/:id")->to("server#index");
    $r->post("/server/:server/:boot")->to("server#set_next_boot");
    $r->get("/server")->to("server#list");
+   $r->post("/network-adapter/:id")->to("server#update_network_adapter");
 
    # search
    $r->get("/search")->to("search#index");

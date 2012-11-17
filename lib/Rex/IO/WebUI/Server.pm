@@ -42,4 +42,12 @@ sub add_new {
    $self->render_json($ret);
 }
 
+sub update_network_adapter {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->update_network_adapter($self->param("id"), %{ $self->req->json });
+
+   $self->render_json($ret);
+}
+
 1;

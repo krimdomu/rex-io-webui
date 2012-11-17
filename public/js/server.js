@@ -108,6 +108,23 @@ function load_server(srv_id) {
 
       $(".save_network_button").button().click(function(event) {
          event.preventDefault();
+         var nwa_id = $(this).attr("eth_id");
+         $.log("Saving network adapter: " + nwa_id);
+
+         $.ajax({
+            "type": "POST",
+            "url": "/network-adapter/" + nwa_id,
+            "data": JSON.stringify({
+               "proto": $("#proto_" + nwa_id).val(),
+               "ip": $("#ip_" + nwa_id).val(),
+               "netmask": $("#netmask_" + nwa_id).val(),
+               "broadcast": $("#broadcast_" + nwa_id).val(),
+               "network": $("#network_" + nwa_id).val(),
+               "gateway": $("#gateway_" + nwa_id).val()
+            })
+         }).done(function(data) {
+            $.log("Saved NetworkAdapter\nGot Data: " + JSON.stringify(data));
+         });
       });
 
       $("#save_boot_target").button().click(function(event) {
