@@ -90,6 +90,10 @@
          <div>
             <table border="0">
                <tr>
+                  <td>Bootdevice</td>
+                  <td><input type="checkbox"<% if($eth->{boot} == 1) { %>checked="checked"<% } %> name="boot_<%= $eth->{id} %>" value="1" id="boot_<%= $eth->{id} %>" /></td>
+               </tr>
+               <tr>
                   <td>Protocol</td>
                   <td>
                      <select name="proto_<%= $eth->{id} %>" id="proto_<%= $eth->{id} %>">

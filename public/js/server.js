@@ -111,6 +111,8 @@ function load_server(srv_id) {
          var nwa_id = $(this).attr("eth_id");
          $.log("Saving network adapter: " + nwa_id);
 
+         $.log("boot?: " + $("#boot_" + nwa_id).attr("checked"));
+
          $.ajax({
             "type": "POST",
             "url": "/network-adapter/" + nwa_id,
@@ -120,7 +122,8 @@ function load_server(srv_id) {
                "netmask": $("#netmask_" + nwa_id).val(),
                "broadcast": $("#broadcast_" + nwa_id).val(),
                "network": $("#network_" + nwa_id).val(),
-               "gateway": $("#gateway_" + nwa_id).val()
+               "gateway": $("#gateway_" + nwa_id).val(),
+               "boot": ($("#boot_" + nwa_id).attr("checked") == "checked" ? 1 : 0)
             })
          }).done(function(data) {
             $.log("Saved NetworkAdapter\nGot Data: " + JSON.stringify(data));
