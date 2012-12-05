@@ -20,6 +20,7 @@ sub startup {
    $r->get("/server/new")->to("server#add");
    $r->post("/server/new")->to("server#add_new");
    $r->get("/server/:id")->to("server#index");
+   $r->post("/server/:id")->to("server#update_server");
    $r->post("/server/:server/:boot")->to("server#set_next_boot");
    $r->get("/server")->to("server#list");
    $r->post("/network-adapter/:id")->to("server#update_network_adapter");

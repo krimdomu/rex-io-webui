@@ -50,4 +50,13 @@ sub update_network_adapter {
    $self->render_json($ret);
 }
 
+sub update_server {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->update_server($self->param("id"), %{ $self->req->json });
+
+   $self->render_json($ret);
+}
+
+
 1;

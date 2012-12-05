@@ -12,7 +12,7 @@
             <table border="0">
                <tr>
                   <td class="col-info">Hostname:</td>
-                  <td class="col-text"><%= $server->{name} %></td>
+                  <td class="col-text"><%= $server->{name} %> <img class="edit-server-name" src="/icons/writing.png" /></td>
                </tr>
                <tr>
                   <td class="col-info">Operating System:</td>
@@ -104,24 +104,26 @@
                </tr>
                <tr>
                   <td>IP</td>
-                  <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= $eth->{ip} %>" id="ip_<%= $eth->{id} %>" /></td>
+                  <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= $eth->{ip} eq '0'?'':$eth->{ip} %>" id="ip_<%= $eth->{id} %>" /></td>
                </tr>
                <tr>
                   <td>Netmask</td>
-                  <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= $eth->{netmask} %>" id="netmask_<%= $eth->{id} %>" /></td>
+                  <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= $eth->{netmask} eq '0'?'':$eth->{netmask} %>" id="netmask_<%= $eth->{id} %>" /></td>
                </tr>
                <tr>
                   <td>Broadcast</td>
-                  <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= $eth->{broadcast} %>" id="broadcast_<%= $eth->{id} %>" /></td>
+                  <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= $eth->{broadcast} eq '0'?'':$eth->{broadcast} %>" id="broadcast_<%= $eth->{id} %>" /></td>
                </tr>
                <tr>
                   <td>Network</td>
-                  <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= $eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
+                  <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= $eth->{network} eq '0'?'':$eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
                </tr>
+               <!--
                <tr>
                   <td>Gateway</td>
                   <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= $eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
                </tr>
+               -->
                <tr>
                   <td>&nbsp;</td>
                   <td><input type="button" class="save_network_button" name="save_network" value="Save" eth_id="<%= $eth->{id} %>"></td>
@@ -133,5 +135,18 @@
       </div> 
    </div>
 
+
 </div>
+
+<div id="rename_server" title="Rename Server">
+   <p class="validateTips">Allowed Characters: A-Z, a-z, 0-9 and -</p>
+
+   <form>
+      <fieldset>
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+      </fieldset>
+   </form>
+</div>
+
 

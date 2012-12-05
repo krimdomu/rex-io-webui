@@ -24,7 +24,7 @@
                         list_server();
                      }
                   } catch(err) {
-                     Raven.captureException(err);
+                     $.log(err);
                   }
                });
             });
@@ -68,7 +68,7 @@ function list_server() {
                   throw "Error updating Server next_boot_target";
                }
             } catch(err) {
-               Raven.captureException(err);
+               $.log(err);
             }
          });
       });
@@ -88,6 +88,42 @@ function list_server() {
 function load_server(srv_id) {
 
    $("#content_area").load("/server/" + srv_id, null, function() {
+
+      $("#rename_server").dialog({
+         autoOpen: false,
+         height: 300,
+         width: 350,
+         modal: true,
+         buttons: {
+            "Rename Server": function() {
+               $.log("new name: " + $("#name").val());
+               var new_name = $("#name").val();
+               rename_server(srv_id, new_name, 
+                  // success
+                  function() {
+                     $.log("Successfull renamed");
+                     $("#rename_server").dialog("close");
+                     load_server(srv_id);
+                  },
+                  // error
+                  function() {
+                     $.log("An error occured on renaming server");
+                  }
+               );
+            },
+            Cancel: function() {
+               $(this).dialog("close");
+            }
+         },
+         close: function() {
+            $("#name").val("").removeClass("ui-state-error");
+         }
+      });
+
+      $(".edit-server-name").click(function(event) {
+         $("#rename_server").dialog("open");
+      });
+
       $("#tabs").tabs({
          "activate": function(event, ui) {
             $.log("Tab changed");
@@ -143,10 +179,32 @@ function load_server(srv_id) {
                   throw "Error updating Server next_boot_target";
                }
             } catch(err) {
-               Raven.captureException(err);
+               $.log(err);
             }
          });
       });
+   });
+
+}
+
+function rename_server(srv_id, new_name, success_cb, error_cb) {
+
+   $.ajax({
+      "type": "POST",
+      "url": "/server/" + srv_id,
+      "data": JSON.stringify({
+         "name": new_name
+      })
+   }).done(function(data) {
+      try {
+         if(data.ok != true) {
+            throw "Error updating Server name";
+         }
+
+         success_cb();
+      } catch(err) {
+         error_cb();
+      }
    });
 
 }
