@@ -1,3 +1,8 @@
+<button id="dns_add_entry"><img src="/icons/edit_add.png" /><span style="float: right; margin-top: 6px; margin-left: 8px;">Add Entry</span></button>
+
+<br />
+<br />
+
 <table border="0" id="table_entries" style="width: 100%;">
    <thead>
       <tr>
@@ -19,3 +24,35 @@
       % }
    </tbody>
 </table>
+
+<div id="add_dns_entry" title="Add new DNS Record">
+   <p class="validateTips">Allowed Characters for Name: A-Z, a-z, 0-9 and -</p>
+
+   <form>
+      <fieldset>
+         <label for="type">Type</label>
+         <select name="type" size="1">
+            <option value="A">A Record</option>
+         </select>
+
+         <label for="ttl">TTL</label>
+         <input type="text" name="ttl" id="ttl" class="text ui-widget-content ui-corner-all" value="3600" />
+
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+
+         <label for="domain">Domain</label>
+         <select name="domain" id="domain" size="1">
+            % my $tlds = rexio->get_dns_tlds;
+            % for my $tld (@{ $tlds }) {
+            <option value="<%= $tld %>"><%= $tld %></option>
+            % }
+         </select>
+
+         <label for="ip">IP</label>
+         <input type="text" name="ip" id="ip" class="text ui-widget-content ui-corner-all" />
+      </fieldset>
+   </form>
+</div>
+
+

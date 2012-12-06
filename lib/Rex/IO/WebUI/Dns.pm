@@ -14,4 +14,13 @@ sub update_tld_record {
    $self->render_text($self->param("value"));
 }
 
+sub add_A_record {
+   my ($self) = @_;
+
+   my $option = $self->req->json;
+   my $ret = $self->rexio->add_dns_A_record($self->param("domain"), $self->param("host"), %{ $option });
+
+   $self->render_json($ret);
+}
+
 1;

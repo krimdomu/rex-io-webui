@@ -29,8 +29,9 @@ sub startup {
    $r->get("/search")->to("search#index");
 
    # dns
-   $r->get("/dns/*tld")->to("dns#show_tld");
-   $r->post("/dns/*tld")->to("dns#update_tld_record");
+   $r->get("/dns/#tld")->to("dns#show_tld");
+   $r->post("/dns/#domain/A/#host")->to("dns#add_A_record");
+   $r->post("/dns/#tld")->to("dns#update_tld_record");
 
    # dhcp
    $r->get("/dhcp")->to("dhcp#show_leases");
