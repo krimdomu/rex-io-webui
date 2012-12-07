@@ -13,6 +13,8 @@ use Rex::IO::Client;
 use Mojolicious::Plugin;
 use base qw(Mojolicious::Plugin);
 
+use Data::Dumper;
+
 sub register {
    my ($plugin, $app) = @_;
 
@@ -20,7 +22,7 @@ sub register {
       rexio => sub {
          my $self = shift;
          my $cl = Rex::IO::Client->create(protocol => 1);
-         $cl->endpoint = "http://127.0.0.1:5000";
+         $cl->endpoint = $app->config->{server};
 
          return $cl;
       }

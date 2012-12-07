@@ -7,6 +7,17 @@ sub startup {
 
    # Documentation browser under "/perldoc"
    #$self->plugin("PODRenderer");
+
+   my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", "webui.conf");
+   my $cfg;
+   for my $file (@cfg) {
+      if(-f $file) {
+         $cfg = $file;
+         last;
+      }
+   }
+   $self->plugin('Config', file => $cfg);
+
    $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer");
 
    # Router
