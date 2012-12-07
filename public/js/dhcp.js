@@ -17,7 +17,11 @@
             });
 
             $(window).on("resize", function() {
-               window.setTimeout(function() {
+               if(typeof resize_Timer != "undefined") {
+                  window.clearTimeout(resize_Timer);
+               }
+
+               resize_Timer = window.setTimeout(function() {
                   $("#table_entries").parent().css("height", $("#content_area").height()-90);
                   oTable.fnDraw();
                }, 200);

@@ -76,7 +76,8 @@
    </body>
    <script type="text/javascript" charset="utf-8">
       $(document).ready(function() {
-         $("body").layout();
+         $("body").layout({
+         });
       });
    </script>
    <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>

@@ -20,6 +20,16 @@ function list_dns(tld) {
 
    $("#content_area").load("/dns/" + tld, null, function() {
       // do something after loading...
+      $("#table_entries tbody tr").click( function( e ) {
+         if ( $(this).hasClass('row_selected') ) {
+            $(this).removeClass('row_selected');
+         }
+         else {
+            oTable.$('tr.row_selected').removeClass('row_selected');
+            $(this).addClass('row_selected');
+         }
+      });
+
       var oTable = $("#table_entries").dataTable({
          "bJQueryUI": true,
          "bPaginate": false,
@@ -28,29 +38,22 @@ function list_dns(tld) {
       });
 
 
-      oTable.$("td").editable("/dns/" + tld, {
-         "callback": function(value, y) {
-            var sel_pos = oTable.fnGetPosition(this);
-            oTable.fnUpdate(value, sel_pos[0], sel_pos[1]);
-         },
-         "submitdata": function( value, settings) {
-            return {
-               "row_id": this.parentNode.getAttribute("id"),
-               "column": oTable.fnGetPosition(this)[2]
-            };
-         },
-         "height": "14px",
-         "width": "100%"
-      });
-
       $(window).on("resize", function() {
-         window.setTimeout(function() {
+         if(typeof resize_Timer != "undefined") {
+            window.clearTimeout(resize_Timer);
+         }
+         resize_Timer = window.setTimeout(function() {
             $("#table_entries").parent().css("height", $("#content_area").height()-160);
             oTable.fnDraw();
          }, 200);
       });
 
-      $("#table_entries").parent().css("height", $("#content_area").height()-160);
+
+
+      window.setTimeout(function() {
+         $("#table_entries").parent().css("height", $("#content_area").height()-160);
+         oTable.fnDraw();
+      }, 200);
 
       $("#add_dns_entry").dialog({
          autoOpen: false,
@@ -62,10 +65,10 @@ function list_dns(tld) {
                $.log("adding");
 
                $.ajax({
-                  "url": "/dns/" + $("#domain").val() + "/A/" + $("#name").val(),
+                  "url": "/dns/" + $("#domain").val() + "/" + $("#type").val() + "/" + $("#name").val(),
                   "type": "POST",
                   "data": JSON.stringify({
-                     "ip": $("#ip").val(),
+                     "data": $("#data").val(),
                      "ttl": $("#ttl").val()
                   }),
                   "contentType": "application/json",
@@ -99,6 +102,18 @@ function list_dns(tld) {
          $("#add_dns_entry").dialog("open");
       });
 
+      $("#dns_del_entry").button().click(function() {
+         var selected_row = fnGetSelected(oTable);
+         var domain = $(selected_row).attr("attr_domain");
+         var type = $(selected_row).attr("attr_type");
+         var name = $(selected_row).attr("attr_name");
+
+         $.log("Delting: " + domain + "/" + type + "/" + name);
+
+         delete_dns_entry(domain, name, type);
+      });
+
+
 
       $("SELECT").selectBox();
 
@@ -106,3 +121,20 @@ function list_dns(tld) {
 
 
 }
+
+function delete_dns_entry(domain, host, type) {
+
+   $.ajax({
+      "url": "/dns/" + domain + "/" + type + "/" + host,
+      "type": "DELETE"
+   }).done(function(data) {
+      list_dns(domain);     
+   });
+   
+}
+
+function fnGetSelected( oTableLocal )
+{
+    return oTableLocal.$('tr.row_selected');
+}
+

@@ -30,7 +30,8 @@ sub startup {
 
    # dns
    $r->get("/dns/#tld")->to("dns#show_tld");
-   $r->post("/dns/#domain/A/#host")->to("dns#add_A_record");
+   $r->post("/dns/#domain/:type/#host")->to("dns#add_record");
+   $r->delete("/dns/#domain/:type/#host")->to("dns#del_record");
    $r->post("/dns/#tld")->to("dns#update_tld_record");
 
    # dhcp
