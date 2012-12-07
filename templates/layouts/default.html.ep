@@ -53,8 +53,8 @@
 
             <h3>Deploy Templates</h3>
             <div>
-               <p><a href="#" class="new-template-link">New Template</a></p>
                <p><a href="#" class="template-link">List Templates</a></p>
+               <p><a href="#" class="new-template-link">New Template</a></p>
             </div>
          </div>
 
