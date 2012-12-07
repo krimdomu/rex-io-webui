@@ -118,12 +118,10 @@
                   <td>Network</td>
                   <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= $eth->{network} eq '0'?'':$eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
                </tr>
-               <!--
                <tr>
                   <td>Gateway</td>
-                  <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= $eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
+                  <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= $eth->{gateway} eq '0'?'':$eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
                </tr>
-               -->
                <tr>
                   <td>&nbsp;</td>
                   <td><input type="button" class="save_network_button" name="save_network" value="Save" eth_id="<%= $eth->{id} %>"></td>
