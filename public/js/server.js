@@ -124,6 +124,10 @@ function load_server(srv_id) {
          }
       });
 
+      $("#reload_hw").button().click(function(event) {
+         // reload hw
+      });
+
       $(".edit-server-name").click(function(event) {
          $("#rename_server").dialog("open");
       });

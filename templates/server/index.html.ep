@@ -11,6 +11,15 @@
          <div>
             <table border="0">
                <tr>
+                  % my $is_online = 0;
+                  % for my $dev ( @{ $server->{network_adapters} } ) {
+                  %  my $check = rexio->is_online($dev->{ip});
+                  %  if($check->{ok}) { $is_online = 1; last; }
+                  % }
+                  <td class="col-info">Online Status:</td>
+                  <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
+               </tr>
+               <tr>
                   <td class="col-info">Hostname:</td>
                   <td class="col-text"><%= $server->{name} %> <img class="edit-server-name" src="/icons/writing.png" /></td>
                </tr>
@@ -76,6 +85,19 @@
                   <td class="col-info"><%= $eth->{dev} %></td>
                </tr>
                <% } %>
+
+               % if($is_online) {
+               <tr>
+                  <td colspan="3">&nbsp;</td>
+               </tr>
+
+               <tr>
+                  <td>&nbsp;</td>
+                  <td colspan="2">
+                     <button id="reload_hw"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
+                  </td>
+               </tr>
+               % }
 
             </table>
          </div>
