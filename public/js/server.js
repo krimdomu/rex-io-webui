@@ -102,6 +102,7 @@ function load_server(srv_id) {
             "Rename Server": function() {
                $.log("new name: " + $("#name").val());
                var new_name = $("#name").val();
+               var srv_id   = $("#srv_id").val();
                rename_server(srv_id, new_name, 
                   // success
                   function() {
@@ -174,6 +175,11 @@ function load_server(srv_id) {
          });
       });
 
+      $("#reboot_system").button().click(function(event) {
+         event.preventDefault();
+         trigger_reboot($(this).attr("ip"));
+      });
+
       $("#save_boot_target").button().click(function(event) {
          event.preventDefault();
          $.log("server_id: " + srv_id);
@@ -223,6 +229,15 @@ function trigger_inventory(ip) {
       "url": "/server/" + ip + "/inventory"
    }).done(function(data) {
       $.log("inventory triggered");
+   });
+}
+
+function trigger_reboot(ip) {
+   $.ajax({
+      "type": "POST",
+      "url": "/server/" + ip + "/reboot"
+   }).done(function(data) {
+      $.log("reboot triggered");
    });
 }
 

@@ -66,4 +66,12 @@ sub trigger_inventory {
    $self->render_json($ret);
 }
 
+sub trigger_reboot {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->trigger_reboot($self->param("ip"));
+
+   $self->render_json($ret);
+}
+
 1;

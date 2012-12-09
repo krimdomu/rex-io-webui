@@ -38,6 +38,7 @@
                         <% } %>
                      </select>
                      <button id="save_boot_target">Save</button>
+                     <% if($is_online) { %><button id="reboot_system" ip="<%= $agent_ip %>">Reboot</button><% } %>
                   </td>
                </tr>
             </table>
@@ -164,6 +165,7 @@
    <p class="validateTips">Allowed Characters: A-Z, a-z, 0-9 and -</p>
 
    <form>
+      <input type="hidden" name="srv_id" id="srv_id" value="<%= $server->{id} %>" />
       <fieldset>
          <label for="name">Name</label>
          <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
