@@ -201,3 +201,7 @@ label, input.text { display:block; }
    padding-top: 3px !important;
    padding-bottom: 3px !important;
 }
+
+.scrolling-tab-pane {
+   overflow: auto;
+}

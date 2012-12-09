@@ -5,7 +5,7 @@
       <li><a href="#network-tab">Network</a></li>
    </ul>
 
-   <div id="info-tab">
+   <div id="info-tab" class="scrolling-tab-pane">
       <div id="general-info">
          <h3>General Information</h3>
          <div>
@@ -107,7 +107,7 @@
 
    </div>
 
-   <div id="network-tab">
+   <div id="network-tab" class="scrolling-tab-pane">
       <div id="network-info" class="is_accordion">
       % for my $eth (@{ $server->{network_adapters} }) {
          <h3><%= $eth->{dev} %> (<%= $eth->{mac} %>)</h3>
