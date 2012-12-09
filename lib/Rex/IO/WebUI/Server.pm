@@ -58,5 +58,12 @@ sub update_server {
    $self->render_json($ret);
 }
 
+sub trigger_inventory {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->trigger_inventory($self->param("ip"));
+
+   $self->render_json($ret);
+}
 
 1;

@@ -125,7 +125,7 @@ function load_server(srv_id) {
       });
 
       $("#reload_hw").button().click(function(event) {
-         // reload hw
+         trigger_inventory($(this).attr("ip"));
       });
 
       $(".edit-server-name").click(function(event) {
@@ -216,3 +216,13 @@ function rename_server(srv_id, new_name, success_cb, error_cb) {
    });
 
 }
+
+function trigger_inventory(ip) {
+   $.ajax({
+      "type": "POST",
+      "url": "/server/" + ip + "/inventory"
+   }).done(function(data) {
+      $.log("inventory triggered");
+   });
+}
+

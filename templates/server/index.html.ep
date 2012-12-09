@@ -11,10 +11,11 @@
          <div>
             <table border="0">
                <tr>
+                  % my $agent_ip;
                   % my $is_online = 0;
                   % for my $dev ( @{ $server->{network_adapters} } ) {
                   %  my $check = rexio->is_online($dev->{ip});
-                  %  if($check->{ok}) { $is_online = 1; last; }
+                  %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
                   % }
                   <td class="col-info">Online Status:</td>
                   <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
@@ -94,7 +95,7 @@
                <tr>
                   <td>&nbsp;</td>
                   <td colspan="2">
-                     <button id="reload_hw"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
+                     <button id="reload_hw" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
                   </td>
                </tr>
                % }
