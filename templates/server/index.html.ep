@@ -81,13 +81,14 @@
                </tr>
                <% } %>
 
-               <% for my $eth (@{ $server->{network_adapters} }) { %>
+               % for my $eth (@{ $server->{network_adapters} }) {
+               % next if ($eth->{virtual});
                <tr>
                   <td class="col-img icon-eth td-icon">&nbsp;</td>
                   <td class="col-class">Network</td>
                   <td class="col-info"><%= $eth->{dev} %></td>
                </tr>
-               <% } %>
+               % }
 
                % if($is_online) {
                <tr>
@@ -111,6 +112,7 @@
    <div id="network-tab" class="scrolling-tab-pane">
       <div id="network-info" class="is_accordion">
       % for my $eth (@{ $server->{network_adapters} }) {
+      % next if ($eth->{virtual});
          <h3><%= $eth->{dev} %> (<%= $eth->{mac} %>)</h3>
          <div>
             <table border="0">
