@@ -11,6 +11,14 @@
          <td><input type="text" name="mac" id="mac" value="" style="width: 100%;" /></td>
       </tr>
       <tr>
+         <td>UUID:</td>
+         <td><input type="text" name="uuid" id="uuid" value="" style="width: 100%;" /></td>
+      </tr>
+      <tr>
+         <td>&nbsp;</td>
+         <td>You can get the UUID of your server by executing the following command:<br /><pre>dmidecode | grep UUID | cut -d: -f2</pre></td>
+      </tr>
+      <tr>
          <td>&nbsp;</td>
          <td><button id="save_server" class="save_button">Save</button></td>
       </tr>

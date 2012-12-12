@@ -11,7 +11,8 @@
                   "type": "POST",
                   "data": JSON.stringify({
                      "name": $("#name").val(),
-                     "mac": $("#mac").val()
+                     "mac": $("#mac").val(),
+                     "uuid": $("#uuid").val()
                   }),
                   "contentType": "application/json",
                   "dataType": "json"
