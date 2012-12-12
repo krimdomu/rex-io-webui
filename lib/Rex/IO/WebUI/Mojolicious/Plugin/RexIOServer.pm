@@ -21,7 +21,15 @@ sub register {
    $app->helper(
       rexio => sub {
          my $self = shift;
-         my $cl = Rex::IO::Client->create(protocol => 1);
+         my $cl;
+
+         if($app->config->{ssl}) {
+            $cl = Rex::IO::Client->create(protocol => 1, ssl => $app->config->{ssl});
+         }
+         else {
+            $cl = Rex::IO::Client->create(protocol => 1);
+         }
+
          $cl->endpoint = $app->config->{server};
 
          return $cl;
