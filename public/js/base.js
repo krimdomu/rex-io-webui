@@ -2,11 +2,17 @@
 
    $(document).ready(function() {
       
-      $("#content_area").load("/dashboard");
       //$(".main-accordion").accordion();
+      load_dashboard();
+
+      $(".dashboard-link").click(function() {
+         load_dashboard();
+      });
 
    });
 
 })();
 
-
+function load_dashboard() {
+   $("#content_area").load("/dashboard");
+}

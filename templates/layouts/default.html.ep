@@ -18,6 +18,7 @@
       <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
       
    </head>
+   % my @server_plugins = @{ rexio->get_plugins };
    <body>
       <div id="content_area" class="ui-layout-center light-background">
          Dashboard...
@@ -31,12 +32,18 @@
                </div>
             </div>
 
+            <h3>Links</h3>
+            <div>
+               <p><a href="#" class="dashboard-link">Dashboard</a></p>
+            </div>
+
             <h3>Server</h3>
             <div>
                <p><a href="#" class="server-list-link">List Server</a></p>
                <p><a href="#" class="server-add-link">Add new Server</a></p>
             </div>
 
+            % if(@server_plugins ~~ m/^Dns$/) {
             <h3>DNS</h3>
             <div>
                % my $tlds = rexio->get_dns_tlds;
@@ -45,11 +52,14 @@
                % }
 
             </div>
+            % }
 
+            % if(@server_plugins ~~ m/^Dhcp$/) {
             <h3>DHCP</h3>
             <div>
                <p><a href="#" class="dhcp-link">List Leases</a></p>
             </div>
+            % }
 
             <h3>Deploy Templates</h3>
             <div>
