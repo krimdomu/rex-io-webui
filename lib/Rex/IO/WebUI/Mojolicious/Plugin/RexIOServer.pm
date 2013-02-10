@@ -24,13 +24,13 @@ sub register {
          my $cl;
 
          if($app->config->{ssl}) {
-            $cl = Rex::IO::Client->create(protocol => 1, ssl => $app->config->{ssl});
+            $cl = Rex::IO::Client->create(protocol => 1, ssl => $app->config->{server}->{ssl}, endpoint => $app->config->{server}->{url});
          }
          else {
-            $cl = Rex::IO::Client->create(protocol => 1);
+            $cl = Rex::IO::Client->create(protocol => 1, endpoint => $app->config->{server}->{url});
          }
 
-         $cl->endpoint = $app->config->{server};
+         $cl->auth($app->config->{server}->{user}, $app->config->{server}->{password});
 
          return $cl;
       }
