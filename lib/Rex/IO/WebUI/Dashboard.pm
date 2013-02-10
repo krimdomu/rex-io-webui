@@ -12,4 +12,27 @@ sub view {
    $self->render;
 }
 
+sub login {
+   my ($self) = @_;
+   $self->render;
+}
+
+sub login_do_auth {
+   my ($self) = @_;
+
+   if($self->authenticate($self->param("user"), $self->param("password"))) {
+   print STDERR "redirecting\n";
+      $self->redirect_to("/");
+   }
+
+   $self->render("dashboard/login");
+
+}
+
+sub check_login {
+   my ($self) = @_;
+   $self->redirect_to("/login") and return 0 unless($self->is_user_authenticated);
+   return 1;
+}
+
 1;
