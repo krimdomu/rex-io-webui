@@ -1,14 +1,33 @@
 package Rex::IO::WebUI;
 use Mojo::Base "Mojolicious";
 
+use File::Basename 'dirname';
+use File::Spec::Functions 'catdir';
+use Cwd 'getcwd';
+
+our $VERSION = "0.1";
+
 # This method will run once at server start
 sub startup {
    my $self = shift;
 
    #######################################################################
+   # for the package
+   #######################################################################
+   
+   # Switch to installable home directory
+   $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
+
+   # Switch to installable "public" directory
+   $self->static->paths->[0] = $self->home->rel_dir('public');
+
+   # Switch to installable "templates" directory
+   $self->renderer->paths->[0] = $self->home->rel_dir('templates');
+
+   #######################################################################
    # Load configuration
    #######################################################################
-   my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", "webui.conf");
+   my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", getcwd() . "/webui.conf");
    my $cfg;
    for my $file (@cfg) {
       if(-f $file) {
@@ -16,6 +35,7 @@ sub startup {
          last;
       }
    }
+   print STDERR "CFG: $cfg\n";
 
    #######################################################################
    # Load plugins
