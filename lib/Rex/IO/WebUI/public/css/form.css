@@ -1,0 +1,42 @@
+.control-label {
+   float: left;
+   width: 100px;
+   padding-top: 5px;
+   text-align: right;
+}
+
+.control-row {
+   padding-bottom: 10px;
+   margin-right: 120px;
+}
+
+.controls {
+   margin-left: 120px;
+}
+
+.btn.green {
+   color: #fff;
+   text-shadow: none;
+   background-color: #215270;
+}
+
+.btn {
+   background-color: #e5e5e5;
+   background-image: none;
+   filter: none;
+   border: 0;
+   box-shadow: none;
+   padding: 7px 14px;
+   text-shadow: none;
+   font-size: 14px;
+   color: #333333;
+   cursor: pointer;
+   outline: none;
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+   border-radius: 0 !important;   
+}
+
+input[type=text], input[type=password] {
+   padding: 2px;
+}

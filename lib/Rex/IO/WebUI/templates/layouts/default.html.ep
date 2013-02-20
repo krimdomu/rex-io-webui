@@ -7,88 +7,91 @@
 
       <script type="text/javascript" charset="utf-8" src="/js/jquery-1.8.2.min.js"></script>
       <script type="text/javascript" charset="utf-8" src="/js/jquery-ui-1.9.0.min.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/js/jquery.layout.min.js"></script>
+      <!-- <script type="text/javascript" charset="utf-8" src="/js/jquery.layout.min.js"></script> -->
       <script type="text/javascript" charset="utf-8" src="/js/raven-0.6.min.js"></script>
 
-      <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" />
+      <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
       <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
+      <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen" charset="utf-8" />
       
    </head>
    % my @server_plugins = @{ rexio->get_plugins };
    <body>
-      <div id="content_area" class="ui-layout-center light-background">
-         Dashboard...
-      </div>
-      <div class="ui-layout-west light-background">
-         <div class="main-accordion">
-            <h3>Server Search</h3>
-            <div>
-               <div class="search_box">
-                  <input type="text" id="server_search" name="server_search" value="" class="w100per" />
+
+      <div class="page-container">
+
+         <div class="page-sidebar dark-background">
+            <div class="main-accordion">
+
+               <div>
+                  <div class="search_box">
+                     <input type="text" id="server_search" name="server_search" value="" placeholder="Server Search..." />
+                  </div>
                </div>
+
+               <ul class="navul">
+                  <li class="active">
+                     <a href="/">Dashboard</a>
+                  </li>
+                  <li class="has-sub">
+                     <a href="#">Server</a>
+                     <ul class="sub">
+                        <li><a href="#" class="server-list-link">List Server</a></li>
+                        <li><a href="#" class="server-add-link">Add new Server</a></li>
+                     </ul>
+                  </li>
+
+                  % if(@server_plugins ~~ m/^Dns$/) {
+                  <li class="has-sub">
+                     <a href="#">DNS</a>
+                     <ul class="sub">
+                        % my $tlds = rexio->get_dns_tlds;
+                        % for my $tld (@{ $tlds }) {
+                        <li><a href="#" class="dns-link" tld="<%= $tld %>"><%= $tld %></a></li>
+                        % }
+                     </ul>
+                  </li>
+                  % }
+
+                  % if(@server_plugins ~~ m/^Dhcp$/) {
+                  <li class="has-sub">
+                     <a href="#">DHCP</a>
+                     <ul class="sub">
+                        <li><a href="#" class="dhcp-link">List Leases</a></li>
+                     </ul>
+                  </li>
+                  % }
+
+                  <li class="has-sub">
+                     <a href="#">Deploy Templates</a>
+                     <ul class="sub">
+                        <li><a href="#" class="template-link">List Templates</a></li>
+                        <li><a href="#" class="new-template-link">New Template</a></li>
+                     </ul>
+                  </li>
+
+               </ul>
+
             </div>
 
-            <h3>Links</h3>
-            <div>
-               <p><a href="#" class="dashboard-link">Dashboard</a></p>
-            </div>
-
-            <h3>Server</h3>
-            <div>
-               <p><a href="#" class="server-list-link">List Server</a></p>
-               <p><a href="#" class="server-add-link">Add new Server</a></p>
-            </div>
-
-            % if(@server_plugins ~~ m/^Dns$/) {
-            <h3>DNS</h3>
-            <div>
-               % my $tlds = rexio->get_dns_tlds;
-               % for my $tld (@{ $tlds }) {
-               <p><a href="#" class="dns-link" tld="<%= $tld %>"><%= $tld %></a></p>
-               % }
-
-            </div>
-            % }
-
-            % if(@server_plugins ~~ m/^Dhcp$/) {
-            <h3>DHCP</h3>
-            <div>
-               <p><a href="#" class="dhcp-link">List Leases</a></p>
-            </div>
-            % }
-
-            <h3>Deploy Templates</h3>
-            <div>
-               <p><a href="#" class="template-link">List Templates</a></p>
-               <p><a href="#" class="new-template-link">New Template</a></p>
-            </div>
          </div>
 
-         <!--
-         <div class="search_result">
-            <div class="search_result_entry">
-               <a href="#">Server 1</a>
-            </div>
-
-            <div class="search_result_entry">
-               <a href="#">Server 2</a>
-            </div>
-            <div class="search_result_entry">
-               <a href="#">Server 3</a>
-            </div>
+         <div id="content_area" class="page-content light-background">
+            Dashboard...
          </div>
-         -->
+
       </div>
+
    </body>
    <script type="text/javascript" charset="utf-8">
-      $(document).ready(function() {
+      /*$(document).ready(function() {
          $("body").layout({
          });
-      });
+      });*/
    </script>
    <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
