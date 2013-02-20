@@ -194,6 +194,8 @@ ul.navul > li > a {
    font-weight: 300;
    outline: 0;
    text-shadow: none !important;
+   background-repeat: no-repeat;
+   background-position: 200px 15px;
 }
 
 .has-sub > ul {
@@ -234,4 +236,40 @@ ul.sub > li > a {
    background: none;
 }
 
+ul.navul > li > a:hover,
+ul.sub > li > a:hover {
+   background-color: #293943; 
+}
 
+/**
+ * page things
+ */
+
+.page-content-container {
+   padding: 15px;
+}
+
+.page-title {
+   font-size: 30px;
+   letter-spacing: -1px;
+   display: block;
+   color: #666;
+   font-weight: 300;
+   font-family: Verdana;
+}
+
+.page-title small {
+   font-size: 14px;
+   font-weight: 300;
+   letter-spacing: 0px;
+   color: #888;
+   padding-left: 4px;
+}
+
+.icon-arrow-left {
+   background-image: url(/icons/arrow-left.png);
+}
+
+.icon-arrow-down {
+   background-image: url(/icons/arrow-down.png);
+}

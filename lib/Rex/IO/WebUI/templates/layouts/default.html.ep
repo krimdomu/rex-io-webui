@@ -38,7 +38,7 @@
                      <a href="/">Dashboard</a>
                   </li>
                   <li class="has-sub">
-                     <a href="#">Server</a>
+                     <a href="#" class="icon-arrow-left">Server</a>
                      <ul class="sub">
                         <li><a href="#" class="server-list-link">List Server</a></li>
                         <li><a href="#" class="server-add-link">Add new Server</a></li>
@@ -47,7 +47,7 @@
 
                   % if(@server_plugins ~~ m/^Dns$/) {
                   <li class="has-sub">
-                     <a href="#">DNS</a>
+                     <a href="#" class="icon-arrow-left">DNS</a>
                      <ul class="sub">
                         % my $tlds = rexio->get_dns_tlds;
                         % for my $tld (@{ $tlds }) {
@@ -59,7 +59,7 @@
 
                   % if(@server_plugins ~~ m/^Dhcp$/) {
                   <li class="has-sub">
-                     <a href="#">DHCP</a>
+                     <a href="#" class="icon-arrow-left">DHCP</a>
                      <ul class="sub">
                         <li><a href="#" class="dhcp-link">List Leases</a></li>
                      </ul>
@@ -67,7 +67,7 @@
                   % }
 
                   <li class="has-sub">
-                     <a href="#">Deploy Templates</a>
+                     <a href="#" class="icon-arrow-left">Deploy Templates</a>
                      <ul class="sub">
                         <li><a href="#" class="template-link">List Templates</a></li>
                         <li><a href="#" class="new-template-link">New Template</a></li>
@@ -81,7 +81,9 @@
          </div>
 
          <div id="content_area" class="page-content light-background">
-            Dashboard...
+            <div class="page-content-container">
+               Dashboard...
+            </div>
          </div>
 
       </div>
