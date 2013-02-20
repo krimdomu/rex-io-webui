@@ -1,0 +1,78 @@
+/*
+ * default rules
+ */
+html, * {
+   font-family: Verdana;
+   font-size: 0.95em;
+}
+
+body {
+   /* background-color: #2e2e31; */
+   background-color: #111d25;
+}
+
+.window {
+   border: 1px solid #ffffff;
+   position: absolute;
+   background-color: #dfdfdf;
+   height: 230px;
+   left: 50%;
+   margin: -115px 0 0 -110px;
+   position: absolute;
+   top: 50%;
+   width: 320px;
+}
+
+.window .window_header {
+   background-color: #ffffff;
+   padding: 5px;
+   font-size: 15px;
+}
+
+.window .window_body {
+   padding-top: 50px;
+   padding-bottom: 50px;
+}
+
+.control-label {
+   float: left;
+   width: 100px;
+   padding-top: 5px;
+   text-align: right;
+}
+
+.control-row {
+   padding-bottom: 10px;
+   margin-right: 120px;
+}
+
+.controls {
+   margin-left: 120px;
+}
+
+.btn.green {
+   color: #fff;
+   text-shadow: none;
+   background-color: #215270;
+}
+
+.btn {
+   background-color: #e5e5e5;
+   background-image: none;
+   filter: none;
+   border: 0;
+   box-shadow: none;
+   padding: 7px 14px;
+   text-shadow: none;
+   font-size: 14px;
+   color: #333333;
+   cursor: pointer;
+   outline: none;
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+   border-radius: 0 !important;   
+}
+
+input[type=text], input[type=password] {
+   padding: 2px;
+}

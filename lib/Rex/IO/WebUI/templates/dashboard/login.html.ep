@@ -1,16 +1,36 @@
-<html>
-   <head>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8">
-      <title>Login to Rex.IO WebUI</title>
-   </head>
-   <body>
+% layout 'login';
+
+<div class="window">
+   <div class="window_header">
+      Login
+   </div>
+   <div class="window_body">
+
       <form action="/login" method="post" accept-charset="utf-8">
 
-         User: <input type="text" name="user" value="">
-         <br />
-         Pass: <input type="password" name="password" value="">
-      
-      <p><input type="submit" value="Continue &rarr;"></p>
+         <div class="control-row">
+            <label class="control-label">Username</label>
+            <div class="controls">
+               <input type="text" name="user" value="" />
+            </div>
+         </div>
+
+         <div class="control-row">
+            <label class="control-label">Password</label>
+            <div class="controls">
+               <input type="password" name="password" value="">
+            </div>
+         </div>
+
+         <div class="control-row">
+            <div class="controls">
+               <button type="submit" class="btn green">Login</button>
+            </div>
+         </div>
+
       </form>
-   </body>
-</html>
+
+   </div>
+</div>
+
+
