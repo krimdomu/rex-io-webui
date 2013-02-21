@@ -1,3 +1,18 @@
+<h1 class="page-title">DNS<small>listing dns entries of <%= param("tld") %></small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      DHCP-Leases &raquo;
+   </li>
+   <li>
+      <%= param("tld") %>
+   </li>
+
+</ul>
+
 <button id="dns_add_entry"><img src="/icons/edit_add.png" /><span style="float: right; margin-top: 6px; margin-left: 8px;">Add Entry</span></button>
 <button id="dns_del_entry"><img src="/icons/delete.png" /><span style="float: right; margin-top: 6px; margin-left: 8px;">Delete Entry</span></button>
 

@@ -1,4 +1,16 @@
-<h3>Add new Server</h3>
+<h1 class="page-title">Add Server<small>fill out the form to add a new server</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Server &raquo;
+   </li>
+   <li>
+      New
+   </li>
+</ul>
 
 <form action="/server/new" method="post" accept-charset="utf-8">
    <table border="0" width="100%">

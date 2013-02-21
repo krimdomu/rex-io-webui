@@ -11,14 +11,14 @@
          <div class="control-row">
             <label class="control-label">Username</label>
             <div class="controls">
-               <input type="text" name="user" value="" />
+               <input type="text" name="user" value="" id="name" />
             </div>
          </div>
 
          <div class="control-row">
             <label class="control-label">Password</label>
             <div class="controls">
-               <input type="password" name="password" value="">
+               <input type="password" name="password" value="" id="password">
             </div>
          </div>
 

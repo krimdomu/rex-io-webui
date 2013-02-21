@@ -1,4 +1,16 @@
-<h3>Create new Deploy Template</h3>
+<h1 class="page-title">Add Template<small>fill out the form to add a new deploy template</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Templates &raquo;
+   </li>
+   <li>
+      New
+   </li>
+</ul>
 
 <form action="/deploy/template" method="post" accept-charset="utf-8">
    <table border="0" width="100%">

@@ -1,166 +1,182 @@
-<div id="tabs">
+<h1 class="page-title"><%= $server->{name} %><small>detail information</small></h1>
 
-   <ul>
-      <li><a href="#info-tab">Information</a></li>
-      <li><a href="#network-tab">Network</a></li>
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Server &raquo;
+   </li>
+   <li>
+      <%= $server->{name} %>
+   </li>
+</ul>
+
+<div class="tabbable">
+   <ul class="tabs tabs-top">
+<!--      <li class=""><a href="#">foo</a></li>
+<li class="active"><a href="#">var</a></li> -->
+      <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
+      <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
+
    </ul>
+   <div class="tab-content">
 
-   <div id="info-tab" class="scrolling-tab-pane">
-      <div id="general-info">
-         <h3>General Information</h3>
-         <div>
-            <table border="0">
-               <tr>
-                  % my $agent_ip;
-                  % my $is_online = 0;
-                  % for my $dev ( @{ $server->{network_adapters} } ) {
-                  %  next unless $dev->{ip};
-                  %  my $check = rexio->is_online($dev->{ip});
-                  %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
+      <div id="tab-info" class="tab-pane" tab_id="info">
+         <div id="general-info">
+            <h3>General Information</h3>
+            <div>
+               <table border="0">
+                  <tr>
+                     % my $agent_ip;
+                     % my $is_online = 0;
+                     % for my $dev ( @{ $server->{network_adapters} } ) {
+                     %  next unless $dev->{ip};
+                     %  my $check = rexio->is_online($dev->{ip});
+                     %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
+                     % }
+                     <td class="col-info">Online Status:</td>
+                     <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
+                  </tr>
+                  <tr>
+                     <td class="col-info">Hostname:</td>
+                     <td class="col-text"><%= $server->{name} %> <img class="edit-server-name" src="/icons/writing.png" /></td>
+                  </tr>
+                  <tr>
+                     <td class="col-info">Operating System:</td>
+                     <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
+                  </tr>
+                  <tr>
+                     <td class="col-info">Current Boottype:</td>
+                     <td class="col-text">
+                        <select name="next_boot_target" id="next_boot_target">
+                           <% for my $os (@{ $os_templates }) { %>
+                           <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
+                           <% } %>
+                        </select>
+                        <button id="save_boot_target">Save</button>
+                        <% if($is_online) { %><button id="reboot_system" ip="<%= $agent_ip %>">Reboot</button><% } %>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+
+         <div class="space15"></div>
+
+         <div id="hw-info">
+            <h3>Hardware</h3>
+            <div>
+               <table border="0">
+                  <tr>
+                     <th>&nbsp;</th>
+                     <th align="left">Class</th>
+                     <th align="left">Info</th>
+                  </tr>
+
+                  <% for my $cpu (@{ $server->{processors} }) { %>
+                  <tr>
+                     <td class="col-img icon-cpu td-icon">&nbsp;</td>
+                     <td class="col-class">CPU</td>
+                     <td class="col-info"><%= $cpu->{modelname} %> (<%= $cpu->{mhz} %> MHz)</td>
+                  </tr>
+                  <% } %>
+
+                  <% for my $mem (@{ $server->{memories} }) { %>
+                  <tr>
+                     <td class="col-img icon-memory td-icon">&nbsp;</td>
+                     <td class="col-class">Memory</td>
+                     <td class="col-info"><%= $mem->{size} %> MB, <%= $mem->{type} %> <%= $mem->{speed} %></td>
+                  </tr>
+                  <% } %>
+
+                  <% for my $hdd (@{ $server->{harddrives} }) { %>
+                  <tr>
+                     <td class="col-img icon-hdd td-icon">&nbsp;</td>
+                     <td class="col-class">Harddrive</td>
+                     <td class="col-info"><%= int($hdd->{size} / 1024) %> GB, <%= $hdd->{vendor} %>, Device: <%= $hdd->{devname} %></td>
+                  </tr>
+                  <% } %>
+
+                  % for my $eth (@{ $server->{network_adapters} }) {
+                  % next if ($eth->{virtual});
+                  <tr>
+                     <td class="col-img icon-eth td-icon">&nbsp;</td>
+                     <td class="col-class">Network</td>
+                     <td class="col-info"><%= $eth->{dev} %></td>
+                  </tr>
                   % }
-                  <td class="col-info">Online Status:</td>
-                  <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
-               </tr>
-               <tr>
-                  <td class="col-info">Hostname:</td>
-                  <td class="col-text"><%= $server->{name} %> <img class="edit-server-name" src="/icons/writing.png" /></td>
-               </tr>
-               <tr>
-                  <td class="col-info">Operating System:</td>
-                  <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
-               </tr>
-               <tr>
-                  <td class="col-info">Current Boottype:</td>
-                  <td class="col-text">
-                     <select name="next_boot_target" id="next_boot_target">
-                        <% for my $os (@{ $os_templates }) { %>
-                        <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
-                        <% } %>
-                     </select>
-                     <button id="save_boot_target">Save</button>
-                     <% if($is_online) { %><button id="reboot_system" ip="<%= $agent_ip %>">Reboot</button><% } %>
-                  </td>
-               </tr>
-            </table>
+
+                  % if($is_online) {
+                  <tr>
+                     <td colspan="3">&nbsp;</td>
+                  </tr>
+
+                  <tr>
+                     <td>&nbsp;</td>
+                     <td colspan="2">
+                        <button id="reload_hw" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
+                     </td>
+                  </tr>
+                  % }
+
+               </table>
+            </div>
          </div>
+
       </div>
 
-      <div class="space15"></div>
+      <div id="tab-network" class="tab-pane" tab_id="network">
+         <div id="network-info" class="is_accordion">
+         % for my $eth (@{ $server->{network_adapters} }) {
+         % next if ($eth->{virtual});
+            <h3><%= $eth->{dev} %> (<%= $eth->{mac} %>)</h3>
+            <div>
+               <table border="0">
+                  <tr>
+                     <td>Bootdevice</td>
+                     <td><input type="checkbox"<% if($eth->{boot} && $eth->{boot} == 1) { %>checked="checked"<% } %> name="boot_<%= $eth->{id} %>" value="1" id="boot_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>Protocol</td>
+                     <td>
+                        <select name="proto_<%= $eth->{id} %>" id="proto_<%= $eth->{id} %>">
+                           <option <% if($eth->{proto} eq "static") { %>selected<% } %> value="static">Static IP</option>
+                           <option <% if($eth->{proto} eq "dhcp") { %>selected<% } %> value="dhcp">Dynamic IP (DHCP)</option>
+                        </select>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>IP</td>
+                     <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= ! $eth->{ip}?'':$eth->{ip} %>" id="ip_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>Netmask</td>
+                     <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= ! $eth->{netmask}?'':$eth->{netmask} %>" id="netmask_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>Broadcast</td>
+                     <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= ! $eth->{broadcast}?'':$eth->{broadcast} %>" id="broadcast_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>Network</td>
+                     <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= ! $eth->{network}?'':$eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>Gateway</td>
+                     <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= ! $eth->{gateway}?'':$eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
+                     <td>&nbsp;</td>
+                     <td><input type="button" class="save_network_button" name="save_network" value="Save" eth_id="<%= $eth->{id} %>"></td>
+                  </tr>
 
-      <div id="hw-info">
-         <h3>Hardware</h3>
-         <div>
-            <table border="0">
-               <tr>
-                  <th>&nbsp;</th>
-                  <th align="left">Class</th>
-                  <th align="left">Info</th>
-               </tr>
-
-               <% for my $cpu (@{ $server->{processors} }) { %>
-               <tr>
-                  <td class="col-img icon-cpu td-icon">&nbsp;</td>
-                  <td class="col-class">CPU</td>
-                  <td class="col-info"><%= $cpu->{modelname} %> (<%= $cpu->{mhz} %> MHz)</td>
-               </tr>
-               <% } %>
-
-               <% for my $mem (@{ $server->{memories} }) { %>
-               <tr>
-                  <td class="col-img icon-memory td-icon">&nbsp;</td>
-                  <td class="col-class">Memory</td>
-                  <td class="col-info"><%= $mem->{size} %> MB, <%= $mem->{type} %> <%= $mem->{speed} %></td>
-               </tr>
-               <% } %>
-
-               <% for my $hdd (@{ $server->{harddrives} }) { %>
-               <tr>
-                  <td class="col-img icon-hdd td-icon">&nbsp;</td>
-                  <td class="col-class">Harddrive</td>
-                  <td class="col-info"><%= int($hdd->{size} / 1024) %> GB, <%= $hdd->{vendor} %>, Device: <%= $hdd->{devname} %></td>
-               </tr>
-               <% } %>
-
-               % for my $eth (@{ $server->{network_adapters} }) {
-               % next if ($eth->{virtual});
-               <tr>
-                  <td class="col-img icon-eth td-icon">&nbsp;</td>
-                  <td class="col-class">Network</td>
-                  <td class="col-info"><%= $eth->{dev} %></td>
-               </tr>
-               % }
-
-               % if($is_online) {
-               <tr>
-                  <td colspan="3">&nbsp;</td>
-               </tr>
-
-               <tr>
-                  <td>&nbsp;</td>
-                  <td colspan="2">
-                     <button id="reload_hw" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
-                  </td>
-               </tr>
-               % }
-
-            </table>
-         </div>
+               </table>
+            </div>
+         % }
+         </div> 
       </div>
-
    </div>
-
-   <div id="network-tab" class="scrolling-tab-pane">
-      <div id="network-info" class="is_accordion">
-      % for my $eth (@{ $server->{network_adapters} }) {
-      % next if ($eth->{virtual});
-         <h3><%= $eth->{dev} %> (<%= $eth->{mac} %>)</h3>
-         <div>
-            <table border="0">
-               <tr>
-                  <td>Bootdevice</td>
-                  <td><input type="checkbox"<% if($eth->{boot} && $eth->{boot} == 1) { %>checked="checked"<% } %> name="boot_<%= $eth->{id} %>" value="1" id="boot_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>Protocol</td>
-                  <td>
-                     <select name="proto_<%= $eth->{id} %>" id="proto_<%= $eth->{id} %>">
-                        <option <% if($eth->{proto} eq "static") { %>selected<% } %> value="static">Static IP</option>
-                        <option <% if($eth->{proto} eq "dhcp") { %>selected<% } %> value="dhcp">Dynamic IP (DHCP)</option>
-                     </select>
-                  </td>
-               </tr>
-               <tr>
-                  <td>IP</td>
-                  <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= ! $eth->{ip}?'':$eth->{ip} %>" id="ip_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>Netmask</td>
-                  <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= ! $eth->{netmask}?'':$eth->{netmask} %>" id="netmask_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>Broadcast</td>
-                  <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= ! $eth->{broadcast}?'':$eth->{broadcast} %>" id="broadcast_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>Network</td>
-                  <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= ! $eth->{network}?'':$eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>Gateway</td>
-                  <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= ! $eth->{gateway}?'':$eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
-               </tr>
-               <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="button" class="save_network_button" name="save_network" value="Save" eth_id="<%= $eth->{id} %>"></td>
-               </tr>
-
-            </table>
-         </div>
-      % }
-      </div> 
-   </div>
-
-
 </div>
 
 <div id="rename_server" title="Rename Server">

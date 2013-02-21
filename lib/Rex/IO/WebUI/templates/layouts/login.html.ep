@@ -12,5 +12,10 @@
    </head>
    <body>
       <%= content %>
+      <script type="text/javascript" charset="utf-8">
+         $(document).ready(function() {
+            $("#name").focus();
+         });
+      </script>
    </body>
 </html>

@@ -1,2 +1,9 @@
 <h1 class="page-title">Dashboard<small>statistics and more</small></h1>
 
+<ul class="breadcrumb">
+   <li>
+      Home
+   </li>
+</ul>
+
+<p>blah blah</p>

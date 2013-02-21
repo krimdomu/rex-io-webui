@@ -37,6 +37,9 @@
    border-radius: 0 !important;   
 }
 
+textarea,
 input[type=text], input[type=password] {
    padding: 2px;
+   font-size: 12px;
 }
+

@@ -5,12 +5,12 @@ html, * {
    font-family: Verdana;
    margin: 0;
    padding: 0;
-   font-size: 0.95em;
 }
 
 body {
    background-color: #111d25;
    display: block;
+   font-size: 12px;
 }
 
 .page-container {
@@ -36,7 +36,7 @@ body {
  */
 
 .light-background {
-   background-color: #f0efef;
+   background-color: #ffffff;
 }
 
 .dark-background {
@@ -272,4 +272,229 @@ ul.sub > li > a:hover {
 
 .icon-arrow-down {
    background-image: url(/icons/arrow-down.png);
+}
+
+/**
+ * Table CSS
+ */
+
+table.dataTable {
+   border: 0px !important;
+}
+
+.dataTables_scroll {
+   border: 1px solid #c3c3c3 !important;
+   border-bottom: 0px !important;
+}
+
+.table-toolbar {
+   background-color: #ffffff !important;
+   background-image: none !important;
+   border-radius: 0;
+   border: 0px;
+   margin-bottom: 8px;
+}
+
+.table-bottom-bar {
+   background-color: #ffffff !important;
+   background-image: none !important;
+   border-radius: 0;
+   padding-top: 5px !important;
+   padding-bottom: 5px !important;
+   font-size: 12px;;
+}
+
+.table-cell-head {
+   background-color: #ffffff !important;
+   background-image: none !important;
+   border: 0px solid #c3c3c3;
+}
+
+.table-cell-head-border {
+   border-left: 0px solid #c3c3c3 !important;
+   border-bottom: 1px solid #c3c3c3 !important;
+}
+
+.table-cell-head > div {
+   padding: 0px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   font-size: 12px;
+   font-weight: 600;
+}
+
+.table-cell {
+   background-color: #ffffff !important;
+   background-image: none !important;
+   font-size: 12px;
+   padding: 0px;
+   padding-top: 5px !important;
+   padding-bottom: 5px !important;
+   border: 0px;
+}
+
+.table-cell-border {
+   border-bottom: 1px solid #c3c3c3;
+}
+
+.table-search-field {
+   float: left !important;
+   text-align: left !important;
+}
+
+.sorting_1 {
+   background-color: #ffffff !important;
+}
+
+/**
+ * breadcrumb navigation
+ */
+
+.breadcrumb {
+   box-shadow: none;
+   margin-bottom: 25px;
+   border: 0px !important;
+   background-color: #eee;
+   margin-top: 15px;
+   padding: 10px 0px 10px 8px;
+   font-size: 15px;
+   font-weight: 300;
+}
+
+.breadcrumb > li {
+   display: inline-block;
+   text-shadow: 0 1px 0 #fff;
+}
+
+/**
+ * tabs
+ */
+
+.tabbable::after {
+   clear: both;
+}
+
+
+/**
+ * left tabs
+ */
+.tabs-left {
+   float: left;
+}
+
+ul.tabs-left {
+   list-style: none;
+   padding: 0;
+   display: block;
+}
+
+ul.tabs-left li {
+   border-top: none;
+   border-left: 3px solid #ffffff;
+   margin-top: 0;
+   margin-right: -1px;
+   position: relative;
+   float: none;
+   margin-bottom: -1px;
+   line-height: 20px;
+}
+
+ul.tabs-left li.active {
+   border-left: 3px solid #235676 !important;
+   margin-right: -1px;
+}
+
+ul.tabs-left li.active > a {
+   border-top: 1px solid #c3c3c3;
+   border-left: 1px solid transparent;
+   font-weight: 400;
+   background-color: #ffffff;
+   border: 1px solid #c3c3c3;
+   border-color: #c3c3c3 transparent #c3c3c3 #c3c3c3;
+}
+
+ul.tabs-left li > a {
+   padding: 8px 10px;
+   min-width: 74px;
+   margin-right: 0;
+   margin-bottom: 3px;
+   display: block;
+   color: #000000;
+   font-size: 12px;
+}
+
+/**
+ * top tabs
+ */
+
+.tabs-top {
+
+}
+
+ul.tabs-top {
+   margin: 0;
+   list-style: none;
+}
+
+ul.tabs-top::before,
+ul.tabs-top::after {
+   display: table;
+   clear: both;
+   content: "";
+   line-height: 0;
+}
+
+ul.tabs-top li.active {
+   border-top: 3px solid #235676;
+   margin-top: 0;
+   position: relative;
+}
+
+ul.tabs-top li {
+   list-style: none;
+   margin-right: 2px;
+   margin-bottom: -1px;
+   float: left;
+   line-height: 20px;
+   display: list-item;
+   margin-right: 2px;
+   border-top: 2px solid transparent;
+   margin-bottom: -1px;
+}
+
+ul.tabs-top li.active > a {
+   border-top: none;
+   font-weight: 400;
+   color: #555;
+   cursor: default;
+   background-color: #fff;
+   border: 1px solid #ddd;
+   border-bottom-color: transparent;
+}
+
+ul.tabs-top li > a {
+   margin-right: 0;
+   padding: 5px 10px;
+   display: block;
+   text-shadow: none !important;
+   line-height: 20px;
+   border: 1px solid transparent;
+   text-shadow: none !important;
+   text-decoration: none;
+   color: #000000;
+   font-size: 12px;
+}
+
+
+.tab-content {
+   border: 1px solid #c3c3c3;
+   padding: 10px;
+   overflow: hidden;
+}
+
+.tab-pane {
+   display: none;
+}
+#content_area {
+   overflow: auto;
 }
