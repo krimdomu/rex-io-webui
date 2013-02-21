@@ -10,14 +10,16 @@
    <li>
       <%= param("tld") %>
    </li>
-
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="dns_add_entry">Add Entry</a></li>
+            <li><a href="#" id="dns_del_entry">Delete Entry</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
 </ul>
-
-<button id="dns_add_entry"><img src="/icons/edit_add.png" /><span style="float: right; margin-top: 6px; margin-left: 8px;">Add Entry</span></button>
-<button id="dns_del_entry"><img src="/icons/delete.png" /><span style="float: right; margin-top: 6px; margin-left: 8px;">Delete Entry</span></button>
-
-<br />
-<br />
 
 <table border="0" id="table_entries" style="width: 100%;">
    <thead>

@@ -356,7 +356,6 @@ table.dataTable {
    border: 0px !important;
    background-color: #eee;
    margin-top: 15px;
-   padding: 10px 0px 10px 8px;
    font-size: 15px;
    font-weight: 300;
 }
@@ -364,6 +363,66 @@ table.dataTable {
 .breadcrumb > li {
    display: inline-block;
    text-shadow: 0 1px 0 #fff;
+   padding-top: 7px;
+   padding-bottom: 7px;
+}
+
+.breadcrumb > li:first-child {
+   padding-left: 10px;
+}
+
+.pull-right {
+   float: right;
+}
+
+.no-padding {
+   padding: 0px !important;
+}
+
+.pull-menu {
+   background-image: url("/icons/menu-icon.png");
+   background-position: -10px -10px;
+   background-repeat: no-repeat;
+   border: 1px solid #FFFFFF;
+   display: block;
+   margin-right: 2px;
+   margin-top: 1px;
+   padding: 15px;
+}
+
+.dropdown-menu {
+   background-color: #fff;
+   position: absolute;
+   z-index: 5000;
+   right: 17px;
+   width: 150px;
+   -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+   -moz-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+   border: 1px solid #ddd;
+   margin-top: 33px;
+   display: none;
+}
+
+.dropdown-menu ul {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+.dropdown-menu ul > li {
+   margin: 3px;
+}
+
+.dropdown-menu ul > li > a {
+   display: block;
+   padding: 5px;
+   background-color: #efefef;
+   color: #000;
+}
+
+.dropdown-menu ul > li > a:hover {
+   background-color: #ffb848 ;
 }
 
 /**
