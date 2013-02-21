@@ -459,7 +459,7 @@ ul.tabs-left li {
 }
 
 ul.tabs-left li.active {
-   border-left: 3px solid #235676 !important;
+   border-left: 3px solid #ffb848  !important;
    margin-right: -1px;
 }
 
@@ -504,7 +504,7 @@ ul.tabs-top::after {
 }
 
 ul.tabs-top li.active {
-   border-top: 3px solid #235676;
+   border-top: 3px solid #ffb848;
    margin-top: 0;
    position: relative;
 }
