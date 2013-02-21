@@ -50,7 +50,7 @@
    <p class="validateTips">Allowed Characters for Name: A-Z, a-z, 0-9 and -</p>
 
    <form>
-      <fieldset>
+      <fieldset class="standard-form">
          <label for="type">Type</label>
          <select name="type" id="type" size="1">
             <option value="A">A Record</option>

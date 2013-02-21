@@ -41,5 +41,32 @@ textarea,
 input[type=text], input[type=password] {
    padding: 2px;
    font-size: 12px;
+   border-radius: 0px;
+}
+
+
+.standard-form {
+   margin-top: 15px;
+   border: 0px !important;
+}
+
+.standard-form > label {
+   width: 100px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   display: block;
+   float: left;
+}
+
+.standard-form > input,
+.standard-form > select {
+   display: block;
+   margin-bottom: 15px;
+   width: 200px;
+}
+
+.standard-form > select::after {
+   clear: both;
+   content: ""
 }
 

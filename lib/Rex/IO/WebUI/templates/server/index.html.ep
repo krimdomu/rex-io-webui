@@ -24,7 +24,7 @@
 
       <div id="tab-info" class="tab-pane" tab_id="info">
 
-         <div class="portlet box yellow">
+         <div class="portlet box grey">
             <div class="portlet-title">
                <h4>General Information</h4>
             </div>
@@ -67,7 +67,7 @@
             </div>
          </div>
 
-         <div class="portlet box yellow">
+         <div class="portlet box grey">
             <div class="portlet-title">
                <h4>Hardware</h4>
             </div>
@@ -139,7 +139,7 @@
          % for my $eth (@{ $server->{network_adapters} }) {
          % next if ($eth->{virtual});
 
-         <div class="portlet box yellow">
+         <div class="portlet box grey">
             <div class="portlet-title">
                <h4><%= $eth->{dev} %> (<%= $eth->{mac} %>)</h4>
             </div>
@@ -200,7 +200,7 @@
 
    <form>
       <input type="hidden" name="srv_id" id="srv_id" value="<%= $server->{id} %>" />
-      <fieldset>
+      <fieldset class="standard-form">
          <label for="name">Name</label>
          <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
       </fieldset>
