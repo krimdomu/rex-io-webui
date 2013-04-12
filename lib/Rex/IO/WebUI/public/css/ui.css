@@ -677,4 +677,7 @@ color: "";
    color: #888;
 }
 
-
+.row_selected,
+.row_selected > td {
+   background-color: #ffb848 !important;
+}
