@@ -18,6 +18,7 @@
 <li class="active"><a href="#">var</a></li> -->
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
       <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
+      <li id="li-tab-service" tab_id="service"><a id="link-tab-service" tab_id="service" href="#">Services</a></li>
 
    </ul>
    <div class="tab-content">
@@ -191,7 +192,69 @@
             </div>
          </div>
          % }
-      </div>
+      </div>  <!-- network tab -->
+
+      <div id="tab-service" class="tab-pane" tab_id="service">
+
+         <table border="0" width="100%">
+            <tr>
+               <td valign="top">
+
+                  <div class="portlet box grey">
+                     <div class="portlet-title">
+                        <h4>Registered Services</h4>
+                     </div>
+                     <div class="portlet-body">
+                        <ul id="registered_services" class="service_list">
+                           % my @task_ids = ();
+                           % for my $task (@{ rexio->list_services_of_host(param("id"))->{data}}) {
+                           % push(@task_ids, $task->{id});
+                           <li>
+                              <div style="float: right;">[ <a href="#">run</a> ]</div>
+                              <%= $task->{service}->{service_name} %> / <%= $task->{task_name} %>
+                           </li>
+                           % }
+                        </ul>
+                     </div>
+                  </div>
+
+                  <button id="save_services">Save</button>
+                  <button id="run_services">Run</button>
+
+               </td>
+               <td>&nbsp;</td>
+               <td valign="top">
+
+                  <div class="portlet box grey">
+                     <div class="portlet-title">
+                        <h4>Available Services</h4>
+                     </div>
+                     <div class="portlet-body">
+                        <ul id="available_services" class="service_list">
+                           % for my $service (@{ rexio->list_services->{data} }) {
+                              % for my $task (@{ $service->{tasks} }) {
+                              % if(grep { $task->{id} == $_ } @task_ids) {
+                              %    next;
+                              % }
+                              <li>
+                                 <div style="float: right;">[ <a href="#">run</a> ]</div>
+                                 <%= $service->{service_name} %> / <%= $task->{task_name} %>
+                              </li>
+                              % }
+                           % }
+                        </ul>
+                     </div>
+                  </div>
+
+               </td>
+            </tr>
+         </table>
+
+      </div> <!-- service tab -->
+
+
+
+
    </div>
 </div>
 

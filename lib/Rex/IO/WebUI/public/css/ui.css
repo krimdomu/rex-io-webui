@@ -681,3 +681,26 @@ color: "";
 .row_selected > td {
    background-color: #ffb848 !important;
 }
+
+ul.service_list {
+   margin: 0;
+   padding: 5px;
+   background-color: #efefef;
+}
+
+ul.service_list > li {
+   display: block;
+   margin: 0;
+   padding: 0;
+   border: 0px;
+   line-height: 20px;
+   list-style: none;
+   padding: 3px;
+   padding-left: 8px;
+   margin: 1px;
+   background-color: #ffffff;
+}
+
+#run_services {
+   background-color: #aa0000 !important;
+}
