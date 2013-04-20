@@ -207,9 +207,11 @@
                      <div class="portlet-body">
                         <ul id="registered_services" class="service_list">
                            % my @task_ids = ();
-                           % for my $task (@{ rexio->list_services_of_host(param("id"))->{data}}) {
+                           % my @task_list = @{ rexio->list_services_of_host(param("id"))->{data}}; 
+                           % @task_list = sort { $a->{task_order} <=> $b->{task_order} } @task_list;
+                           % for my $task (@task_list) {
                            % push(@task_ids, $task->{id});
-                           <li>
+                           <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
                               <div style="float: right;">[ <a href="#">run</a> ]</div>
                               <%= $task->{service}->{service_name} %> / <%= $task->{task_name} %>
                            </li>
@@ -236,7 +238,7 @@
                               % if(grep { $task->{id} == $_ } @task_ids) {
                               %    next;
                               % }
-                              <li>
+                              <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
                                  <div style="float: right;">[ <a href="#">run</a> ]</div>
                                  <%= $service->{service_name} %> / <%= $task->{task_name} %>
                               </li>

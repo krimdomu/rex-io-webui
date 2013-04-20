@@ -92,9 +92,15 @@ sub startup {
    $r_auth->post("/server/:id")->to("server#update_server");
    $r_auth->post("/server/#ip/inventory")->to("server#trigger_inventory");
    $r_auth->post("/server/#ip/reboot")->to("server#trigger_reboot");
-   $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
    $r_auth->get("/server")->to("server#list");
    $r_auth->post("/network-adapter/:id")->to("server#update_network_adapter");
+   $r_auth->delete("/server/:hostid/tasks")->to("server#remove_all_tasks_from_server");
+   $r_auth->post("/server/:hostid/task")->to("server#add_task_to_server");
+   $r_auth->route("/server/:hostid/task/:taskid")->via("RUN")->to("server#run_task_on_host");
+   $r_auth->route("/server/tasks")->via("RUN")->to("server#run_tasks");
+
+   # set next boot // todo: andere url
+   $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
 
    # search
    $r_auth->get("/search")->to("search#index");

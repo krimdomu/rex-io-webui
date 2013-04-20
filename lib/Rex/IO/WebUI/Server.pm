@@ -74,6 +74,46 @@ sub trigger_reboot {
    $self->render_json($ret);
 }
 
+sub remove_all_tasks_from_server {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->remove_all_tasks_from_host($self->param("hostid"));
+   
+   $self->render_json($ret);
+}
+
+sub add_task_to_server {
+   my ($self) = @_;
+
+   my $json = $self->req->json;
+   my $host_id = $self->param("hostid");
+
+   my $ret = $self->rexio->add_task_to_host(host => $host_id, task => $json->{task_id}, task_order => $json->{task_order});
+
+   $self->render_json($ret);
+}
+
+sub run_task_on_host {
+   my ($self) = @_;
+
+   my $host_id = $self->param("hostid");
+   my $task_id = $self->param("taskid");
+}
+
+sub run_tasks {
+   my ($self) = @_;
+
+   my $json = $self->req->json;
+
+   my @ret;
+
+   for my $task (@{ $json }) {
+      push(@ret, $self->rexio->run_task_on_host(host => $task->{server_id}, task => $task->{task_id}));
+   }
+
+   $self->render_json(\@ret);
+}
+
 sub bulk_view {
    my ($self) = @_;
    $self->render;
