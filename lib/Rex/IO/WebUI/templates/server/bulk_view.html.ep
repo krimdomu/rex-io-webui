@@ -52,7 +52,7 @@
                <ul id="available_services" class="service_list">
                   % for my $service (@{ rexio->list_services->{data} }) {
                      % for my $task (@{ $service->{tasks} }) {
-                     <li>
+                     <li task_id="<%= $task->{id} %>">
                         <%= $service->{service_name} %> / <%= $task->{task_name} %>
                      </li>
                      % }
