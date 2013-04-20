@@ -13,6 +13,7 @@
 <table border="0" id="table_entries" style="width: 100%;">
    <thead>
       <tr>
+         <td style="width: 20px;"></td>
          <td>Name</td>
          <td>Boot MAC</td>
          <td>OS</td>
@@ -25,6 +26,7 @@
       % my $os_templates = rexio->list_os_templates;
       % foreach my $entry (@{ $entries->{data} }) {
       <tr>
+         <td><input type="checkbox" srv_id="<%= $entry->{id} %>" /></td>
          <td><a href="#" class="server-link" srv_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
          <td><%= $entry->{mac} %></td>
          <td><% if($entry->{os}->{name}) { %><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>) <% } else { %>UNKNOWN<% } %></td>
@@ -42,3 +44,11 @@
       % }
    </tbody>
 </table>
+
+<select name="bulk_operation" size="1" style="margin-top: 10px;">
+   <option value="">Bulk Operation</option>
+   <option value="add_services">Add Services</option>
+   <option value="run_services">Run Services</option>
+</select>
+<button class="bulk_op_button">Run</button>
+
