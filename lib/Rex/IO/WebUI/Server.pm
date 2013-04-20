@@ -105,13 +105,9 @@ sub run_tasks {
 
    my $json = $self->req->json;
 
-   my @ret;
+   my $ret = $self->rexio->run_tasks(@{ $json });
 
-   for my $task (@{ $json }) {
-      push(@ret, $self->rexio->run_task_on_host(host => $task->{server_id}, task => $task->{task_id}));
-   }
-
-   $self->render_json(\@ret);
+   $self->render_json($ret);
 }
 
 sub bulk_view {
