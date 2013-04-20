@@ -86,6 +86,7 @@ sub startup {
 
    # server
    $r_auth->get("/server/new")->to("server#add");
+   $r_auth->get("/server/bulk")->to("server#bulk_view");
    $r_auth->post("/server/new")->to("server#add_new");
    $r_auth->get("/server/:id")->to("server#index");
    $r_auth->post("/server/:id")->to("server#update_server");

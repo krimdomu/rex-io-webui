@@ -74,4 +74,9 @@ sub trigger_reboot {
    $self->render_json($ret);
 }
 
+sub bulk_view {
+   my ($self) = @_;
+   $self->render;
+}
+
 1;
