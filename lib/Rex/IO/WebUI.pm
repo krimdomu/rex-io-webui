@@ -98,6 +98,7 @@ sub startup {
    $r_auth->post("/server/:hostid/task")->to("server#add_task_to_server");
    $r_auth->route("/server/:hostid/task/:taskid")->via("RUN")->to("server#run_task_on_host");
    $r_auth->route("/server/tasks")->via("RUN")->to("server#run_tasks");
+   $r_auth->websocket("/server/events")->to("server#events");
 
    # set next boot // todo: andere url
    $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");

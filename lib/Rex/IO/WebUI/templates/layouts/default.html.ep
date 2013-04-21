@@ -78,15 +78,31 @@
 
             </div>
 
-         </div>
+         </div> <!-- page_sidebar -->
 
          <div id="content_area" class="page-content light-background">
 
             <div class="page-content-container">
                Dashboard...
             </div>
-         </div>
+         </div> <!-- content_area -->
 
+      </div> <!-- page container -->
+
+      <div id="message_area" class="message_area_down">
+         <a href="#" id="link_message_area_close" class="link_message_area_close"></a>
+         <div class="message_area_content">
+            <ul class="message_list">
+               <li>eins</li>
+               <li>zwei</li>
+               <li>drei</li>
+               <li>vier</li>
+               <li>fuenf</li>
+               <li>sechs</li>
+               <li>sieben</li>
+               <li>acht</li>
+            </ul>
+         </div>
       </div>
 
    </body>

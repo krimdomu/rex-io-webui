@@ -115,4 +115,20 @@ sub bulk_view {
    $self->render;
 }
 
+sub events {
+   my ($self) = @_;
+
+   $self->log->debug("Client connected: " . $self->tx->remote_address);
+
+   $self->on(finish => sub {
+      $self->log->debug("Client disconnected: " . $self->tx->remote_address);
+   });
+
+   $self->on(message => sub {
+      my ($tx, $message) = @_;
+      $self->log->debug("Websockt Message: $message");
+      $tx->send("Thanks for your message: " . $self->tx->remote_address);
+   });
+}
+
 1;

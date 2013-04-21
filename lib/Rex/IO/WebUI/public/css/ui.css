@@ -274,6 +274,10 @@ ul.sub > li > a:hover {
    background-image: url(/icons/arrow-down.png);
 }
 
+.icon-arrow-up {
+   background-image: url(/icons/arrow-up.png);
+}
+
 /**
  * Table CSS
  */
@@ -704,3 +708,67 @@ ul.service_list > li {
 #run_services {
    background-color: #aa0000 !important;
 }
+
+.message_area_down {
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   background-color: #111d25;
+   height: 15px;
+}
+
+.message_area_down .message_area_content {
+   display: none;
+}
+
+.message_area {
+   position: absolute;
+   bottom: 0px;
+   width: 100%;
+   background-color: #111d25;
+   height: 120px;
+}
+
+.message_area .message_area_content {
+   margin-top: 0px;
+   background-color: #efefef;
+   overflow: auto;
+   height: 108px;
+}
+
+ul.message_list {
+   margin: 0;
+   padding: 0;
+}
+
+ul.message_list > li {
+   display: block;
+   margin: 0;
+   padding: 0;
+   border: 0px;
+   line-height: 20px;
+   list-style: none;
+   padding: 3px;
+   padding-left: 8px;
+   margin: 1px;
+   background-color: #ffffff;
+}
+
+.message_area .link_message_area_close {
+   display: block;
+   position: relative;
+   height: 12px;
+   background-repeat: no-repeat;
+   background-position: 5px 0px;
+   background-image: url(/icons/arrow-down.png);
+}
+
+.message_area_down .link_message_area_close {
+   display: block;
+   position: relative;
+   height: 12px;
+   background-repeat: no-repeat;
+   background-position: 5px 0px;
+   background-image: url(/icons/arrow-up.png);
+}
+
