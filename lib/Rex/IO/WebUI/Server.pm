@@ -2,6 +2,8 @@ package Rex::IO::WebUI::Server;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
 
+use Mojo::Redis;
+
 sub index {
    my ($self) = @_;
 
@@ -118,16 +120,35 @@ sub bulk_view {
 sub events {
    my ($self) = @_;
 
-   $self->log->debug("Client connected: " . $self->tx->remote_address);
+   $self->app->log->debug("Client connected: " . $self->tx->remote_address);
+
+   Mojo::IOLoop->stream($self->tx->connection)->timeout(300);
+
+   my $tx    = $self->tx;
+   my $redis = Mojo::Redis->new(server => "localhost:6379");
+   my $sub   = $redis->subscribe("rex_io_jobs");
+
+   $sub->on(message => sub {
+      my ($sub, $message, $channel) = @_;
+      if($channel eq "rex_io_jobs") {
+         $tx->send($message);
+      }
+   });
 
    $self->on(finish => sub {
-      $self->log->debug("Client disconnected: " . $self->tx->remote_address);
+      $self->app->log->debug("Client disconnected: " . $self->tx->remote_address);
    });
 
    $self->on(message => sub {
       my ($tx, $message) = @_;
-      $self->log->debug("Websockt Message: $message");
+      $self->app->log->debug("Websockt Message: $message");
       $tx->send("Thanks for your message: " . $self->tx->remote_address);
+   });
+
+   $self->on(finish => sub {
+      undef $redis;
+      undef $sub;
+      undef $tx;
    });
 }
 
