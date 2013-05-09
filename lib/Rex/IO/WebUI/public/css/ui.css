@@ -783,3 +783,7 @@ ul.message_list > li {
    background-repeat: no-repeat;
 }
 
+button.grey {
+   background-color: #efefef !important;
+   color: #000000;
+}

@@ -37,6 +37,7 @@
                      % my $is_online = 0;
                      % for my $dev ( @{ $server->{network_adapters} } ) {
                      %  next unless $dev->{ip};
+                     %  next if $dev->{ip} =~ m/^127\./;
                      %  my $check = rexio->is_online($dev->{ip});
                      %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
                      % }
@@ -60,7 +61,7 @@
                            <% } %>
                         </select>
                         <button id="save_boot_target">Save</button>
-                        <% if($is_online) { %><button id="reboot_system" ip="<%= $agent_ip %>">Reboot</button><% } %>
+                        <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
                      </td>
                   </tr>
                </table>
@@ -122,7 +123,7 @@
                   <tr>
                      <td>&nbsp;</td>
                      <td colspan="2">
-                        <button id="reload_hw" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
+                        <button id="reload_hw" class="grey" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
                      </td>
                   </tr>
                   % }
