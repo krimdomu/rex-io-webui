@@ -3,6 +3,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
 
 use Mojo::Redis;
+use Mojo::UserAgent;
 
 sub index {
    my ($self) = @_;
@@ -115,6 +116,45 @@ sub run_tasks {
 sub bulk_view {
    my ($self) = @_;
    $self->render;
+}
+
+sub run_command {
+   my ($self) = @_;
+   $self->app->log->debug("Sending command to: " . $self->param("ip"));
+   $self->app->log->debug(Dumper($self->req->json));
+   $self->rexio->send_command_to($self->param("ip"), $self->req->json);
+
+   $self->render_json({ok => Mojo::JSON->true});
+}
+
+sub messagebroker {
+   my ($self) = @_;
+
+   Mojo::IOLoop->stream($self->tx->connection)->timeout(300);
+   my $outer_tx    = $self->tx;
+
+   my $ua = Mojo::UserAgent->new;
+   $ua->websocket("ws://localhost:5000/messagebroker", sub {
+      my ($ua, $ua_tx) = @_;
+
+      $ua_tx->on(message => sub {
+         my ($tx, $msg) = @_;
+         $self->app->log->debug("Got messagebroker message (from server)");
+         $outer_tx->send($msg);
+      });
+
+      $self->on(message => sub {
+         my ($tx, $msg) = @_;
+         $self->app->log->debug("Got messagebroker message (from client): $msg");
+         $ua_tx->send($msg);
+      });
+
+   });
+
+   $self->on(finish => sub {
+      undef $ua;
+      undef $outer_tx;
+   });
 }
 
 sub events {

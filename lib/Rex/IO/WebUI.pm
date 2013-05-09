@@ -86,6 +86,7 @@ sub startup {
 
    # server
    $r->websocket("/server_events")->to("server#events");
+   $r->websocket("/messagebroker")->to("server#messagebroker");
    $r_auth->get("/server/new")->to("server#add");
    $r_auth->get("/server/bulk")->to("server#bulk_view");
    $r_auth->post("/server/new")->to("server#add_new");
@@ -102,6 +103,7 @@ sub startup {
 
    # set next boot // todo: andere url
    $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
+   $r_auth->route("/server/#ip/command")->via("RUN")->to("server#run_command");
 
    # search
    $r_auth->get("/search")->to("search#index");

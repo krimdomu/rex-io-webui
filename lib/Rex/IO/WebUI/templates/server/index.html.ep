@@ -20,6 +20,7 @@
       <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
       <li id="li-tab-service" tab_id="service"><a id="link-tab-service" tab_id="service" href="#">Services</a></li>
       <li id="li-tab-monitor" tab_id="monitor"><a id="link-tab-monitor" tab_id="monitor" href="#">Monitoring</a></li>
+      <li id="li-tab-log" tab_id="log"><a id="link-tab-log" tab_id="log" href="#">Logs</a></li>
 
    </ul>
    <div class="tab-content">
@@ -38,10 +39,13 @@
                      % my $is_online = 0;
                      % for my $dev ( @{ $server->{network_adapters} } ) {
                      %  next unless $dev->{ip};
-                     %  next if $dev->{ip} =~ m/^127\./;
+                     %  next if ($dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/);
                      %  my $check = rexio->is_online($dev->{ip});
                      %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
                      % }
+                     <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />
+
+
                      <td class="col-info">Online Status:</td>
                      <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
                   </tr>
@@ -275,6 +279,22 @@
                   </tr>
                   % }
 
+               </table>
+
+
+            </div>
+         </div>
+
+      </div> <!-- monitoring tab -->
+
+      <div id="tab-log" class="tab-pane" tab_id="log">
+
+         <div class="portlet box grey">
+            <div class="portlet-title">
+               <h4>Logfiles</h4>
+            </div>
+            <div class="portlet-body">
+               <table id="file_browser" class="file_browser" border="0" width="100%">
                </table>
 
 
