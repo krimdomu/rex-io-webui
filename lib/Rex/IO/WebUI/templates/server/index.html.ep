@@ -19,6 +19,7 @@
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
       <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
       <li id="li-tab-service" tab_id="service"><a id="link-tab-service" tab_id="service" href="#">Services</a></li>
+      <li id="li-tab-monitor" tab_id="monitor"><a id="link-tab-monitor" tab_id="monitor" href="#">Monitoring</a></li>
 
    </ul>
    <div class="tab-content">
@@ -254,6 +255,33 @@
          </table>
 
       </div> <!-- service tab -->
+
+      <div id="tab-monitor" class="tab-pane" tab_id="monitor">
+
+         <div class="portlet box grey">
+            <div class="portlet-title">
+               <h4>Monitoring Information</h4>
+            </div>
+            <div class="portlet-body">
+               <table class="server_statistic" border="0">
+                  % my $monitor_items = rexio->get_monitoring_items_of_host($server->{id});
+                  % for my $itm (@{ $monitor_items->{data} }) {
+                  <tr>
+                     <td class="key"><%= $itm->{name} %></td>
+                     <td class="value"><span id="monitor_<%= $server->{id} %>_<%= $itm->{id} %>"></span></td>
+                     <td class="value">
+                        <canvas id="chart_<%= $server->{id} %>_<%= $itm->{id} %>" class="monitor_chart" itm_id="<%= $itm->{id} %>" host_id="<%= $server->{id} %>" width="500" height="100" check_key="<%= $itm->{check_key} %>"></canvas>
+                     </td>
+                  </tr>
+                  % }
+
+               </table>
+
+
+            </div>
+         </div>
+
+      </div> <!-- monitoring tab -->
 
 
 

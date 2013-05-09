@@ -115,4 +115,6 @@
    <script type="text/javascript" charset="utf-8" src="/js/debug.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.mini.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/smoothie.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/calculator.js"></script>
 </html>
