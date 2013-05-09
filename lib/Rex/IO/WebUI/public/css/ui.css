@@ -787,3 +787,18 @@ button.grey {
    background-color: #efefef !important;
    color: #000000;
 }
+
+table.server_statistic td.key {
+   background-color: #eeeeee;
+   padding: 5px;
+   margin-right: 0px;
+}
+
+table.server_statistic td.value {
+   background-color: #f8f8f8;
+   padding: 5px;
+   margin-left: 0px;
+}
+
+
+

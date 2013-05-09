@@ -6,4 +6,57 @@
    </li>
 </ul>
 
-<p>blah blah</p>
+<div class="tabbable">
+   <ul class="tabs tabs-top">
+      <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
+      <li id="li-tab-monitor" tab_id="monitor"><a id="link-tab-monitor" tab_id="monitor" href="#">Monitoring</a></li>
+   </ul>
+   <div class="tab-content">
+
+      <div id="tab-info" class="tab-pane" tab_id="info">
+
+         <div class="portlet box grey">
+            <div class="portlet-title">
+               <h4>Server Statistics</h4>
+            </div>
+            <div class="portlet-body">
+               <table class="server_statistic" border="0">
+                  <tr>
+                     <td class="key">Count</td>
+                     <td class="value">5</td>
+                  </tr>
+                  <tr>
+                     <td class="key">Operating Systems</td>
+                     <td class="value">3</td>
+                  </tr>
+
+                  <tr>
+                     <td class="key">Online Servers</td>
+                     <td class="value">5</td>
+                  </tr>
+
+               </table>
+            </div>
+         </div>
+      </div> <!-- tab-info -->
+
+
+      <div id="tab-monitor" class="tab-pane" tab_id="monitor">
+
+         <div class="portlet box grey">
+            <div class="portlet-title">
+               <h4>Monitoring Statistics</h4>
+            </div>
+            <div class="portlet-body">
+               <p>Everything's fine. No critical events.</p>
+            </div>
+         </div>
+      </div> <!-- tab-monitor -->
+
+
+
+   </div> <!-- tab-content -->
+
+</div>
+
+
