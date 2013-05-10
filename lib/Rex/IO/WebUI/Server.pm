@@ -166,7 +166,7 @@ sub events {
 
    my $tx    = $self->tx;
    my $redis = Mojo::Redis->new(server => "localhost:6379");
-   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log");
+   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts");
 
    $sub->on(message => sub {
       my ($sub, $message, $channel) = @_;
@@ -175,6 +175,14 @@ sub events {
 
       if($channel eq "rex_monitor") {
          $ref->{cmd} = "monitor";
+      }
+
+      if($channel eq "rex_monitor:alerts") {
+         $ref->{cmd} = "alerts";
+      }
+
+      if($channel eq "rex_io_log") {
+         $ref->{cmd} = "logstream";
       }
 
       $tx->send(Mojo::JSON->encode($ref));

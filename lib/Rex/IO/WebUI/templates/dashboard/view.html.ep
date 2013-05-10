@@ -6,10 +6,14 @@
    </li>
 </ul>
 
+% my $server_count = rexio->get_server_count()->{count};
+% my $os_count     = rexio->get_operating_systems()->{count};
+% my $online       = scalar( @{ rexio->list_online_ips()->{data} } );
+% my $alerts = rexio->list_alerts;
+
 <div class="tabbable">
    <ul class="tabs tabs-top">
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
-      <li id="li-tab-monitor" tab_id="monitor"><a id="link-tab-monitor" tab_id="monitor" href="#">Monitoring</a></li>
    </ul>
    <div class="tab-content">
 
@@ -23,35 +27,57 @@
                <table class="server_statistic" border="0">
                   <tr>
                      <td class="key">Count</td>
-                     <td class="value">5</td>
+                     <td class="value"><%= $server_count %></td>
                   </tr>
                   <tr>
                      <td class="key">Operating Systems</td>
-                     <td class="value">3</td>
+                     <td class="value"><%= $os_count %></td>
                   </tr>
 
                   <tr>
                      <td class="key">Online Servers</td>
-                     <td class="value">5</td>
+                     <td class="value"><%= $online %></td>
                   </tr>
+
+                  <tr>
+                     <td class="key">Incidents</td>
+                     <td class="value"><%= scalar @{ $alerts } %></td>
+                  </tr>
+
+
 
                </table>
             </div>
          </div>
-      </div> <!-- tab-info -->
 
-
-      <div id="tab-monitor" class="tab-pane" tab_id="monitor">
 
          <div class="portlet box grey">
             <div class="portlet-title">
-               <h4>Monitoring Statistics</h4>
+               <h4>Current Incidents</h4>
             </div>
             <div class="portlet-body">
-               <p>Everything's fine. No critical events.</p>
+               <table class="monitoring_table" id="monitoring_table" border="0">
+                  % if(ref $alerts eq "ARRAY" && scalar @{ $alerts }) {
+                     % for my $alert (@{ $alerts }) {
+                     <tr id="alert_<%= $alert->{hardware_id} %>_<%= $alert->{template_item_id} %>">
+                        <td><img src="/icons/warning-16x16.png" /></td>
+                        <td><%= $alert->{time} %></td>
+                        <td><%= $alert->{host} %></td>
+                        <td><%= $alert->{name} %></td>
+                     </tr>
+                     % }
+
+
+                  % } else {
+                  <tr id="alert_no_events">
+                     <td>Currently everything is up and running. So go and get a coffee as long as you can...</td>
+                  </tr>
+                  % }
+               </table>
             </div>
          </div>
-      </div> <!-- tab-monitor -->
+
+      </div> <!-- tab-info -->
 
 
 
