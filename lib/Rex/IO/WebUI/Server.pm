@@ -166,7 +166,7 @@ sub events {
 
    my $tx    = $self->tx;
    my $redis = Mojo::Redis->new(server => "localhost:6379");
-   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor");
+   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log");
 
    $sub->on(message => sub {
       my ($sub, $message, $channel) = @_;

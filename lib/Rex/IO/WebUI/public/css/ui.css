@@ -800,12 +800,12 @@ table.server_statistic td.value {
    margin-left: 0px;
 }
 
-table.file_browser th {
+table.log_browser th {
    text-align: left;
    padding: 5px;
 }
 
-table.file_browser td {
+table.log_browser td {
    padding: 5px;
 }
 

@@ -291,13 +291,28 @@
 
          <div class="portlet box grey">
             <div class="portlet-title">
-               <h4>Logfiles</h4>
+               <h4>Log Entries</h4>
             </div>
             <div class="portlet-body">
-               <table id="file_browser" class="file_browser" border="0" width="100%">
+               % my $logs = rexio->get_log_of_host($server->{id}, sort => [ { '@timestamp' => { "order" => "desc" } } ]);
+               % my $first = ($logs && $logs->{hits} && $logs->{hits}->{hits} ? $logs->{hits}->{hits}->[0] : {});
+               <table id="log_browser_<%= $server->{id} %>" class="log_browser" border="0" width="100%">
+                  % if($first) {
+                     <tr class="tr-log-browser-head-<%= $server->{id} %>">
+                     % for my $key (keys %{ $first->{_source} }) {
+                        <th class="th-log-browser-<%= $server->{id} %>" col_name="<%= $key %>"><%= $key %></th>
+                     % }
+                     </tr>
+                  % }
+
+                  % for my $entry (@{ $logs->{hits}->{hits} }) {
+                  <tr>
+                     % for my $key (keys %{ $entry->{_source} }) {
+                     <td><%= $entry->{_source}->{$key} %></td>
+                     % }
+                  </tr>
+                  % }
                </table>
-
-
             </div>
          </div>
 
