@@ -826,6 +826,7 @@ table.monitoring_table tr:nth-child(odd) {
 
 
 
+table.hardware_table th,
 table.hardware_table td {
    padding: 5px;
 }
@@ -843,7 +844,11 @@ table.dataTable tr.even td.sorting_1 {
 }
 
 .table-cell-border {
-   border: 0px;
+   border: 0px !important;
+}
+
+.table-cell-head-border {
+   border-bottom: 0px !important;
 }
 
 table.dataTable tr.even td.sorting_1 {
