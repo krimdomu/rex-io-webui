@@ -859,3 +859,18 @@ table.dataTable tr.odd td.sorting_1 {
    background-color: #f8f8f8;
 }
 
+
+.framebody {
+}
+
+.framebody .left_frame {
+   float: left;
+   width: 50%;
+}
+
+.framebody .right_frame {
+   float: right;
+   width: 50%;
+}
+
+

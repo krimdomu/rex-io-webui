@@ -15,29 +15,54 @@
          <ul>
             <li><a href="#" id="lnk_add_server_group">Add Group</a></li>
             <li><a href="#" id="lnk_del_server_group">Delete Group</a></li>
+            <li><a href="#" id="lnk_show_server">Show Server</a></li>
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>
    </li>
 </ul>
 
-<table border="0" id="table_entries" style="width: 100%;">
-   <thead>
-      <tr>
-         <td>Name</td>
-         <td>Description</td>
-      </tr>
-   </thead>
-   <tbody>
-      % my $entries = rexio->list_server_groups();
-      % foreach my $entry (@{ $entries->{data} }) {
-      <tr group_id="<%= $entry->{id} %>">
-         <td><%= $entry->{name} %></td>
-         <td><%= $entry->{description} %></td>
-      </tr>
-      % }
-   </tbody>
-</table>
+<div class="framebody">
+   <div class="left_frame">
+      <table border="0" id="table_entries_server_groups" style="width: 100%;">
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            % my $entries = rexio->list_server_groups();
+            % foreach my $entry (@{ $entries->{data} }) {
+            <tr group_id="<%= $entry->{id} %>">
+               <td><div class="group_drag_server" group_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>
+               <td><div class="group_drag_server" group_id="<%= $entry->{id} %>"><%= $entry->{description} %></div></td>
+            </tr>
+            % }
+         </tbody>
+      </table>
+   </div>
+   <div class="right_frame">
+      <table border="0" id="table_entries_server" style="width: 100%;">
+         <thead>
+            <tr>
+               <td>Name</td>
+            </tr>
+         </thead>
+         <tbody>
+            % my $entries = rexio->list_hosts;
+            % my $os_templates = rexio->list_os_templates;
+            % foreach my $entry (@{ $entries->{data} }) {
+            <tr>
+               <td><div class="server_hndl" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>"><%= $entry->{name} %></div></td>
+            </tr>
+            % }
+         </tbody>
+      </table>
+
+
+   </div>
+</div>
 
 <div id="add_server_group" title="Add new Server Group">
    <p class="validateTips">Add a new server group</p>

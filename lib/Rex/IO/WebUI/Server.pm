@@ -224,4 +224,11 @@ sub del_group {
    $self->render_json($ret);
 }
 
+sub add_server_to_group {
+   my ($self) = @_;
+   my $ret = $self->rexio->add_server_to_server_group($self->param("server_id"), $self->param("group_id"));
+   
+   $self->render_json($ret);
+}
+
 1;
