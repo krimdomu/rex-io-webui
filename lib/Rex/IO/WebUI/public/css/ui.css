@@ -122,7 +122,11 @@ a:hover {
    width: 16px;
    height: 16px;
    background-repeat: no-repeat;
-   background-position: 0px 2px;
+   background-position: 4px 5px;
+}
+
+.icon-warning {
+   background-image: url(/icons/warning-16x16.png);
 }
 
 .icon-cpu {
@@ -328,7 +332,6 @@ table.dataTable {
 }
 
 .table-cell {
-   background-color: #ffffff !important;
    background-image: none !important;
    font-size: 12px;
    padding: 0px;
@@ -347,7 +350,7 @@ table.dataTable {
 }
 
 .sorting_1 {
-   background-color: #ffffff !important;
+   background-color: none !important;
 }
 
 /**
@@ -788,16 +791,12 @@ button.grey {
    color: #000000;
 }
 
-table.server_statistic td.key {
-   background-color: #eeeeee;
+table.server_statistic td {
    padding: 5px;
-   margin-right: 0px;
 }
 
-table.server_statistic td.value {
+table.server_statistic tr:nth-child(odd) {
    background-color: #f8f8f8;
-   padding: 5px;
-   margin-left: 0px;
 }
 
 table.log_browser th {
@@ -809,11 +808,49 @@ table.log_browser td {
    padding: 5px;
 }
 
+table.log_browser tr:nth-child(odd) {
+   background-color: #f8f8f8;
+}
+
 table.monitoring_table td {
    padding: 5px;
 }
 
 table.monitoring_table tr.warn {
    background-color: #c30000;
+}
+
+table.monitoring_table tr:nth-child(odd) {
+   background-color: #f8f8f8;
+}
+
+
+
+table.hardware_table td {
+   padding: 5px;
+}
+
+table.hardware_table tr:nth-child(odd) {
+   background-color: #f8f8f8;
+}
+
+table.dataTable tr:nth-child(odd) {
+   background-color: #f8f8f8 !important;
+}
+
+table.dataTable tr.even td.sorting_1 {
+   background-color: none !important;
+}
+
+.table-cell-border {
+   border: 0px;
+}
+
+table.dataTable tr.even td.sorting_1 {
+   background-color: #ffffff;
+}
+
+table.dataTable tr.odd td.sorting_1 {
+   background-color: #f8f8f8;
 }
 

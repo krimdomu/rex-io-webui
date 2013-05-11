@@ -80,12 +80,12 @@
             </div>
             <div class="portlet-body">
                % my $alerts = rexio->list_alerts_of_host($server->{id});
-               <table class="monitoring_table" id="monitoring_table_<%= $server->{id} %>" border="0">
+               <table class="monitoring_table" id="monitoring_table_<%= $server->{id} %>" border="0" width="100%">
                   % if(ref $alerts eq "ARRAY" && scalar @{ $alerts }) {
                      % for my $alert (@{ $alerts }) {
                      <tr id="alert_<%= $alert->{hardware_id} %>_<%= $alert->{template_item_id} %>_<%= $server->{id} %>">
-                        <td><img src="/icons/warning-16x16.png" /></td>
-                        <td><%= $alert->{time} %></td>
+                        <td class="td-icon icon-warning"></td>
+                        <td width="150"><%= $alert->{time} %></td>
                         <td><%= $alert->{name} %></td>
                      </tr>
                      % }
@@ -107,10 +107,10 @@
             </div>
             <div class="portlet-body">
 
-               <table border="0">
+               <table border="0" class="hardware_table" width="100%">
                   <tr>
-                     <th>&nbsp;</th>
-                     <th align="left">Class</th>
+                     <th width="20">&nbsp;</th>
+                     <th width="100" align="left">Class</th>
                      <th align="left">Info</th>
                   </tr>
 
@@ -147,14 +147,16 @@
                   </tr>
                   % }
 
+               </table>
+               <table border="0">
                   % if($is_online) {
                   <tr>
-                     <td colspan="3">&nbsp;</td>
+                     <td colspan="2">&nbsp;</td>
                   </tr>
 
                   <tr>
-                     <td>&nbsp;</td>
-                     <td colspan="2">
+                     <td class="td-icon">&nbsp;</td>
+                     <td>
                         <button id="reload_hw" class="grey" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
                      </td>
                   </tr>
