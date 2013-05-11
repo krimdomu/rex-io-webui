@@ -1,0 +1,56 @@
+<h1 class="page-title">Server Groups<small>categorize your server</h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Server &raquo;
+   </li>
+   <li>
+      Groups
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_add_server_group">Add Group</a></li>
+            <li><a href="#" id="lnk_del_server_group">Delete Group</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+<table border="0" id="table_entries" style="width: 100%;">
+   <thead>
+      <tr>
+         <td>Name</td>
+         <td>Description</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->list_server_groups();
+      % foreach my $entry (@{ $entries->{data} }) {
+      <tr group_id="<%= $entry->{id} %>">
+         <td><%= $entry->{name} %></td>
+         <td><%= $entry->{description} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>
+
+<div id="add_server_group" title="Add new Server Group">
+   <p class="validateTips">Add a new server group</p>
+
+   <form>
+      <fieldset class="standard-form">
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+
+         <label for="description">Description</label>
+         <textarea name="description" id="description" style="width: 300px; height: 80px;"></textarea>
+      </fieldset>
+   </form>
+</div>
+
+

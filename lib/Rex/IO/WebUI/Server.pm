@@ -205,4 +205,23 @@ sub events {
    });
 }
 
+sub group {
+   my ($self) = @_;
+   $self->render;
+}
+
+sub add_group {
+   my ($self) = @_;
+   my $ret = $self->rexio->add_server_group(%{ $self->req->json });
+
+   $self->render_json($ret);
+}
+
+sub del_group {
+   my ($self) = @_;
+   my $ret = $self->rexio->del_server_group($self->param("group_id"));
+
+   $self->render_json($ret);
+}
+
 1;
