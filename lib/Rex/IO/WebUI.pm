@@ -126,6 +126,16 @@ sub startup {
    $r_auth->put("/deploy/template/:id")->to("deploy-template#update");
    $r_auth->get("/deploy/template/new")->to("deploy-template#create_new");
    $r_auth->post("/deploy/template")->to("deploy-template#post_new");
+
+   # users and groups
+   $r_auth->get("/user")->to("user#list");
+   $r_auth->post("/user")->to("user#add");
+   $r_auth->delete("/user/:user_id")->to("user#delete");
+
+   $r_auth->get("/group")->to("group#list");
+   $r_auth->post("/group")->to("group#add");
+   $r_auth->post("/group/:group_id/user/:user_id")->to("group#add_user_to_group");
+   $r_auth->delete("/group/:group_id")->to("group#delete");
 }
 
 1;

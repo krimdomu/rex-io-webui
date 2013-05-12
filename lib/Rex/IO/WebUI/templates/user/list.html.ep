@@ -1,0 +1,54 @@
+<h1 class="page-title">User Overview<small>All your users</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Users
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_add_user">Add User</a></li>
+            <li><a href="#" id="lnk_del_user">Delete User</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+
+<table border="0" id="table_entries_user" style="width: 100%;">
+   <thead>
+      <tr>
+         <td width="250">Name</td>
+         <td>Group</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->list_users;
+      % foreach my $entry (@{ $entries }) {
+      <tr user_id="<%= $entry->{id} %>">
+         <td><a href="#" class="user-link" user_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
+         <td><%= $entry->{group}->{name} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>
+
+<div id="add_user" title="Add new User">
+   <p class="validateTips">Add a new user</p>
+
+   <form>
+      <fieldset class="standard-form">
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+
+         <label for="name">Password</label>
+         <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" value="" />
+      </fieldset>
+   </form>
+</div>
+
+

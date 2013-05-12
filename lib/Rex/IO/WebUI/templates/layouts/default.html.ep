@@ -51,7 +51,14 @@
                      <a href="#" class="icon-arrow-left">Monitoring</a>
                      <ul class="sub">
                         <li><a href="#" class="monitoring-incidents">Incidents</a></li>
+                        <li><a href="#" class="monitoring-monitor-groups">Monitor Groups</a></li>
                         <li><a href="#" class="monitoring-monitors">Monitors</a></li>
+                        <!-- <li><a href="#" class="monitoring-triggers">Triggers</a></li> -->
+                        <!-- 
+                              default trigger is template_item.failure
+                              extend: add trigger to group
+                              extend: add trigger to host (will overwrite group)
+                        -->
                         <li><a href="#" class="monitoring-alerts">Alerts</a></li>
                      </ul>
                   </li>
@@ -140,6 +147,7 @@
    <script type="text/javascript" charset="utf-8" src="/js/server.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dns.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dhcp.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/user.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>

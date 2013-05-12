@@ -1,0 +1,73 @@
+<h1 class="page-title">Group Overview<small>All your groups</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Groups
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_add_group">Add Group</a></li>
+            <li><a href="#" id="lnk_del_group">Delete Group</a></li>
+            <li><a href="#" id="lnk_show_user">Show Users</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+<div class="framebody">
+   <div class="left_frame">
+      <table border="0" id="table_entries_group" style="width: 100%;">
+         <thead>
+            <tr>
+               <td width="80">Gid</td>
+               <td>Name</td>
+            </tr>
+         </thead>
+         <tbody>
+            % my $entries = rexio->list_groups;
+            % foreach my $entry (@{ $entries }) {
+            <tr group_id="<%= $entry->{id} %>">
+               <td><div class="group_drag_user" group_id="<%= $entry->{id} %>"><%= $entry->{id} %></div></td>
+               <td><div class="group_drag_user" group_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>
+            </tr>
+            % }
+         </tbody>
+      </table>
+   </div>
+   <div class="right_frame">
+      <table border="0" id="table_entries_user" style="width: 100%;">
+         <thead>
+            <tr>
+               <td>Name</td>
+            </tr>
+         </thead>
+         <tbody>
+            % my $entries = rexio->list_users;
+            % foreach my $entry (@{ $entries }) {
+            <tr>
+               <td><div class="user_hndl" user_name="<%= $entry->{name} %>" user_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>
+            </tr>
+            % }
+         </tbody>
+      </table>
+
+   </div>
+</div>
+
+<div id="add_group" title="Add new Group">
+   <p class="validateTips">Add a new group</p>
+
+   <form>
+      <fieldset class="standard-form">
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+      </fieldset>
+   </form>
+</div>
+
+
