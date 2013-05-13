@@ -6,6 +6,9 @@ my %deps = (
                   'Mojolicious' => '2.98',
                   'Compress::Zlib' => 0,
                   'XML::Simple' => 0,
+                  'Mojo::Redis' => 0,
+                  'Mojolicious::Plugins::Authentication' => 0,
+                  'Mojolicious::Plugins::Authorization' => 0,
 );
 
 WriteMakefile1(
