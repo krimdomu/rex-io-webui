@@ -22,6 +22,7 @@
 <table border="0" id="table_entries_user" style="width: 100%;">
    <thead>
       <tr>
+         <td width="80">Uid</td>
          <td width="250">Name</td>
          <td>Group</td>
       </tr>
@@ -30,7 +31,8 @@
       % my $entries = rexio->list_users;
       % foreach my $entry (@{ $entries }) {
       <tr user_id="<%= $entry->{id} %>">
-         <td><a href="#" class="user-link" user_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
+         <td><%= $entry->{id} %></td>
+         <td><%= $entry->{name} %></td>
          <td><%= $entry->{group}->{name} %></td>
       </tr>
       % }

@@ -1,0 +1,59 @@
+<h1 class="page-title">Incident Overview<small>The bad things in live</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Incidents
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_add_incident">Add Incident</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+
+<table border="0" id="table_entries_incident" style="width: 100%;">
+   <thead>
+      <tr>
+         <td width="80">#</td>
+         <td>Title</td>
+         <td width="100">Status</td>
+         <td width="150">Created</td>
+         <td width="100">Assignee</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->list_incidents;
+      % foreach my $entry (@{ $entries }) {
+      <tr incident_id="<%= $entry->{id} %>">
+         <td><%= $entry->{id} %></td>
+         <td><a href="#" class="incident-link" incident_id="<%= $entry->{id} %>"><%= $entry->{title} %></a></td>
+         <td><%= $entry->{status} %></td>
+         <td><%= $entry->{created} %></td>
+         <td><%= $entry->{assignee}->{name} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>
+
+<div id="add_incident" title="Add new Incident">
+   <p class="validateTips">Add a new incident</p>
+
+   <form>
+      <fieldset class="standard-form">
+         <label for="i_title">Title</label>
+         <input type="text" name="i_title" id="i_title" class="text ui-widget-content ui-corner-all" value="" style="width: 600px;" />
+
+         <label for="i_content">Message</label>
+         <textarea name="i_content" id="i_content" style="width: 600px; height: 220px;"></textarea>
+      </fieldset>
+   </form>
+
+</div>
+

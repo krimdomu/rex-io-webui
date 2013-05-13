@@ -136,6 +136,12 @@ sub startup {
    $r_auth->post("/group")->to("group#add");
    $r_auth->post("/group/:group_id/user/:user_id")->to("group#add_user_to_group");
    $r_auth->delete("/group/:group_id")->to("group#delete");
+
+   # monitoring
+   $r_auth->get("/incident")->to("incident#list");
+   $r_auth->post("/incident")->to("incident#add");
+   $r_auth->get("/incident/:incident_id")->to("incident#view");
+   $r_auth->post("/incident/:incident_id")->to("incident#add_message");
 }
 
 1;

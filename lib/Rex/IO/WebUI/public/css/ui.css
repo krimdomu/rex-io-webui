@@ -873,4 +873,77 @@ table.dataTable tr.odd td.sorting_1 {
    width: 50%;
 }
 
+table.incident_overview th,
+table.incident_overview td {
+   padding: 5px;
+}
+
+table.incident_overview tr:nth-child(odd) {
+   background-color: #f8f8f8;
+}
+
+.formated_message {
+   padding: 5px;
+}
+
+.formated_message p {
+   margin-top: 2px;
+   margin-bottom: 2px;
+}
+
+.formated_message ol,
+.formated_message ul {
+   margin: 0;
+   padding: 0;
+}
+
+.formated_message ol li,
+.formated_message ul li {
+   margin-left: 20px;
+}
+
+.formated_message blockquote {
+   border-left: 2px solid #cd0000;
+   margin-left: 15px;
+   padding-left: 5px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+h2 {
+   color: #666666;
+   font-family: Verdana;
+   font-size: 18px;
+   margin-top: 15px;
+   font-weight: normal;
+}
+
+.incident_message {
+   margin-top: 15px;
+   border: 1px solid #efefef;
+   background-color: #f8f8f8;
+}
+
+.incident_message h3 {
+   color: #666666;
+   font-weight: normal;
+   font-size: 15px;
+   padding: 5px;
+   padding-bottom: 2px;
+}
+
+.incident_message .message_from {
+   background-color: #fefefe;
+   padding: 5px;
+   padding-top: 3px;
+}
+
+table.db_table_entries_incident td {
+   padding: 5px;
+}
+
+table.db_table_entries_incident tr:nth-child(odd) {
+   background-color: #f8f8f8;
+}
+
 

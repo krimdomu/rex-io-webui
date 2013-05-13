@@ -148,6 +148,8 @@
    <script type="text/javascript" charset="utf-8" src="/js/dns.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dhcp.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/user.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/monitoring.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/dashboard.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>
