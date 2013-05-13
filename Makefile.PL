@@ -7,8 +7,8 @@ my %deps = (
                   'Compress::Zlib' => 0,
                   'XML::Simple' => 0,
                   'Mojo::Redis' => 0,
-                  'Mojolicious::Plugins::Authentication' => 0,
-                  'Mojolicious::Plugins::Authorization' => 0,
+                  'Mojolicious::Plugin::Authentication' => 0,
+                  'Mojolicious::Plugin::Authorization' => 0,
 );
 
 WriteMakefile1(
