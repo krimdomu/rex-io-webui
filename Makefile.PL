@@ -9,6 +9,7 @@ my %deps = (
                   'Mojo::Redis' => 0,
                   'Mojolicious::Plugin::Authentication' => 0,
                   'Mojolicious::Plugin::Authorization' => 0,
+                  'Text::Markdown' => 0,
 );
 
 WriteMakefile1(
