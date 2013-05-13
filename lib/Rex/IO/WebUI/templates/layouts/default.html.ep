@@ -80,7 +80,10 @@
                      <ul class="sub">
                         % my $tlds = rexio->get_dns_tlds;
                         % for my $tld (@{ $tlds }) {
-                        <li><a href="#" class="dns-link" tld="<%= $tld %>"><%= $tld %></a></li>
+                        % my ($name, $zone);
+                        % $name = $tld->{name};
+                        % $zone   = $tld->{zone};
+                        <li><a href="#" class="dns-link" tld="<%= $zone %>"><%= $name %></a></li>
                         % }
                      </ul>
                   </li>

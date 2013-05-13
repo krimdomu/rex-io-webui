@@ -70,7 +70,7 @@
          <select name="domain" id="domain" size="1">
             % my $tlds = rexio->get_dns_tlds;
             % for my $tld (@{ $tlds }) {
-            <option value="<%= $tld %>"><%= $tld %></option>
+            <option value="<%= $tld->{zone} %>"><%= $tld->{name} %></option>
             % }
          </select>
 
