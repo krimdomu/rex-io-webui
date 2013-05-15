@@ -59,6 +59,7 @@
                      %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
                      % }
                      <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />
+                     <input type="hidden" name="txt_hostname" id="txt_hostname" value="<%= $server->{name} %>" />
 
 
                      <td class="col-info">Online Status:</td>
@@ -202,6 +203,10 @@
                      <td><input type="checkbox"<% if($eth->{boot} && $eth->{boot} == 1) { %>checked="checked"<% } %> name="boot_<%= $eth->{id} %>" value="1" id="boot_<%= $eth->{id} %>" /></td>
                   </tr>
                   <tr>
+                     <td>Register DNS</td>
+                     <td><input type="checkbox" name="dns_<%= $eth->{id} %>" value="1" id="dns_<%= $eth->{id} %>" /></td>
+                  </tr>
+                  <tr>
                      <td>Protocol</td>
                      <td>
                         <select name="proto_<%= $eth->{id} %>" id="proto_<%= $eth->{id} %>">
@@ -212,23 +217,23 @@
                   </tr>
                   <tr>
                      <td>IP</td>
-                     <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= ! $eth->{ip}?'':$eth->{ip} %>" id="ip_<%= $eth->{id} %>" /></td>
+                     <td><input type="text" name="ip_<%= $eth->{id} %>" value="<%= ! $eth->{wanted_ip}?'':$eth->{wanted_ip} %>" id="ip_<%= $eth->{id} %>" /> <% if($eth->{ip}) { %>(<%= $eth->{ip} %>) <% } %></td>
                   </tr>
                   <tr>
                      <td>Netmask</td>
-                     <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= ! $eth->{netmask}?'':$eth->{netmask} %>" id="netmask_<%= $eth->{id} %>" /></td>
+                     <td><input type="text" name="netmask_<%= $eth->{id} %>" value="<%= ! $eth->{wanted_netmask}?'':$eth->{wanted_netmask} %>" id="netmask_<%= $eth->{id} %>" /> <% if($eth->{netmask}) { %> (<%= $eth->{netmask} %>) <% } %></td>
                   </tr>
                   <tr>
                      <td>Broadcast</td>
-                     <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= ! $eth->{broadcast}?'':$eth->{broadcast} %>" id="broadcast_<%= $eth->{id} %>" /></td>
+                     <td><input type="text" name="broadcast_<%= $eth->{id} %>" value="<%= ! $eth->{wanted_broadcast}?'':$eth->{wanted_broadcast} %>" id="broadcast_<%= $eth->{id} %>" /> <% if($eth->{broadcast}) { %>(<%= $eth->{broadcast} %>) <% } %></td>
                   </tr>
                   <tr>
                      <td>Network</td>
-                     <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= ! $eth->{network}?'':$eth->{network} %>" id="network_<%= $eth->{id} %>" /></td>
+                     <td><input type="text" name="network_<%= $eth->{id} %>" value="<%= ! $eth->{wanted_network}?'':$eth->{wanted_network} %>" id="network_<%= $eth->{id} %>" /> <% if($eth->{network}) { %> (<%= $eth->{network} %>) <% } %></td>
                   </tr>
                   <tr>
                      <td>Gateway</td>
-                     <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= ! $eth->{gateway}?'':$eth->{gateway} %>" id="gateway_<%= $eth->{id} %>" /></td>
+                     <td><input type="text" name="gateway_<%= $eth->{id} %>" value="<%= ! $eth->{wanted_gateway}?'':$eth->{wanted_gateway} %>" id="gateway_<%= $eth->{id} %>" /> <% if($eth->{gateway}) { %> (<%= $eth->{gateway} %>) <% } %></td>
                   </tr>
                   <tr>
                      <td>&nbsp;</td>

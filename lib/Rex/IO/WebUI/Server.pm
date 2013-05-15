@@ -162,11 +162,21 @@ sub events {
 
    $self->app->log->debug("Client connected: " . $self->tx->remote_address);
 
-   Mojo::IOLoop->stream($self->tx->connection)->timeout(300);
+   Mojo::IOLoop->stream($self->tx->connection)->timeout(0);
 
    my $tx    = $self->tx;
    my $redis = Mojo::Redis->new(server => "localhost:6379");
+   $redis->timeout(0);
    my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy");
+
+   $redis->on(
+      error => sub {
+         $self->app->log->debug("Got redis error");
+      },
+      finish => sub {
+         $self->app->log->debug("Got redis finish");
+      },
+   );
 
    $sub->on(message => sub {
       my ($sub, $message, $channel) = @_;
@@ -186,7 +196,13 @@ sub events {
       }
 
       $tx->send(Mojo::JSON->encode($ref));
-   });
+   },
+      error => sub {
+         $self->app->log->debug("Got sub error");
+      },
+      finish => sub {
+         $self->app->log->debug("Got sub finish");
+      });
 
    $self->on(finish => sub {
       $self->app->log->debug("Client disconnected: " . $self->tx->remote_address);
@@ -198,7 +214,14 @@ sub events {
       $tx->send("Thanks for your message: " . $self->tx->remote_address);
    });
 
+   $self->on(
+      error => sub {
+         $self->app->log->debug("Got ERROR!");
+      },
+   );
+
    $self->on(finish => sub {
+      $self->app->log->debug("Got FINISH!");
       undef $redis;
       undef $sub;
       undef $tx;

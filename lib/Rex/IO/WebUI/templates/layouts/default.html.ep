@@ -36,7 +36,7 @@
 
                <ul class="navul">
                   <li class="active">
-                     <a href="/">Dashboard</a>
+                     <a href="#" class="dashboard-link">Dashboard</a>
                   </li>
                   <li class="has-sub">
                      <a href="#" class="icon-arrow-left">Server</a>
