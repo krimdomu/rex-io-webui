@@ -39,7 +39,7 @@
    </tbody>
 </table>
 
-<div id="add_user" title="Add new User">
+<div id="add_user" class="dialog-window" title="Add new User">
    <p class="validateTips">Add a new user</p>
 
    <form>

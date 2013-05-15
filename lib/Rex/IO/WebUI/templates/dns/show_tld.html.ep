@@ -46,7 +46,7 @@
    </tbody>
 </table>
 
-<div id="add_dns_entry" title="Add new DNS Record">
+<div id="add_dns_entry" class="dialog-window" title="Add new DNS Record">
    <p class="validateTips">Allowed Characters for Name: A-Z, a-z, 0-9 and -</p>
 
    <form>

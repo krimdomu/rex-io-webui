@@ -373,7 +373,7 @@
    </div>
 </div>
 
-<div id="rename_server" title="Rename Server">
+<div id="rename_server" class="dialog-window" title="Rename Server">
    <p class="validateTips">Allowed Characters: A-Z, a-z, 0-9 and -</p>
 
    <form>
@@ -385,7 +385,7 @@
    </form>
 </div>
 
-<div id="initialize_server" title="Initialize Server">
+<div id="initialize_server" class="dialog-window" title="Initialize Server">
    <form>
       <fieldset class="standard-form">
 

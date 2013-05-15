@@ -64,7 +64,7 @@
    </div>
 </div>
 
-<div id="add_server_group" title="Add new Server Group">
+<div id="add_server_group" class="dialog-window" title="Add new Server Group">
    <p class="validateTips">Add a new server group</p>
 
    <form>

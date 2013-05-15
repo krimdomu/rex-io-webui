@@ -42,7 +42,7 @@
    </tbody>
 </table>
 
-<div id="add_incident" title="Add new Incident">
+<div id="add_incident" class="dialog-window" title="Add new Incident">
    <p class="validateTips">Add a new incident</p>
 
    <form>

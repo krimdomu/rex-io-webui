@@ -101,7 +101,7 @@
 
 </div> <!-- / tabbable -->
 
-<div id="add_incident_message" title="Add new Message">
+<div id="add_incident_message" class="dialog-window" title="Add new Message">
    <p class="validateTips">Add a new message</p>
 
    <form>
