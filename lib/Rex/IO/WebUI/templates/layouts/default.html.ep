@@ -53,7 +53,6 @@
                      <ul class="sub">
                         <li><a href="#" class="monitoring-incidents">Incidents</a></li>
                         <li><a href="#" class="monitoring-monitor-groups">Monitor Groups</a></li>
-                        <li><a href="#" class="monitoring-monitors">Monitors</a></li>
                         <!-- <li><a href="#" class="monitoring-triggers">Triggers</a></li> -->
                         <!-- 
                               default trigger is template_item.failure

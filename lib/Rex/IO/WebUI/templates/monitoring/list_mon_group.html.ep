@@ -1,0 +1,74 @@
+<h1 class="page-title">Monitoring Group <%= $group->{name} %><small>monitoring is the heart of calm sleep</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Monitor Groups &raquo;
+   </li>
+   <li>
+      <%= $group->{name} %>
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_add_mon_item">Add Item</a></li>
+            <li><a href="#" id="lnk_del_mon_item">Delete Item</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+
+<table border="0" id="table_entries_items" style="width: 100%;">
+   <thead>
+      <tr>
+         <td width="80">#</td>
+         <td>Name</td>
+         <td width="150">Key</td>
+         <td width="80">Unit</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->list_monitoring_item_of_template($group->{id});
+      % foreach my $entry (@{ $entries }) {
+      <tr item_id="<%= $entry->{id} %>" group_id="<%= $group->{id} %>">
+         <td><%= $entry->{id} %></td>
+         <td><a href="#" class="mon-item-link" group_id="<%= $group->{id} %>" item_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
+         <td><%= $entry->{check_key} %></td>
+         <td><%= $entry->{unit} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>
+
+<div id="add_mon_item" class="dialog-window" title="Add new monitoring item">
+   <p class="validateTips">Add a new monitoring item</p>
+
+   <form>
+      <fieldset class="standard-form">
+
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+
+         <label for="check_key">Key</label>
+         <input type="text" name="check_key" id="check_key" class="text ui-widget-content ui-corner-all" value="" />
+
+         <label for="unit">Unit</label>
+         <input type="text" name="unit" id="unit" class="text ui-widget-content ui-corner-all" value="" />
+
+         <label for="divisor">Divisor</label>
+         <input type="text" name="divisor" id="divisor" class="text ui-widget-content ui-corner-all" value="1" />
+
+         <label for="relative">Is relative?</label>
+         <input type="checkbox" name="relative" id="relative" value="1" />
+
+         <label for="calculation"><i>Calculation</i></label>
+         <textarea name="calculation" id="calculation" style="width: 350px; height: 150px;"></textarea>
+      </fieldset>
+   </form>
+
+</div>
+
