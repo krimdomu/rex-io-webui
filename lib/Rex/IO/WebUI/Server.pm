@@ -14,6 +14,25 @@ sub index {
    $self->stash("server", $server);
    $self->stash("os_templates", $os_templates);
 
+   my (@more_tabs, @more_content);
+
+   # load server tabs from plugins
+   for my $plugin (@{ $self->config->{plugins} }) {
+      my $template_path = "\L$plugin";
+      my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
+      if($template_tab) {
+         push @more_tabs, $template_tab;
+      }
+
+      my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
+      if($template_content) {
+         push @more_content, $template_content;
+      }
+   }
+
+   $self->stash(plugin_tabs => \@more_tabs);
+   $self->stash(plugin_tab_content => \@more_content);
+
    $self->render;
 }
 

@@ -1,0 +1,28 @@
+<div id="tab-monitor" class="tab-pane" tab_id="monitor">
+
+   <div class="portlet box grey">
+      <div class="portlet-title">
+         <h4>Monitoring Information</h4>
+      </div>
+      <div class="portlet-body">
+         <table class="server_statistic" border="0">
+            % my $monitor_items = rexio->get_monitoring_items_of_host($server->{id});
+            % for my $itm (@{ $monitor_items->{data} }) {
+            <tr>
+               <td class="key"><%= $itm->{name} %></td>
+               <td class="value"><span id="monitor_<%= $server->{id} %>_<%= $itm->{id} %>"></span></td>
+               <td class="value">
+                  <canvas id="chart_<%= $server->{id} %>_<%= $itm->{id} %>" class="monitor_chart" itm_id="<%= $itm->{id} %>" host_id="<%= $server->{id} %>" width="500" height="100" check_key="<%= $itm->{check_key} %>"></canvas>
+               </td>
+            </tr>
+            % }
+
+         </table>
+
+
+      </div>
+   </div>
+
+</div> <!-- monitoring tab -->
+
+

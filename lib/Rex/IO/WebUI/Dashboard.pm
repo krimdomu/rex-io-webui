@@ -11,7 +11,9 @@ sub index {
    for my $plugin (@{ $self->config->{plugins} }) {
       my $template_path = "\L$plugin";
       my $template = $self->render("$template_path/ext/mainmenu", partial => 1);
-      push @main_menu, $template;
+      if($template) {
+         push @main_menu, $template;
+      }
    }
 
    $self->stash(main_menu => \@main_menu);
