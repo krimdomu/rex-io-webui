@@ -8,4 +8,15 @@ sub show_leases {
    $self->render;
 }
 
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r_auth->get("/dhcp")->to("dhcp#show_leases");
+}
+
+
+
 1;

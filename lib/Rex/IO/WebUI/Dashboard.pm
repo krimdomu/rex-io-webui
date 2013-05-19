@@ -4,6 +4,18 @@ use Mojo::Base 'Mojolicious::Controller';
 # This action will render a template
 sub index {
    my $self = shift;
+
+   my @main_menu;
+
+   # load navigation from plugins
+   for my $plugin (@{ $self->config->{plugins} }) {
+      my $template_path = "\L$plugin";
+      my $template = $self->render("$template_path/ext/mainmenu", partial => 1);
+      push @main_menu, $template;
+   }
+
+   $self->stash(main_menu => \@main_menu);
+   
    $self->render;
 }
 
@@ -21,7 +33,6 @@ sub login_do_auth {
    my ($self) = @_;
 
    if($self->authenticate($self->param("user"), $self->param("password"))) {
-   print STDERR "redirecting\n";
       $self->redirect_to("/");
    }
 

@@ -1,4 +1,4 @@
-package Rex::IO::WebUI::Deploy::Template;
+package Rex::IO::WebUI::Deploy;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
 
@@ -29,5 +29,19 @@ sub post_new {
 
    $self->render_json($ret);
 }
+
+
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r_auth->get("/deploy/template")->to("deploy#show_templates");
+   $r_auth->put("/deploy/template/:id")->to("deploy#update");
+   $r_auth->get("/deploy/template/new")->to("deploy#create_new");
+   $r_auth->post("/deploy/template")->to("deploy#post_new");
+}
+
 
 1;

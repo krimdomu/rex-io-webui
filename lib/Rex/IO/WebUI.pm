@@ -84,75 +84,25 @@ sub startup {
    $r_auth->get("/")->to("dashboard#index");
    $r_auth->get("/dashboard")->to("dashboard#view");
 
-   # server
-   $r->websocket("/server_events")->to("server#events");
-   $r->websocket("/messagebroker")->to("server#messagebroker");
-   $r_auth->get("/server/new")->to("server#add");
-   $r_auth->get("/server/bulk")->to("server#bulk_view");
-   $r_auth->post("/server/new")->to("server#add_new");
-   $r_auth->get("/server/:id")->to("server#index");
-   $r_auth->post("/server/:id")->to("server#update_server");
-   $r_auth->post("/server/#ip/inventory")->to("server#trigger_inventory");
-   $r_auth->post("/server/#ip/reboot")->to("server#trigger_reboot");
-   $r_auth->get("/server")->to("server#list");
-   $r_auth->post("/network-adapter/:id")->to("server#update_network_adapter");
-   $r_auth->delete("/server/:hostid/tasks")->to("server#remove_all_tasks_from_server");
-   $r_auth->post("/server/:hostid/task")->to("server#add_task_to_server");
-   $r_auth->route("/server/:hostid/task/:taskid")->via("RUN")->to("server#run_task_on_host");
-   $r_auth->route("/server/tasks")->via("RUN")->to("server#run_tasks");
-   $r_auth->get("/server_group")->to("server#group");
-   $r_auth->post("/server_group")->to("server#add_group");
-   $r_auth->delete("/server_group/:group_id")->to("server#del_group");
-   $r_auth->post("/server_group/server/:server_id/:group_id")->to("server#add_server_to_group");
-
-   # set next boot // todo: andere url
-   $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
-   $r_auth->route("/server/#ip/command")->via("RUN")->to("server#run_command");
-
    # search
    $r_auth->get("/search")->to("search#index");
 
-   # dns
-   $r_auth->get("/dns/#tld")->to("dns#show_tld");
-   $r_auth->post("/dns/#domain/:type/#host")->to("dns#add_record");
-   $r_auth->delete("/dns/#domain/:type/#host")->to("dns#del_record");
-   $r_auth->post("/dns/#tld")->to("dns#update_tld_record");
+   #######################################################################
+   # Load RexIO Plugins
+   #######################################################################
+   my @plugins = @{ $self->config->{plugins} }; 
+   for my $plugin (@plugins) {
+      my $klass = "Rex::IO::WebUI::$plugin";
+      eval "use $klass";
+      if($@) {
+         die("Error loading plugin $klass. $@");
+      }
 
-   # dhcp
-   $r_auth->get("/dhcp")->to("dhcp#show_leases");
-
-   # templates
-   $r_auth->get("/deploy/template")->to("deploy-template#show_templates");
-   $r_auth->put("/deploy/template/:id")->to("deploy-template#update");
-   $r_auth->get("/deploy/template/new")->to("deploy-template#create_new");
-   $r_auth->post("/deploy/template")->to("deploy-template#post_new");
-
-   # users and groups
-   $r_auth->get("/user")->to("user#list");
-   $r_auth->post("/user")->to("user#add");
-   $r_auth->delete("/user/:user_id")->to("user#delete");
-
-   $r_auth->get("/group")->to("group#list");
-   $r_auth->post("/group")->to("group#add");
-   $r_auth->post("/group/:group_id/user/:user_id")->to("group#add_user_to_group");
-   $r_auth->delete("/group/:group_id")->to("group#delete");
-
-   # monitoring
-   $r_auth->get("/incident")->to("incident#list");
-   $r_auth->post("/incident")->to("incident#add");
-   $r_auth->get("/incident/:incident_id")->to("incident#view");
-   $r_auth->post("/incident/:incident_id")->to("incident#add_message");
-
-   $r_auth->get("/monitoring")->to("monitoring#list");
-   $r_auth->post("/monitoring/group")->to("monitoring#add_group");
-   $r_auth->delete("/monitoring/group/:group_id")->to("monitoring#delete_group");
-
-   $r_auth->get("/monitoring/group/:groupid")->to("monitoring#list_mon_group");
-   $r_auth->post("/monitoring/group/:groupid/item")->to("monitoring#add_monitoring_item");
-   $r_auth->delete("/monitoring/group/:group_id/item/:item_id")->to("monitoring#delete_monitoring_item");
-   $r_auth->get("/monitoring/group/:group_id/item/:item_id")->to("monitoring#view_item");
-   $r_auth->post("/monitoring/group/:group_id/item/:item_id")->to("monitoring#update_item");
-   $r_auth->post("/monitoring/group/:group_id/host/:host_id")->to("monitoring#add_group_to_host");
+      $klass->rexio_routes({
+         route => $r,
+         route_auth => $r_auth,
+      });
+   };
 }
 
 1;

@@ -254,4 +254,35 @@ sub add_server_to_group {
    $self->render_json($ret);
 }
 
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r->websocket("/server_events")->to("server#events");
+   $r->websocket("/messagebroker")->to("server#messagebroker");
+   $r_auth->get("/server/new")->to("server#add");
+   $r_auth->get("/server/bulk")->to("server#bulk_view");
+   $r_auth->post("/server/new")->to("server#add_new");
+   $r_auth->get("/server/:id")->to("server#index");
+   $r_auth->post("/server/:id")->to("server#update_server");
+   $r_auth->post("/server/#ip/inventory")->to("server#trigger_inventory");
+   $r_auth->post("/server/#ip/reboot")->to("server#trigger_reboot");
+   $r_auth->get("/server")->to("server#list");
+   $r_auth->post("/network-adapter/:id")->to("server#update_network_adapter");
+   $r_auth->delete("/server/:hostid/tasks")->to("server#remove_all_tasks_from_server");
+   $r_auth->post("/server/:hostid/task")->to("server#add_task_to_server");
+   $r_auth->route("/server/:hostid/task/:taskid")->via("RUN")->to("server#run_task_on_host");
+   $r_auth->route("/server/tasks")->via("RUN")->to("server#run_tasks");
+   $r_auth->get("/server_group")->to("server#group");
+   $r_auth->post("/server_group")->to("server#add_group");
+   $r_auth->delete("/server_group/:group_id")->to("server#del_group");
+   $r_auth->post("/server_group/server/:server_id/:group_id")->to("server#add_server_to_group");
+
+   # set next boot // todo: andere url
+   $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
+   $r_auth->route("/server/#ip/command")->via("RUN")->to("server#run_command");
+}
+
 1;

@@ -97,4 +97,27 @@ sub add_group_to_host {
    $self->render_json($ret);
 }
 
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r_auth->get("/incident")->to("incident#list");
+   $r_auth->post("/incident")->to("incident#add");
+   $r_auth->get("/incident/:incident_id")->to("incident#view");
+   $r_auth->post("/incident/:incident_id")->to("incident#add_message");
+
+   $r_auth->get("/monitoring")->to("monitoring#list");
+   $r_auth->post("/monitoring/group")->to("monitoring#add_group");
+   $r_auth->delete("/monitoring/group/:group_id")->to("monitoring#delete_group");
+
+   $r_auth->get("/monitoring/group/:groupid")->to("monitoring#list_mon_group");
+   $r_auth->post("/monitoring/group/:groupid/item")->to("monitoring#add_monitoring_item");
+   $r_auth->delete("/monitoring/group/:group_id/item/:item_id")->to("monitoring#delete_monitoring_item");
+   $r_auth->get("/monitoring/group/:group_id/item/:item_id")->to("monitoring#view_item");
+   $r_auth->post("/monitoring/group/:group_id/item/:item_id")->to("monitoring#update_item");
+   $r_auth->post("/monitoring/group/:group_id/host/:host_id")->to("monitoring#add_group_to_host");
+}
+
 1;

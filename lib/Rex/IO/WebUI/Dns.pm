@@ -36,4 +36,17 @@ sub del_record {
    $self->render_json($ret);
 }
 
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r_auth->get("/dns/#tld")->to("dns#show_tld");
+   $r_auth->post("/dns/#domain/:type/#host")->to("dns#add_record");
+   $r_auth->delete("/dns/#domain/:type/#host")->to("dns#del_record");
+   $r_auth->post("/dns/#tld")->to("dns#update_tld_record");
+}
+
+
 1;
