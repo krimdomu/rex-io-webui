@@ -1,6 +1,7 @@
 package Rex::IO::WebUI::Dns;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
+use MIME::Base64;
 
 # This action will render a template
 sub show_tld {
@@ -19,6 +20,12 @@ sub add_record {
 
    my $option = $self->req->json;
    $option->{type} = $self->param("type");
+
+   if($option->{base64} == 1) {
+      $option->{data} = encode_base64($option->{data});
+      delete $option->{base64};
+   }
+
    my $ret = $self->rexio->add_dns_record($self->param("domain"), $self->param("host"), %{ $option });
 
    $self->render_json($ret);

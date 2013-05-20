@@ -32,7 +32,7 @@
    </thead>
    <tbody>
       % my $entries = rexio->get_dns_tld(param("tld"));
-      % foreach my $entry (values %{ $entries }) {
+      % foreach my $entry (@{ $entries }) {
       % my $name = $entry->{name};
       % my $tld  = param("tld");
       % $name =~ s/\.?$tld//;
@@ -74,8 +74,12 @@
             % }
          </select>
 
+         <label for="base64">Base64?</label>
+         <input type="checkbox" name="base64" id="base64" value="1" />
+
          <label for="data">Data</label>
          <input type="text" name="data" id="data" class="text ui-widget-content ui-corner-all" />
+
       </fieldset>
    </form>
 </div>
