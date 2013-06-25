@@ -13,6 +13,7 @@
       <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
       <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
+      <link rel="stylesheet" href="/css/datacenter.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
       <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
@@ -92,6 +93,7 @@
    <script type="text/javascript" charset="utf-8" src="/js/user.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/monitoring.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/dashboard.js"></script>
+   <script type="text/javascript" charset="utf-8" src="/js/datacenter.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>

@@ -1,0 +1,47 @@
+<h1 class="page-title">Racks<small>all your base</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Data Center &raquo;
+   </li>
+   <li>
+      Racks
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="rack_add_entry">Add Rack</a></li>
+            <li><a href="#" id="rack_del_entry">Delete Rack</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+<div id="rack_designer" class="rack_designer">
+
+   <div class="rack_table">
+      <div class="table_row">
+         <div class="rack-cell rack-u-num"></div></td>
+         <div class="rack-cell rack-front">Front</div></td>
+         <div class="rack-cell rack-interior">Interior</div></td>
+         <div class="rack-cell rack-back">Back</div></td>
+      </div>
+      % my $add = 43;
+      % for my $count ((1..42)) {
+      % $add -= 2;
+      <div class="table_row">
+         <td><div class="rack-cell rack-u-num"><%= $count + $add %></div></td>
+         <td><div position="front" he="<%= $count + $add %>" class="rack-cell rack-front rack-drop rack-empty"></div></td>
+         <td><div position="interior" he="<%= $count + $add %>" class="rack-cell rack-interior rack-drop rack-empty"></div></td>
+         <td><div position="back" he="<%= $count + $add %>" class="rack-cell rack-back rack-drop rack-empty"></div></td>
+      </div>
+      % }
+
+      <div class="clearfix"></div>
+   </div>
+
+
+</div>
+
+
