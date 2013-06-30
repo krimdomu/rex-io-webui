@@ -3,25 +3,19 @@
 use ExtUtils::MakeMaker;
 
 my %deps = (
-                  'Mojolicious' => '2.98',
+                  'Mojolicious' => '3.90',
                   'Compress::Zlib' => 0,
                   'XML::Simple' => 0,
                   'Mojo::Redis' => 0,
                   'Mojolicious::Plugin::Authentication' => 0,
-                  'Mojolicious::Plugin::Authorization' => 0,
                   'Text::Markdown' => 0,
 );
 
 WriteMakefile1(
    META_MERGE => {
       resources => {
-         repository => 'https://github.com/krimdomu/rex-io-server',
+         repository => 'https://github.com/krimdomu/rex-io-webui',
       },
-   },
-   BUILD_REQUIRES => {
-      'Mojolicious' => '2.98',
-      'Compress::Zlib' => 0,
-      'XML::Simple' => 0,
    },
 
    NAME => 'Rex::IO::WebUI',

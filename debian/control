@@ -1,0 +1,25 @@
+Source: rex-io-webui
+Section: admin
+Priority: optional
+Maintainer: Jan Gehring <jan.gehring@gmail.com>
+Build-Depends: debhelper (>= 7),
+                  libmojolicious-perl (>= 3.90),
+                  libmojolicious-plugin-authentication-perl (>= 1.24),
+                  libmojo-redis-perl,
+                  perl (>= 5.10.1),
+                  libyaml-perl,
+                  libxml-simple-perl
+Standards-Version: 3.9.1
+Homepage: http://rex.io/
+
+Package: rex-io-webui
+Architecture: all
+Depends: ${misc:Depends},
+            ${perl:Depends},
+            libmojolicious-perl (>= 3.90),
+            libmojolicious-plugin-authentication-perl (>= 1.24),
+            libmojo-redis-perl,
+            libxml-simple-perl,
+            libyaml-perl
+Description: Rex.IO - Bare Metal Deploy
+ WebUI for Rex.IO
