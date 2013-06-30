@@ -8,7 +8,8 @@ Build-Depends: debhelper (>= 7),
                   libmojo-redis-perl,
                   perl (>= 5.10.1),
                   libyaml-perl,
-                  libxml-simple-perl
+                  libxml-simple-perl,
+                  rex-io-client
 Standards-Version: 3.9.1
 Homepage: http://rex.io/
 
@@ -20,6 +21,7 @@ Depends: ${misc:Depends},
             libmojolicious-plugin-authentication-perl (>= 1.24),
             libmojo-redis-perl,
             libxml-simple-perl,
-            libyaml-perl
+            libyaml-perl,
+            rex-io-client
 Description: Rex.IO - Bare Metal Deploy
  WebUI for Rex.IO
