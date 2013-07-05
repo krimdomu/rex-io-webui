@@ -103,11 +103,6 @@ sub rexio_routes {
    my $r      = $routes->{route};
    my $r_auth = $routes->{route_auth};
 
-   $r_auth->get("/incident")->to("incident#list");
-   $r_auth->post("/incident")->to("incident#add");
-   $r_auth->get("/incident/:incident_id")->to("incident#view");
-   $r_auth->post("/incident/:incident_id")->to("incident#add_message");
-
    $r_auth->get("/monitoring")->to("monitoring#list");
    $r_auth->post("/monitoring/group")->to("monitoring#add_group");
    $r_auth->delete("/monitoring/group/:group_id")->to("monitoring#delete_group");

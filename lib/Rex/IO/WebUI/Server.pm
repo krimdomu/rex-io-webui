@@ -14,7 +14,7 @@ sub index {
    $self->stash("server", $server);
    $self->stash("os_templates", $os_templates);
 
-   my (@more_tabs, @more_content);
+   my (@more_tabs, @more_content, @information_plugins);
 
    # load server tabs from plugins
    for my $plugin (@{ $self->config->{plugins} }) {
@@ -28,10 +28,16 @@ sub index {
       if($template_content) {
          push @more_content, $template_content;
       }
+
+      my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
+      if($information_content) {
+         push @information_plugins, $information_content;
+      }
    }
 
    $self->stash(plugin_tabs => \@more_tabs);
    $self->stash(plugin_tab_content => \@more_content);
+   $self->stash(plugin_information_tab => \@information_plugins);
 
    $self->render;
 }
@@ -96,41 +102,7 @@ sub trigger_reboot {
    $self->render_json($ret);
 }
 
-sub remove_all_tasks_from_server {
-   my ($self) = @_;
 
-   my $ret = $self->rexio->remove_all_tasks_from_host($self->param("hostid"));
-   
-   $self->render_json($ret);
-}
-
-sub add_task_to_server {
-   my ($self) = @_;
-
-   my $json = $self->req->json;
-   my $host_id = $self->param("hostid");
-
-   my $ret = $self->rexio->add_task_to_host(host => $host_id, task => $json->{task_id}, task_order => $json->{task_order});
-
-   $self->render_json($ret);
-}
-
-sub run_task_on_host {
-   my ($self) = @_;
-
-   my $host_id = $self->param("hostid");
-   my $task_id = $self->param("taskid");
-}
-
-sub run_tasks {
-   my ($self) = @_;
-
-   my $json = $self->req->json;
-
-   my $ret = $self->rexio->run_tasks(@{ $json });
-
-   $self->render_json($ret);
-}
 
 sub bulk_view {
    my ($self) = @_;
@@ -290,10 +262,6 @@ sub rexio_routes {
    $r_auth->post("/server/#ip/reboot")->to("server#trigger_reboot");
    $r_auth->get("/server")->to("server#list");
    $r_auth->post("/network-adapter/:id")->to("server#update_network_adapter");
-   $r_auth->delete("/server/:hostid/tasks")->to("server#remove_all_tasks_from_server");
-   $r_auth->post("/server/:hostid/task")->to("server#add_task_to_server");
-   $r_auth->route("/server/:hostid/task/:taskid")->via("RUN")->to("server#run_task_on_host");
-   $r_auth->route("/server/tasks")->via("RUN")->to("server#run_tasks");
    $r_auth->get("/server_group")->to("server#group");
    $r_auth->post("/server_group")->to("server#add_group");
    $r_auth->delete("/server_group/:group_id")->to("server#del_group");

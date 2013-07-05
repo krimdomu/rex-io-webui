@@ -18,7 +18,6 @@
 <li class="active"><a href="#">var</a></li> -->
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
       <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
-      <li id="li-tab-service" tab_id="service"><a id="link-tab-service" tab_id="service" href="#">Services</a></li>
       % for my $tab (@{ $plugin_tabs }) {
       <%= $tab %>
       % }
@@ -86,31 +85,6 @@
                         <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
                      </td>
                   </tr>
-               </table>
-
-            </div>
-         </div>
-
-         <div class="portlet box grey">
-            <div class="portlet-title">
-               <h4>Current Incidents</h4>
-            </div>
-            <div class="portlet-body">
-               % my $alerts = rexio->list_alerts_of_host($server->{id});
-               <table class="monitoring_table" id="monitoring_table_<%= $server->{id} %>" border="0" width="100%">
-                  % if(ref $alerts eq "ARRAY" && scalar @{ $alerts }) {
-                     % for my $alert (@{ $alerts }) {
-                     <tr id="alert_<%= $alert->{hardware_id} %>_<%= $alert->{template_item_id} %>_<%= $server->{id} %>">
-                        <td class="td-icon icon-warning"></td>
-                        <td width="150"><%= $alert->{time} %></td>
-                        <td><%= $alert->{name} %></td>
-                     </tr>
-                     % }
-                  % } else {
-                  <tr id="alert_no_events_<%= $server->{id} %>">
-                     <td>There are currently no incidents for this host...</td>
-                  </tr>
-                  % }
                </table>
 
             </div>
@@ -185,6 +159,10 @@
             </div>
          </div>
 
+         % for my $pl_info (@{ $plugin_information_tab }) {
+            <%= $pl_info %>
+         % }
+
       </div>
 
       <div id="tab-network" class="tab-pane" tab_id="network">
@@ -250,65 +228,6 @@
          % }
       </div>  <!-- network tab -->
 
-      <div id="tab-service" class="tab-pane" tab_id="service">
-
-         <table border="0" width="100%">
-            <tr>
-               <td valign="top">
-
-                  <div class="portlet box grey">
-                     <div class="portlet-title">
-                        <h4>Registered Services</h4>
-                     </div>
-                     <div class="portlet-body">
-                        <ul id="registered_services" class="service_list">
-                           % my @task_ids = ();
-                           % my @task_list = @{ rexio->list_services_of_host(param("id"))->{data}}; 
-                           % @task_list = sort { $a->{task_order} <=> $b->{task_order} } @task_list;
-                           % for my $task (@task_list) {
-                           % push(@task_ids, $task->{id});
-                           <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
-                              <div style="float: right;">[ <a href="#">run</a> ]</div>
-                              <%= $task->{service}->{service_name} %> / <%= $task->{task_name} %>
-                           </li>
-                           % }
-                        </ul>
-                     </div>
-                  </div>
-
-                  <button id="save_services">Save</button>
-                  <button id="run_services">Run</button>
-
-               </td>
-               <td>&nbsp;</td>
-               <td valign="top">
-
-                  <div class="portlet box grey">
-                     <div class="portlet-title">
-                        <h4>Available Services</h4>
-                     </div>
-                     <div class="portlet-body">
-                        <ul id="available_services" class="service_list">
-                           % for my $service (@{ rexio->list_services->{data} }) {
-                              % for my $task (@{ $service->{tasks} }) {
-                              % if(grep { $task->{id} == $_ } @task_ids) {
-                              %    next;
-                              % }
-                              <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
-                                 <div style="float: right;">[ <a href="#">run</a> ]</div>
-                                 <%= $service->{service_name} %> / <%= $task->{task_name} %>
-                              </li>
-                              % }
-                           % }
-                        </ul>
-                     </div>
-                  </div>
-
-               </td>
-            </tr>
-         </table>
-
-      </div> <!-- service tab -->
 
       % for my $tab_content (@{ $plugin_tab_content }) {
       <%= $tab_content %>

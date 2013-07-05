@@ -23,6 +23,28 @@ sub index {
 
 sub view {
    my $self = shift;
+
+   my (@dashboard, @dashboard_stats);
+
+   # load dashboard (statistics) from plugins
+
+   # load dashboard from plugins
+   for my $plugin (@{ $self->config->{plugins} }) {
+      my $template_path = "\L$plugin";
+      my $template = $self->render("$template_path/ext/dashboard", partial => 1);
+      if($template) {
+         push @dashboard, $template;
+      }
+
+      my $template2 = $self->render("$template_path/ext/dashboard_stats", partial => 1);
+      if($template2) {
+         push @dashboard_stats, $template2;
+      }
+   }
+
+   $self->stash(dashboard       => \@dashboard);
+   $self->stash(dashboard_stats => \@dashboard_stats);
+
    $self->render;
 }
 

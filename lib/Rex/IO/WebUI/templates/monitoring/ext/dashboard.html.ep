@@ -1,0 +1,29 @@
+% my $alerts = rexio->list_alerts;
+
+<div class="portlet box grey">
+   <div class="portlet-title">
+      <h4>Current Alerts</h4>
+   </div>
+   <div class="portlet-body">
+      <table class="monitoring_table" id="monitoring_table" border="0" width="100%">
+         % if(ref $alerts eq "ARRAY" && scalar @{ $alerts }) {
+            % for my $alert (@{ $alerts }) {
+            <tr id="alert_<%= $alert->{hardware_id} %>_<%= $alert->{template_item_id} %>">
+               <td width="24" class="td-icon icon-warning"></td>
+               <td width="150"><%= $alert->{time} %></td>
+               <td width="200"><%= $alert->{host} %></td>
+               <td><%= $alert->{name} %></td>
+            </tr>
+            % }
+
+
+         % } else {
+         <tr id="alert_no_events">
+            <td>Currently everything is up and running. So go and get a coffee as long as you can...</td>
+         </tr>
+         % }
+      </table>
+   </div>
+</div>
+
+

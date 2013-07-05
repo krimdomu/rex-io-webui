@@ -55,4 +55,19 @@ sub add_message {
    $self->render_json($ret);
 }
 
+##### Rex.IO WebUI Plugin specific methods 
+sub rexio_routes {
+   my ($self, $routes) = @_;
+   my $r      = $routes->{route};
+   my $r_auth = $routes->{route_auth};
+
+   $r_auth->get("/incident")->to("incident#list");
+   $r_auth->post("/incident")->to("incident#add");
+   $r_auth->get("/incident/:incident_id")->to("incident#view");
+   $r_auth->post("/incident/:incident_id")->to("incident#add_message");
+
+}
+
+
+
 1;
