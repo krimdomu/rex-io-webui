@@ -10,6 +10,15 @@
    <li>
       <%= $server->{name} %>
    </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu">
+         <ul>
+            <li><a href="#" id="lnk_del_server">Delete Server</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+
 </ul>
 
 <div class="tabbable">

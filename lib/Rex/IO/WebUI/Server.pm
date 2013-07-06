@@ -70,6 +70,14 @@ sub add_new {
    $self->render_json($ret);
 }
 
+sub del_server {
+   my ($self) = @_;
+
+   my $srv_id = $self->param("id");
+   my $ret = $self->rexio->del_server($srv_id);
+   $self->render(json => $ret);
+}
+
 sub update_network_adapter {
    my ($self) = @_;
 
@@ -257,6 +265,7 @@ sub rexio_routes {
    $r_auth->get("/server/bulk")->to("server#bulk_view");
    $r_auth->post("/server/new")->to("server#add_new");
    $r_auth->get("/server/:id")->to("server#index");
+   $r_auth->delete("/server/:id")->to("server#del_server");
    $r_auth->post("/server/:id")->to("server#update_server");
    $r_auth->post("/server/#ip/inventory")->to("server#trigger_inventory");
    $r_auth->post("/server/#ip/reboot")->to("server#trigger_reboot");
