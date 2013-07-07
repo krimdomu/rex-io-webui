@@ -87,6 +87,7 @@
          });
       });*/
    </script>
+   <script type="text/javascript" charset="utf-8" src="/js/debug.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
    <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
    % for my $plg (@{config->{ plugins }}) {
