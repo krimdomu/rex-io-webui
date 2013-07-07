@@ -86,13 +86,13 @@ a,
 a:link,
 a:visited,
 a:active {
-  font-size: 0.95em;
+  font-size: 12px;
   font-family: Verdana;
   color: #418aec;
   text-decoration: none; }
 
 a:hover {
-  font-size: 0.95em;
+  font-size: 12px;
   font-family: Verdana;
   color: #343483; }
 
@@ -184,7 +184,7 @@ ul.navul > li > a {
   border: 0px;
   padding: 10px 15px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   outline: 0;
   text-shadow: none !important;
@@ -220,7 +220,7 @@ ul.sub > li > a {
   color: #ccc;
   text-decoration: none;
   text-shadow: 0 1px 1px #000;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   background: none; }
 
@@ -811,3 +811,9 @@ table.db_table_entries_incident tr:nth-child(odd) {
 
 .clearfix {
   clear: both; }
+
+.ui-menu-icon {
+  float: left !important; }
+
+.ui-icon-carat-1-e {
+  background-position: -100px 0px !important; }
