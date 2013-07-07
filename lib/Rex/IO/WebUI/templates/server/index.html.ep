@@ -14,6 +14,9 @@
       <div class="dropdown-menu">
          <ul id="menu">
             <li><a href="#" id="lnk_del_server">Delete Server</a></li>
+            % for my $plg_menu (@{ $plugin_menus }) {
+            <%= $plg_menu %>
+            % }
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>

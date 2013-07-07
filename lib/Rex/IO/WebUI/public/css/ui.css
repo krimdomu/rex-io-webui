@@ -420,6 +420,7 @@ table.dataTable {
    list-style: none;
    margin: 0 !important;
    padding: 0 !important;
+   width: 150px !important;
 }
 
 .dropdown-menu ul > li {
