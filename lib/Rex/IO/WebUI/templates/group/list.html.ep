@@ -9,7 +9,7 @@
    </li>
    <li class="pull-right no-padding">
       <div class="dropdown-menu">
-         <ul>
+         <ul id="menu">
             <li><a href="#" id="lnk_add_group">Add Group</a></li>
             <li><a href="#" id="lnk_del_group">Delete Group</a></li>
             <li><a href="#" id="lnk_show_user">Show Users</a></li>

@@ -9,7 +9,7 @@
    </li>
    <li class="pull-right no-padding">
       <div class="dropdown-menu">
-         <ul>
+         <ul id="menu">
             <li><a href="#" id="lnk_add_incident">Add Incident</a></li>
          </ul>
       </div>

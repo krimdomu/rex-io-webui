@@ -12,7 +12,7 @@
    </li>
    <li class="pull-right no-padding">
       <div class="dropdown-menu">
-         <ul>
+         <ul id="menu" class="ul-dropdown-menu">
             <li><a href="#" id="dns_add_entry">Add Entry</a></li>
             <li><a href="#" id="dns_del_entry">Delete Entry</a></li>
          </ul>
