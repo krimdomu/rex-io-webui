@@ -102,6 +102,9 @@ sub startup {
          route => $r,
          route_auth => $r_auth,
       });
+
+      eval { $klass->__init__($self); };
+      if($@) { print STDERR "MOD/ERR: $@\n"; }
    };
 }
 

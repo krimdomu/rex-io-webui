@@ -312,6 +312,11 @@ table.dataTable {
    font-size: 12px;;
 }
 
+.dataTables_filter {
+   text-align: left !important;
+   float: left !important;
+}
+
 .table-cell-head {
    background-color: #ffffff !important;
    background-image: none !important;
