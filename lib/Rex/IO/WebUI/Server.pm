@@ -283,7 +283,7 @@ sub rexio_routes {
    $r_auth->post("/server_group/server/:server_id/:group_id")->to("server#add_server_to_group");
 
    # set next boot // todo: andere url
-   $r_auth->post("/server/:server/:boot")->to("server#set_next_boot");
+   $r_auth->post("/server/:server/boot/:boot")->to("server#set_next_boot");
    $r_auth->route("/server/#ip/command")->via("RUN")->to("server#run_command");
 }
 
