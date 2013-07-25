@@ -23,7 +23,7 @@ Rex.IO is a Bare-Metal-Deployer and an infrastructure management tool.
 %{__rm} -rf %{buildroot}
 %{__mkdir} -p %{buildroot}/srv/rexio/webui
 %{__mkdir} -p %{buildroot}/etc/init.d
-%{__cp} -R {bin,db,lib,t,local} %{buildroot}/srv/rexio/webui
+%{__cp} -R {bin,lib,t,local} %{buildroot}/srv/rexio/webui
 %{__cp} doc/rex-io-webui.init %{buildroot}/etc/init.d/rex-io-webui
 %{__chmod} 755 %{buildroot}/etc/init.d/rex-io-webui
 
