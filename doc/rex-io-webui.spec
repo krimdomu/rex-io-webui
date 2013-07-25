@@ -9,8 +9,12 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 AutoReqProv: no
 
 BuildRequires: rexio-perl >= 5.18.0
-#Requires: libssh2 >= 1.2.8 - is included in perl-Net-SSH2 deps
+BuildRequires: rexio-perl-YAML >= 0.84
+BuildRequires: rexio-perl-Rex-IO-Client >= 0
+
 Requires: rexio-perl >= 5.18.0
+Requires: rexio-perl-YAML >= 0.84
+Requires: rexio-perl-Rex-IO-Client >= 0
 
 %description
 Rex.IO is a Bare-Metal-Deployer and an infrastructure management tool.
