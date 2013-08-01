@@ -37,7 +37,7 @@ find %{buildroot} -name .packlist -exec %{__rm} {} \;
 %pre
 
 # create rex.io user if not there
-if ! id rexio &>/dev/null; then
+if ! id rexio >/dev/null 2>&1; then
 	groupadd -r rexio &>/dev/null
 	useradd -r -d /srv/rexio -c 'Rex.IO Service User' -g rexio -m rexio &>/dev/null
 fi
