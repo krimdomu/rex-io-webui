@@ -20,13 +20,15 @@
 PATH=/usr/lib/rexio/perl/bin:/srv/rexio/webui/local/bin:$PATH
 PERL5LIB=/srv/rexio/webui/local/lib/perl5
 REXIO_BIN=/srv/rexio/webui/local/bin/hypnotoad
-REXIO_SCRIPT=/srv/rexio/webui/bin/rex_iowebui
+REXIO_SCRIPT=/srv/rexio/webui/bin/rex_ioweb_ui
 REXIO_LOG=/srv/rexio/webui/log/stdout.log
 test -x $REXIO_BIN || exit 5
 test -d $(dirname $REXIO_LOG) || mkdir -p $(dirname $REXIO_LOG)
 chown rexio: $(dirname $REXIO_LOG)
 
 PIDFILE=/var/run/rex_io_webui.pid
+
+export PERL5LIB
 
 # Shell functions sourced from /etc/rc.status:
 #      rc_check         check and set local and overall rc status
@@ -60,7 +62,7 @@ case "$1" in
 
 	# NOTE: startproc return 0, even if service is 
 	# already running to match LSB spec.
-        start-stop-daemon -x $REXIO_BIN -p $PIDFILE -u rexio --start --  /srv/rexio/webui/bin/rex_iowebui
+        start-stop-daemon -x $REXIO_BIN -p $PIDFILE -u rexio --start --  /srv/rexio/webui/bin/rex_ioweb_ui
 
 	# Remember status and be verbose
 	rc_status -v
