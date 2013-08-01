@@ -14,7 +14,7 @@ sub update {
    my ($self) = @_;
 
    my $ret = $self->rexio->save_deploy_os($self->param("id"), %{ $self->req->json });
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub create_new {
@@ -27,7 +27,7 @@ sub post_new {
 
    my $ret = $self->rexio->add_os_template(%{ $self->req->json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 

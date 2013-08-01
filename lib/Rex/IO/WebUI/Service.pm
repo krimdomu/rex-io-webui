@@ -8,7 +8,7 @@ sub remove_all_tasks_from_server {
 
    my $ret = $self->rexio->remove_all_tasks_from_host($self->param("hostid"));
    
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub add_task_to_server {
@@ -19,7 +19,7 @@ sub add_task_to_server {
 
    my $ret = $self->rexio->add_task_to_host(host => $host_id, task => $json->{task_id}, task_order => $json->{task_order});
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub run_task_on_host {
@@ -36,7 +36,7 @@ sub run_tasks {
 
    my $ret = $self->rexio->run_tasks(@{ $json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 

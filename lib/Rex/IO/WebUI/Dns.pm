@@ -28,7 +28,7 @@ sub add_record {
 
    my $ret = $self->rexio->add_dns_record($self->param("domain"), $self->param("host"), %{ $option });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub del_record {
@@ -40,7 +40,7 @@ sub del_record {
 
    my $ret = $self->rexio->del_dns_record($domain, $host, $type);
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 

@@ -18,13 +18,13 @@ sub list {
 sub add {
    my ($self) = @_;
    my $ret = $self->rexio->add_user(%{ $self->req->json });
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub delete {
    my ($self) = @_;
    my $ret = $self->rexio->del_user($self->param("user_id"));
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 

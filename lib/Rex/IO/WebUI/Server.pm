@@ -52,7 +52,7 @@ sub set_next_boot {
    my ($self) = @_;
 
    my $data = $self->rexio->set_next_boot(server => $self->param("server"), boot => $self->param("boot"));
-   $self->render_json($data);
+   $self->render(json => $data);
 }
 
 sub list {
@@ -73,7 +73,7 @@ sub add_new {
    delete $json->{mac};
    my $ret = $self->rexio->add_server($mac, %{ $json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub del_server {
@@ -89,7 +89,7 @@ sub update_network_adapter {
 
    my $ret = $self->rexio->update_network_adapter($self->param("id"), %{ $self->req->json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub update_server {
@@ -97,7 +97,7 @@ sub update_server {
 
    my $ret = $self->rexio->update_server($self->param("id"), %{ $self->req->json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub trigger_inventory {
@@ -105,7 +105,7 @@ sub trigger_inventory {
 
    my $ret = $self->rexio->trigger_inventory($self->param("ip"));
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub trigger_reboot {
@@ -113,7 +113,7 @@ sub trigger_reboot {
 
    my $ret = $self->rexio->trigger_reboot($self->param("ip"));
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 
@@ -129,7 +129,7 @@ sub run_command {
    $self->app->log->debug(Dumper($self->req->json));
    $self->rexio->send_command_to($self->param("ip"), $self->req->json);
 
-   $self->render_json({ok => Mojo::JSON->true});
+   $self->render(json => {ok => Mojo::JSON->true});
 }
 
 sub messagebroker {
@@ -242,21 +242,21 @@ sub add_group {
    my ($self) = @_;
    my $ret = $self->rexio->add_server_group(%{ $self->req->json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub del_group {
    my ($self) = @_;
    my $ret = $self->rexio->del_server_group($self->param("group_id"));
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub add_server_to_group {
    my ($self) = @_;
    my $ret = $self->rexio->add_server_to_server_group($self->param("server_id"), $self->param("group_id"));
    
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 

@@ -11,7 +11,7 @@ sub index {
       push(@ret, { label => $srv->{name}, value => $srv->{name}, srv_id => $srv->{id} });
    }
 
-   $self->render_json(\@ret);
+   $self->render(json => \@ret);
 }
 
 1;

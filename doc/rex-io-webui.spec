@@ -1,10 +1,10 @@
 Summary: Rex.IO - WebUI
 Name: rex-io-webui
-Version: 0.0.12
+Version: 0.0.13
 Release: 3
 License: Apache 2.0
 Group: Utilities/System
-Source: http://rex.io/downloads/rex-io-webui-0.0.12.tar.gz
+Source: http://rex.io/downloads/rex-io-webui-0.0.13.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 AutoReqProv: no
 

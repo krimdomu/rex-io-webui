@@ -21,11 +21,11 @@ sub add_group {
 
    my $ref = $self->req->json;
    if(! exists $ref->{name}) {
-      return $self->render_json({ok => Mojo::JSON->false, error => "name missing"}, status => 500);
+      return $self->render(json => {ok => Mojo::JSON->false, error => "name missing"}, status => 500);
    }
 
    my $ret = $self->rexio->add_monitoring_template(%{ $ref });
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub delete_group {
@@ -34,7 +34,7 @@ sub delete_group {
    my $group_id = $self->param("group_id");
    my $ret = $self->rexio->del_monitoring_template($group_id);
    
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub list_mon_group {
@@ -52,7 +52,7 @@ sub add_monitoring_item {
 
    my $ret = $self->rexio->add_monitoring_item($self->param("groupid"), %{ $self->req->json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub delete_monitoring_item {
@@ -60,7 +60,7 @@ sub delete_monitoring_item {
    
    my $ret = $self->rexio->del_monitoring_item($self->param("group_id"), $self->param("item_id"));
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub view_item {
@@ -83,7 +83,7 @@ sub update_item {
 
    my $ret = $self->rexio->update_monitoring_item($group_id, $item_id, %{ $self->req->json });
    
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub add_group_to_host {
@@ -94,7 +94,7 @@ sub add_group_to_host {
 
    my $ret = $self->rexio->add_monitoring_template_to_host($group_id, $host_id);
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 

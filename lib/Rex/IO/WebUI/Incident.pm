@@ -25,7 +25,7 @@ sub add {
 
    my $ret = $self->rexio->add_incident(%{ $json });
 
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 sub view {
@@ -52,7 +52,7 @@ sub add_message {
    $json->{creator}  = $self->current_user->id;
 
    my $ret = $self->rexio->add_incident_message($self->param("incident_id"), %{ $json });
-   $self->render_json($ret);
+   $self->render(json => $ret);
 }
 
 ##### Rex.IO WebUI Plugin specific methods 
