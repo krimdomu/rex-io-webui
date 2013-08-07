@@ -1,6 +1,6 @@
 Summary: Rex.IO - WebUI
 Name: rex-io-webui
-Version: 0.0.14
+Version: 0.2.0
 Release: 1
 License: Apache 2.0
 Group: Utilities/System
