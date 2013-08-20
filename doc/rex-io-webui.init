@@ -30,8 +30,8 @@ PIDFILE=/var/run/rex_io_webui.pid
 
 export PERL5LIB
 
-if [ -f /etc/rex/io/env-webui.conf ]; then
-   . /etc/rex/io/env-webui.conf
+if [ -f /etc/rex/io/env-webui.sh ]; then
+   . /etc/rex/io/env-webui.sh
 fi
 
 # Shell functions sourced from /etc/rc.status:
