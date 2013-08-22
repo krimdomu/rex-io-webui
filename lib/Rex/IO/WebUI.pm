@@ -5,7 +5,7 @@ use File::Basename 'dirname';
 use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 
-our $VERSION = "0.2.5";
+our $VERSION = "0.2.6";
 
 # This method will run once at server start
 sub startup {
