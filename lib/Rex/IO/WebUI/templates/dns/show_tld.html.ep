@@ -84,4 +84,7 @@
    </form>
 </div>
 
+<div id="dns_delete_entry_dialog" title="Really delete entry">
+   <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This entry will be permanently deleted and cannot be recovered. Are you sure?</p>
+</div>
 
