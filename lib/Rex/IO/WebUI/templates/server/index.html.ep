@@ -1,3 +1,6 @@
+<script type="text/javascript">
+   var server_name = '<%= $server->{name} %>';
+</script>
 <h1 class="page-title"><%= $server->{name} %><small>detail information</small></h1>
 
 <ul class="breadcrumb">
@@ -311,9 +314,5 @@
 
       </fieldset>
    </form>
-</div>
-
-<div id="server_delete_dialog" title="Really delete server <%= $server->{name} %>">
-   <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This server will be permanently deleted and cannot be recovered. Are you sure?</p>
 </div>
 
