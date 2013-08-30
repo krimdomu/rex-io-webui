@@ -97,7 +97,7 @@
                            <% } %>
                         </select>
                         <button id="save_boot_target">Save</button>
-                        <!-- <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %> -->
+                        <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
                      </td>
                   </tr>
                </table>
@@ -155,7 +155,7 @@
 
                </table>
                <table border="0">
-                  % if($is_online) {
+                  % if(0 && $is_online) {
                   <tr>
                      <td colspan="2">&nbsp;</td>
                   </tr>
