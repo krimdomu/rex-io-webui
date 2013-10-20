@@ -37,6 +37,7 @@ lib/Rex/IO/WebUI/public/css/smoothness/images/ui-icons_cd0a0a_256x240.png
 lib/Rex/IO/WebUI/public/css/smoothness/jquery-ui-1.9.0.custom.css
 lib/Rex/IO/WebUI/public/css/smoothness/jquery-ui-1.9.0.custom.min.css
 lib/Rex/IO/WebUI/public/css/ui.css
+lib/Rex/IO/WebUI/public/css/ui.scss
 lib/Rex/IO/WebUI/public/icons/arrow-down.png
 lib/Rex/IO/WebUI/public/icons/arrow-left.png
 lib/Rex/IO/WebUI/public/icons/arrow-up.png
@@ -81,6 +82,7 @@ lib/Rex/IO/WebUI/public/js/DataTables-1.9.4/media/js/jquery.dataTables.js
 lib/Rex/IO/WebUI/public/js/DataTables-1.9.4/media/js/jquery.dataTables.min.js
 lib/Rex/IO/WebUI/public/js/DataTables-1.9.4/media/js/jquery.js
 lib/Rex/IO/WebUI/public/js/debug.js
+lib/Rex/IO/WebUI/public/js/deploy.js
 lib/Rex/IO/WebUI/public/js/deploy/template.js
 lib/Rex/IO/WebUI/public/js/dhcp.js
 lib/Rex/IO/WebUI/public/js/dns.js
@@ -158,6 +160,7 @@ lib/Rex/IO/WebUI/public/js/user.js
 lib/Rex/IO/WebUI/public/js/view.js
 lib/Rex/IO/WebUI/Search.pm
 lib/Rex/IO/WebUI/Server.pm
+lib/Rex/IO/WebUI/Service.pm
 lib/Rex/IO/WebUI/templates/dashboard/get_locations.html.ep
 lib/Rex/IO/WebUI/templates/dashboard/index.html.ep
 lib/Rex/IO/WebUI/templates/dashboard/login.html.ep
@@ -175,12 +178,16 @@ lib/Rex/IO/WebUI/templates/dhcp/show_leases.html.ep
 lib/Rex/IO/WebUI/templates/dns/ext/mainmenu.html.ep
 lib/Rex/IO/WebUI/templates/dns/show_tld.html.ep
 lib/Rex/IO/WebUI/templates/group/list.html.ep
+lib/Rex/IO/WebUI/templates/incident/ext/dashboard.html.ep
+lib/Rex/IO/WebUI/templates/incident/ext/server_tabs_information.html.ep
 lib/Rex/IO/WebUI/templates/incident/list.html.ep
 lib/Rex/IO/WebUI/templates/incident/view.html.ep
 lib/Rex/IO/WebUI/templates/layouts/default.html.ep
 lib/Rex/IO/WebUI/templates/layouts/login.html.ep
 lib/Rex/IO/WebUI/templates/log/ext/server_tabs.html.ep
 lib/Rex/IO/WebUI/templates/log/ext/server_tabs_content.html.ep
+lib/Rex/IO/WebUI/templates/monitoring/ext/dashboard.html.ep
+lib/Rex/IO/WebUI/templates/monitoring/ext/dashboard_stats.html.ep
 lib/Rex/IO/WebUI/templates/monitoring/ext/mainmenu.html.ep
 lib/Rex/IO/WebUI/templates/monitoring/ext/server_tabs.html.ep
 lib/Rex/IO/WebUI/templates/monitoring/ext/server_tabs_content.html.ep
@@ -193,6 +200,8 @@ lib/Rex/IO/WebUI/templates/server/ext/mainmenu.html.ep
 lib/Rex/IO/WebUI/templates/server/group.html.ep
 lib/Rex/IO/WebUI/templates/server/index.html.ep
 lib/Rex/IO/WebUI/templates/server/list.html.ep
+lib/Rex/IO/WebUI/templates/service/ext/server_tabs.html.ep
+lib/Rex/IO/WebUI/templates/service/ext/server_tabs_content.html.ep
 lib/Rex/IO/WebUI/templates/user/ext/mainmenu.html.ep
 lib/Rex/IO/WebUI/templates/user/list.html.ep
 lib/Rex/IO/WebUI/User.pm
