@@ -27,7 +27,12 @@
       % foreach my $entry (@{ $entries->{data} }) {
       <tr>
          <td><input class="bulk_checkbox" type="checkbox" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>" /></td>
-         <td><a href="#" class="server-link" srv_id="<%= $entry->{id} %>"><%= $entry->{name} %></a></td>
+         <td class="td_server_link" srv_id="<%= $entry->{id} %>">
+            <a href="#" class="server-link" srv_id="<%= $entry->{id} %>"><%= $entry->{name} %></a>
+            % for my $plugin (@{ $self->config->{plugins} }) {
+            %= $self->render(lc($plugin) . '/ext/server_list_row_name', partial => 1, entry => $entry);
+            % }
+         </td>
          <td><%= $entry->{mac} %></td>
          <td><% if($entry->{os}->{name}) { %><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>) <% } else { %>UNKNOWN<% } %></td>
          <td><%= $entry->{state} %></td>
