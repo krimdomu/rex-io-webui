@@ -864,3 +864,9 @@ table.db_table_entries_incident tr:nth-child(odd) {
   -webkit-border-radius: 0px !important;
   -khtml-border-radius: 0px !important;
   border-radius: 0px !important; }
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-tabs-loading a {
+  outline: 0; }
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-tabs-loading a:active {
+  outline: 0; }
