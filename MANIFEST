@@ -1,4 +1,5 @@
 bin/rex_ioweb_ui
+cpanfile
 lib/Rex/IO/WebUI.pm
 lib/Rex/IO/WebUI/Auth/User.pm
 lib/Rex/IO/WebUI/Dashboard.pm
