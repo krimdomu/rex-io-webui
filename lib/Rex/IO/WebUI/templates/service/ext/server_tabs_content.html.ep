@@ -56,5 +56,19 @@
       </tr>
    </table>
 
+   <div style="padding-top: 25px;"></div>
+
+   <div class="portlet box grey">
+      <div class="portlet-title">
+         <h4>Rex Output</h4>
+      </div>
+      <div class="portlet-body">
+         <div class="jobqueue_console_output" id="jobqueue_output_<%= $server->{name} %>">
+         </div>
+      </div>
+   </div>
+
+
+
 </div> <!-- service tab -->
 

@@ -1057,3 +1057,36 @@ table.db_table_entries_incident tr:nth-child(odd) {
 .ui-tabs .ui-tabs-nav li.ui-tabs-active a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-tabs-loading a:active {
    outline: 0;
 }
+
+.jobqueue_console_output {
+   background-color: #ffffff;
+}
+
+
+div.jobqueue_log_line:nth-child(odd) {
+   background-color: #efefef;
+}
+
+.jobqueue_log_line {
+   margin: 1px;
+   padding: 5px;
+   padding-top: 9px;
+   padding-bottom: 9px;
+}
+
+.green_text {
+   color: #00ff00;
+   font-weight: bold;
+}
+
+.red_text {
+   color: #c30000;
+   font-weight: bold;
+}
+
+.orange_text {
+   color: #ffad00;
+   font-weight: bold;
+}
+
+

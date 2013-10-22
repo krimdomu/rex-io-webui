@@ -172,7 +172,7 @@ sub events {
    my $tx    = $self->tx;
    my $redis = Mojo::Redis->new(server => "localhost:6379");
    $redis->timeout(0);
-   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy");
+   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy", "rex_io_jobqueue_output");
 
    $redis->on(
       error => sub {
@@ -198,6 +198,10 @@ sub events {
 
       if($channel eq "rex_io_log") {
          $ref->{cmd} = "logstream";
+      }
+
+      if($channel eq "rex_io_jobqueue_output") {
+         $ref->{cmd} = "jobqueue_output";
       }
 
       $tx->send(Mojo::JSON->encode($ref));
