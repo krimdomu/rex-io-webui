@@ -12,9 +12,39 @@ sub startup {
    my $self = shift;
 
    #######################################################################
+   # some helper functions
+   #######################################################################
+   $self->helper(get_cached => sub {
+      my ($self, $call, $args, $cache_key, $cb) = @_;
+
+      if(ref $args eq "CODE") { $cb = $args; $args = []; $cache_key = ""; };
+      if(ref $cache_key eq "CODE") { $cb = $cache_key; $cache_key = ""; }
+
+      my $key = "webui:$call:$cache_key";
+
+      my $redis = Mojo::Redis->new(server => "localhost:6379");
+      $self->app->log->debug("try to render cached data...");
+
+      $redis->get($key, sub {
+         my ($redis, $val) = @_;
+         if(! $val) {
+            $self->app->log->debug("getting new $call data...");
+            $val = $self->rexio->$call(@{ $args });
+            $redis->set($key, Mojo::JSON->encode($val));
+            $redis->expireat($key, time + ($self->config->{cache}->{$call} || 60));
+         }
+         else {
+            $val = Mojo::JSON->decode($val);
+         }
+
+         $cb->($val);
+      });
+   });
+
+   #######################################################################
    # for the package
    #######################################################################
-   
+ 
    # Switch to installable home directory
    $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
 

@@ -22,8 +22,6 @@
       </tr>
    </thead>
    <tbody>
-      % my $entries = rexio->list_hosts;
-      % my $os_templates = rexio->list_os_templates;
       % foreach my $entry (@{ $entries->{data} }) {
       <tr>
          <td><input class="bulk_checkbox" type="checkbox" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>" /></td>

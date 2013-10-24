@@ -8,44 +8,54 @@ use Mojo::UserAgent;
 sub index {
    my ($self) = @_;
 
+   $self->render_later;
+
    my $server = $self->rexio->get_server($self->param("id"));
    my $os_templates = $self->rexio->list_os_templates;
 
-   $self->stash("server", $server);
-   $self->stash("os_templates", $os_templates);
+   $self->get_cached("get_server", [$self->param("id")], $self->param("id"), sub {
+      my ($server) = @_;
+      $self->stash("server", $server);
+      
+      $self->get_cached("list_os_templates", sub {
+         my ($os_list) = @_;
+         $self->stash("os_templates", $os_list);
 
-   my (@more_tabs, @more_content, @information_plugins, @plugin_menus);
+         my (@more_tabs, @more_content, @information_plugins, @plugin_menus);
 
-   # load server tabs from plugins
-   for my $plugin (@{ $self->config->{plugins} }) {
-      my $template_path = "\L$plugin";
-      my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
-      if($template_tab) {
-         push @more_tabs, $template_tab;
-      }
+         # load server tabs from plugins
+         for my $plugin (@{ $self->config->{plugins} }) {
+            my $template_path = "\L$plugin";
+            my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
+            if($template_tab) {
+               push @more_tabs, $template_tab;
+            }
 
-      my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
-      if($template_content) {
-         push @more_content, $template_content;
-      }
+            my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
+            if($template_content) {
+               push @more_content, $template_content;
+            }
 
-      my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
-      if($information_content) {
-         push @information_plugins, $information_content;
-      }
+            my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
+            if($information_content) {
+               push @information_plugins, $information_content;
+            }
 
-      my $menu_content = $self->render("$template_path/ext/server_menu", partial => 1);
-      if($menu_content) {
-         push @plugin_menus, $menu_content;
-      }
-   }
+            my $menu_content = $self->render("$template_path/ext/server_menu", partial => 1);
+            if($menu_content) {
+               push @plugin_menus, $menu_content;
+            }
+         }
 
-   $self->stash(plugin_tabs => \@more_tabs);
-   $self->stash(plugin_tab_content => \@more_content);
-   $self->stash(plugin_information_tab => \@information_plugins);
-   $self->stash(plugin_menus => \@plugin_menus);
+         $self->stash(plugin_tabs => \@more_tabs);
+         $self->stash(plugin_tab_content => \@more_content);
+         $self->stash(plugin_information_tab => \@information_plugins);
+         $self->stash(plugin_menus => \@plugin_menus);
 
-   $self->render;
+         $self->render;
+      });
+   });
+
 }
 
 sub set_next_boot {
@@ -55,9 +65,26 @@ sub set_next_boot {
    $self->render(json => $data);
 }
 
+
+
 sub list {
    my ($self) = @_;
-   $self->render;
+
+   $self->render_later;
+
+   $self->get_cached("list_hosts", sub {
+      my ($server_list) = @_;
+      
+      $self->get_cached("list_os_templates", sub {
+         my ($os_list) = @_;
+
+         $self->stash(entries      => $server_list);
+         $self->stash(os_templates => $os_list);
+
+         $self->render;
+      });
+   });
+
 }
 
 sub add {
