@@ -41,6 +41,15 @@ sub startup {
       });
    });
 
+   $self->helper(clear_cache => sub {
+      my ($self, $call, $cache_key) = @_;
+      if(! defined $cache_key) { $cache_key = ""; }
+
+      my $redis = Mojo::Redis->new(server => "localhost:6379");
+      my $key = "webui:$call:$cache_key";
+      $redis->del($key);
+   });
+
    #######################################################################
    # for the package
    #######################################################################

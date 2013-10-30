@@ -5,9 +5,19 @@ use Mojo::Base 'Mojolicious::Controller';
 sub index {
    my $self = shift;
 
-   my @main_menu;
+   my (@main_menu, @main_menu_srv);
 
    # load navigation from plugins
+   for my $plugin (@{ $self->config->{plugins} }) {
+      my $template_path = "\L$plugin";
+      my $srv_mnu_template = $self->render("$template_path/ext/mainmenu_server", partial => 1);
+      if($srv_mnu_template) {
+         push @main_menu_srv, $srv_mnu_template;
+      }
+   }
+
+   $self->stash(main_menu_srv => \@main_menu_srv);
+
    for my $plugin (@{ $self->config->{plugins} }) {
       my $template_path = "\L$plugin";
       my $template = $self->render("$template_path/ext/mainmenu", partial => 1);
@@ -15,6 +25,8 @@ sub index {
          push @main_menu, $template;
       }
    }
+
+
 
    $self->stash(main_menu => \@main_menu);
    

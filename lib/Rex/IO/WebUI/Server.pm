@@ -100,6 +100,8 @@ sub add_new {
    delete $json->{mac};
    my $ret = $self->rexio->add_server($mac, %{ $json });
 
+   $self->clear_cache("list_hosts");
+
    $self->render(json => $ret);
 }
 
@@ -108,6 +110,8 @@ sub del_server {
 
    my $srv_id = $self->param("id");
    my $ret = $self->rexio->del_server($srv_id);
+
+   $self->clear_cache("list_hosts");
    $self->render(json => $ret);
 }
 
