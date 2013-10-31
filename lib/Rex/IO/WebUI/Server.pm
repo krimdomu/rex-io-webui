@@ -10,8 +10,8 @@ sub index {
 
    $self->render_later;
 
-   my $server = $self->rexio->get_server($self->param("id"));
-   my $os_templates = $self->rexio->list_os_templates;
+   #my $server = $self->rexio->get_server($self->param("id"));
+   #my $os_templates = $self->rexio->list_os_templates;
 
    $self->get_cached("get_server", [$self->param("id")], $self->param("id"), sub {
       my ($server) = @_;
