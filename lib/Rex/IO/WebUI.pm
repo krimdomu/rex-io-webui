@@ -5,7 +5,7 @@ use File::Basename 'dirname';
 use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 
-our $VERSION = "0.2.21";
+our $VERSION = "0.2.22";
 
 # This method will run once at server start
 sub startup {
@@ -48,6 +48,19 @@ sub startup {
       my $redis = Mojo::Redis->new(server => "localhost:6379");
       my $key = "webui:$call:$cache_key";
       $redis->del($key);
+   });
+
+   $self->helper(has_plugin => sub {
+      my ($self, $plugin) = @_;
+      my @plugins = @{ $self->config->{plugins} }; 
+
+      for my $p (@plugins) {
+         if($p eq $plugin) {
+            return 1;
+         }
+      }
+
+      return 0;
    });
 
    #######################################################################

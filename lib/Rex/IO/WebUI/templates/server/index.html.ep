@@ -196,10 +196,12 @@
                      <td>Bootdevice</td>
                      <td><input type="checkbox"<% if($eth->{boot} && $eth->{boot} == 1) { %>checked="checked"<% } %> name="boot_<%= $eth->{id} %>" value="1" id="boot_<%= $eth->{id} %>" /></td>
                   </tr>
+                  % if (has_plugin('Dns')) {
                   <tr>
                      <td>Register DNS</td>
                      <td><input type="checkbox" name="dns_<%= $eth->{id} %>" value="1" id="dns_<%= $eth->{id} %>" /></td>
                   </tr>
+                  % }
                   <tr>
                      <td>Protocol</td>
                      <td>
