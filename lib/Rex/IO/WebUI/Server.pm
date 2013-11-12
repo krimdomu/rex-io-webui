@@ -127,6 +127,7 @@ sub update_server {
    my ($self) = @_;
 
    my $ret = $self->rexio->update_server($self->param("id"), %{ $self->req->json });
+   $self->flush_cache();
 
    $self->render(json => $ret);
 }
@@ -203,7 +204,7 @@ sub events {
    my $tx    = $self->tx;
    my $redis = Mojo::Redis->new(server => "localhost:6379");
    $redis->timeout(0);
-   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy", "rex_io_jobqueue_output");
+   my $sub   = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy", "rex_io_jobqueue_output", "rex_io_cluster");
 
    $redis->on(
       error => sub {
@@ -233,6 +234,13 @@ sub events {
 
       if($channel eq "rex_io_jobqueue_output") {
          $ref->{cmd} = "jobqueue_output";
+      }
+
+      if($channel eq "rex_io_cluster") {
+         if($ref->{cmd} eq "flush_cache") {
+            $self->app->log->debug("Flushing Cache...");
+            $self->flush_cache();
+         }
       }
 
       $tx->send(Mojo::JSON->encode($ref));
