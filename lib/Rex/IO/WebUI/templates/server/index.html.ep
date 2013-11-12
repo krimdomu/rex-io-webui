@@ -1,3 +1,4 @@
+% layout 'frame';
 <script type="text/javascript">
    var server_name = '<%= $server->{name} %>';
 </script>

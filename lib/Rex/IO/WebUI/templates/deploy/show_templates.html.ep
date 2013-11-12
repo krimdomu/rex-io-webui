@@ -1,3 +1,4 @@
+% layout 'frame';
 % my $templates = rexio->get_deploy_oses;
 
 <h1 class="page-title">Templates<small>deployable os templates</small></h1>

@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Incident #<%= $incident->{id} %><small><%= $incident->{title} %></small></h1>
 
 <ul class="breadcrumb">

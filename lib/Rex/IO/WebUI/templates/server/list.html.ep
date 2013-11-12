@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Server Overview<small>All your servers</small></h1>
 
 <ul class="breadcrumb">

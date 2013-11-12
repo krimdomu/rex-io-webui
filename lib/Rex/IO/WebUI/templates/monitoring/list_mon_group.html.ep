@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Monitoring Group <%= $group->{name} %><small>monitoring is the heart of calm sleep</small></h1>
 
 <ul class="breadcrumb">

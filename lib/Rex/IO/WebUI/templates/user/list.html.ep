@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">User Overview<small>All your users</small></h1>
 
 <ul class="breadcrumb">

@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Dashboard<small>statistics and more</small></h1>
 
 <ul class="breadcrumb">

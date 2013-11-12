@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Server Groups<small>categorize your server</h1>
 
 <ul class="breadcrumb">

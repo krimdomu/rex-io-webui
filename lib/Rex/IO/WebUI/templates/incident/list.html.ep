@@ -1,3 +1,4 @@
+% layout 'frame';
 <h1 class="page-title">Incident Overview<small>The bad things in live</small></h1>
 
 <ul class="breadcrumb">

@@ -26,7 +26,7 @@
    % my @server_plugins = @{ rexio->get_plugins };
    <body>
 
-      <div class="page-container">
+      <div id="page_container" class="page-container">
 
          <div class="page-sidebar dark-background">
             <div class="main-accordion">
