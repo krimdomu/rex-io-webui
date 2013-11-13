@@ -904,6 +904,19 @@ table.dataTable tr.odd td.sorting_1 {
    width: 50%;
 }
 
+.framebody .portlet {
+   margin: 5px;
+}
+
+.table_no_bottom .table-toolbar {
+   padding: 0px !important;
+   margin-bottom: 0px !important;
+}
+
+.table_no_bottom .table-bottom-bar {
+   border: 0px !important; 
+}
+
 table.incident_overview th,
 table.incident_overview td {
    padding: 5px;
