@@ -357,6 +357,18 @@
                <td>Gateway</td>
                <td><input type="text" name="nwa_gateway" value="" id="nwa_gateway" /></td>
             </tr>
+            <tr id="tr_bridge">
+               <td>Bridge</td>
+               <td>
+                  <select name="nwa_bridge" id="nwa_bridge">
+                     <option value="">No bridging</option>
+                     % for my $br (@{ $bridges->{data} }) {
+                     <option value="<%= $br->{id} %>"><%= $br->{name} %></option>
+                     % }
+                  </select>
+               </td>
+            </tr>
+
 
          </table>
 
