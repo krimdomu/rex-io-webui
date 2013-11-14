@@ -351,6 +351,26 @@ sub update_bridge {
    $self->render(json => $ref);
 }
 
+sub delete_bridge {
+   my ($self) = @_;
+
+   my $ref = $self->rexio->call(DELETE => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"));
+
+   $self->render(json => $ref);
+}
+
+sub get_bridge {
+   my ($self) = @_;
+
+   my $ref = $self->rexio->call(GET => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"));
+
+   if(exists $ref->{data}) {
+      return $self->render(json => $ref->{data});
+   }
+
+   $self->render(json => $ref);
+}
+
 ##### Rex.IO WebUI Plugin specific methods 
 sub rexio_routes {
    my ($self, $routes) = @_;

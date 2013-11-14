@@ -258,15 +258,19 @@
                         <thead>
                            <tr>
                               <td>Name</td>
+                              <td>IP</td>
+                              <td>Netmask</td>
                               <td>Bridged Devices</td>
                            </tr>
                         </thead>
                         <tbody>
                         % my $bridges = rexio->call(LIST => "1.0", "hardware", hardware => $server->{id}, bridge => undef);
                         % for my $br (@{ $bridges->{data} }) {
-                           <tr>
+                           <tr dev="<%= $br->{name} %>" dev_id="<%= $br->{id} %>">
                               <td><%= $br->{name} %></td>
-                              <td><%= join(", ", @{ $br->{devices} || [] }) %></td>
+                              <td><%= $br->{ip} %></td>
+                              <td><%= $br->{netmask} %></td>
+                              <td><%= join(", ", @{ $br->{devices} }) %></td>
                            </tr>
                         % }
                         </tbody>
