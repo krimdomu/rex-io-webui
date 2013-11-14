@@ -6,7 +6,7 @@ use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 use Data::Dumper;
 
-our $VERSION = "0.2.25";
+our $VERSION = "0.2.26";
 
 # This method will run once at server start
 sub startup {
