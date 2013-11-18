@@ -5,6 +5,7 @@ use File::Basename 'dirname';
 use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 use Data::Dumper;
+use JSON::XS;
 
 our $VERSION = "0.2.27";
 
@@ -31,11 +32,11 @@ sub startup {
          if(! $val) {
             $self->app->log->debug("getting new $call data...");
             $val = $self->rexio->$call(@{ $args });
-            $redis->set($key, Mojo::JSON->encode($val));
+            $redis->set($key, encode_json($val));
             $redis->expireat($key, time + ($self->config->{cache}->{$call} || 60));
          }
          else {
-            $val = Mojo::JSON->decode($val);
+            $val = decode_json($val);
          }
 
          $cb->($val);
