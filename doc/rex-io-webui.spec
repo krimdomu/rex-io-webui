@@ -1,10 +1,10 @@
 Summary: Rex.IO - WebUI
 Name: rex-io-webui
-Version: 0.2.27
+Version: 0.2.28
 Release: 1
 License: Apache 2.0
 Group: Utilities/System
-Source: http://rex.io/downloads/rex-io-webui-0.2.27.tar.gz
+Source: http://rex.io/downloads/rex-io-webui-0.2.28.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 AutoReqProv: no
 
@@ -56,6 +56,6 @@ fi
 
 %changelog
 
-* Thu Jul 25 2013 Jan Gehring <jan.gehring at, gmail.com> 0.2.27-1
+* Thu Jul 25 2013 Jan Gehring <jan.gehring at, gmail.com> 0.2.28-1
 - initial packaged
 

@@ -7,7 +7,7 @@ use Cwd 'getcwd';
 use Data::Dumper;
 use JSON::XS;
 
-our $VERSION = "0.2.27";
+our $VERSION = "0.2.28";
 
 # This method will run once at server start
 sub startup {
