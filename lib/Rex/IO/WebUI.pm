@@ -154,6 +154,7 @@ sub startup {
    # Normal route to controller
    $r_auth->get("/")->to("dashboard#index");
    $r_auth->get("/dashboard")->to("dashboard#view");
+   $r_auth->post("/clear/cache")->to("server#clear_server_cache");
 
    # search
    $r_auth->get("/search")->to("search#index");

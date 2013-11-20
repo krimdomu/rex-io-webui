@@ -115,14 +115,6 @@ sub del_server {
    $self->render(json => $ret);
 }
 
-sub update_network_adapter {
-   my ($self) = @_;
-
-   my $ret = $self->rexio->update_network_adapter($self->param("id"), %{ $self->req->json });
-
-   $self->render(json => $ret);
-}
-
 sub update_server {
    my ($self) = @_;
 
@@ -324,6 +316,7 @@ sub update_network_adapter {
    $self->app->log->debug(Dumper($self->req->json));
 
    my $ref = $self->rexio->call(POST => "1.0", "hardware", hardware => $self->param("server_id"), network_adapter => $self->param("network_adapter_id"), ref => $self->req->json);
+   $self->flush_cache();
 
    $self->render(json => $ref);
 }
@@ -332,6 +325,7 @@ sub delete_network_adapter {
    my ($self) = @_;
 
    my $ref = $self->rexio->call(DELETE => "1.0", "hardware", hardware => $self->param("server_id"), network_adapter => $self->param("network_adapter_id"));
+   $self->flush_cache();
 
    $self->render(json => $ref);
 }
@@ -347,6 +341,7 @@ sub update_bridge {
    $self->app->log->debug(Dumper($self->req->json));
 
    my $ref = $self->rexio->call(POST => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"), ref => $self->req->json);
+   $self->flush_cache();
 
    $self->render(json => $ref);
 }
@@ -355,6 +350,7 @@ sub delete_bridge {
    my ($self) = @_;
 
    my $ref = $self->rexio->call(DELETE => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"));
+   $self->flush_cache();
 
    $self->render(json => $ref);
 }
@@ -370,6 +366,18 @@ sub get_bridge {
 
    $self->render(json => $ref);
 }
+
+sub clear_server_cache {
+   my ($self) = @_;
+
+   my $ret = $self->rexio->call(POST => "1.0", "hardware", clear => "cache");
+
+   $self->flush_cache();
+
+   $self->render(json => $ret);
+}
+
+
 
 ##### Rex.IO WebUI Plugin specific methods 
 sub rexio_routes {

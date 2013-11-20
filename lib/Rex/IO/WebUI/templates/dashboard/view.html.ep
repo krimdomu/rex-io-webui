@@ -64,7 +64,7 @@
                <table class="server_statistic" border="0" width="100%">
                   <tr>
                      <td class="key" width="150">Clear Cache:</td>
-                     <td class="value">If you think you see dead people: [<a href="#">x</a>]</td>
+                     <td class="value">If you think you see dead people: [<a href="#" id="lnk_clear_cache">x</a>]</td>
                   </tr>
                </table>
             </div>
