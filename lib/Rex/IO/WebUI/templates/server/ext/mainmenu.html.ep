@@ -3,7 +3,7 @@
    <ul class="sub">
       <li><a href="#" class="server-list-link">List Server</a></li>
       <li><a href="#" class="server-add-link">Add new Server</a></li>
-      <li><a href="#" class="server-group">Groups</a></li>
+      <!--      <li><a href="#" class="server-group">Groups</a></li> -->
       <% for my $mnu (@{ $main_menu_srv }) { %>
       <%= $mnu %>
       <% } %>

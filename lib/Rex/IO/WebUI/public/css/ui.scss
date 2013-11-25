@@ -1102,4 +1102,14 @@ div.jobqueue_log_line:nth-child(odd) {
    font-weight: bold;
 }
 
+.filter_bar {
+   border: 1px solid $border_color;
+   padding: 10px;
+}
+
+.filter_bar .filter_widget {
+   float: left;
+   padding-right: 15px;
+}
+
 

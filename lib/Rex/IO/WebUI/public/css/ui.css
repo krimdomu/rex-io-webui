@@ -904,3 +904,11 @@ div.jobqueue_log_line:nth-child(odd) {
 .orange_text {
   color: #ffad00;
   font-weight: bold; }
+
+.filter_bar {
+  border: 1px solid #c3c3c3;
+  padding: 10px; }
+
+.filter_bar .filter_widget {
+  float: left;
+  padding-right: 15px; }
