@@ -66,14 +66,34 @@ sub set_next_boot {
    $self->render(json => $data);
 }
 
+sub export {
+   my ($self) = @_;
 
+   $self->res->headers->header("Content-Type" => "text/csv");
+   $self->res->headers->header("Content-Disposition" => "attachment; filename=export-serverlist.csv");
+   $self->res->headers->header("Content-Description" => "Server List in CSV Format");
+   $self->res->headers->header("Pragma" => "no-cache");
+   $self->res->headers->header("Expires" => 0);
+
+   my $qry = "" . $self->req->query_params;
+
+   $self->render_later;
+
+   $self->get_cached("list_hosts", [$qry], $qry, sub {
+      my ($server_list) = @_;
+      $self->stash(entries => $server_list);
+      $self->render;
+   });
+}
 
 sub list {
    my ($self) = @_;
 
+   my $qry = "" . $self->req->query_params;
+
    $self->render_later;
 
-   $self->get_cached("list_hosts", sub {
+   $self->get_cached("list_hosts", [$qry], $qry, sub {
       my ($server_list) = @_;
       
       $self->get_cached("list_os_templates", sub {
@@ -402,6 +422,7 @@ sub rexio_routes {
 
    $r->websocket("/server_events")->to("server#events");
    $r->websocket("/messagebroker")->to("server#messagebroker");
+   $r_auth->get("/server/export")->to("server#export");
    $r_auth->get("/server/new")->to("server#add");
    $r_auth->get("/server/bulk")->to("server#bulk_view");
    $r_auth->post("/server/new")->to("server#add_new");

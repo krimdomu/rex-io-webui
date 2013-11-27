@@ -1,0 +1,6 @@
+"Name", "OS"
+% foreach my $entry (@{ $entries->{data} }) {
+"<%= $entry->{name} %>", "<% if($entry->{os}->{name}) { %><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>) <% } else { %>UNKNOWN<% } %>"
+% }
+"-----------", "-----------"
+"Exported Lists are always out of date.", ""
