@@ -43,10 +43,10 @@
                   </li>
                </ul>
             </li>
-            <li><a href="#" id="lnk_del_server">Delete Server</a></li>
             % for my $plg_menu (@{ $plugin_menus }) {
             <%= $plg_menu %>
             % }
+            <li><a href="#" id="lnk_del_server">Delete Server</a></li>
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>
@@ -127,6 +127,9 @@
                         <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
                      </td>
                   </tr>
+                  % for my $plg_general_information (@{ $plugin_general_information }) {
+                  <%= $plg_general_information %>
+                  % }
                </table>
 
             </div>

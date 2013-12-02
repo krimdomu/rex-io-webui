@@ -21,7 +21,7 @@ sub index {
          my ($os_list) = @_;
          $self->stash("os_templates", $os_list);
 
-         my (@more_tabs, @more_content, @information_plugins, @plugin_menus, @plugin_filter);
+         my (@more_tabs, @more_content, @information_plugins, @plugin_menus, @plugin_filter, @plugin_general_information);
 
          # load server tabs from plugins
          for my $plugin (@{ $self->config->{plugins} }) {
@@ -45,6 +45,13 @@ sub index {
             if($menu_content) {
                push @plugin_menus, $menu_content;
             }
+
+            my $gen_info_content = $self->render("$template_path/ext/server_general_information", partial => 1);
+            if($gen_info_content) {
+               push @plugin_general_information, $gen_info_content;
+            }
+
+
          }
 
          $self->stash(plugin_tabs => \@more_tabs);
@@ -52,6 +59,7 @@ sub index {
          $self->stash(plugin_information_tab => \@information_plugins);
          $self->stash(plugin_menus => \@plugin_menus);
          $self->stash(plugin_filter => \@plugin_filter);
+         $self->stash(plugin_general_information => \@plugin_general_information);
 
          $self->render;
       });
