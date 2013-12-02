@@ -90,7 +90,6 @@ sub list {
    my ($self) = @_;
 
    my $qry = "" . $self->req->query_params;
-
    $self->render_later;
 
    $self->get_cached("list_hosts", [$qry], $qry, sub {
