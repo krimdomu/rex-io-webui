@@ -912,3 +912,7 @@ div.jobqueue_log_line:nth-child(odd) {
 .filter_bar .filter_widget {
   float: left;
   padding-right: 15px; }
+
+.dropdown-menu ul > li > a.mnu_item {
+   padding-left: 21px !important;
+}

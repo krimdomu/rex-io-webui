@@ -26,16 +26,16 @@
                      <ul>
                         <li><a href="#" id="lnk_server_network_adapter">Adapter</a>
                         <ul>
-                           <li><a href="#" id="lnk_server_network_add_adapter">Add Adapter</a></li>
-                           <li><a href="#" id="lnk_server_network_delete_adapter">Delete Adapter</a></li>
-                           <li><a href="#" id="lnk_server_network_configure_adapter">Configure Adapter</a></li>
+                           <li><a href="#" id="lnk_server_network_add_adapter" class="mnu_item">Add Adapter</a></li>
+                           <li><a href="#" id="lnk_server_network_delete_adapter" class="mnu_item">Delete Adapter</a></li>
+                           <li><a href="#" id="lnk_server_network_configure_adapter" class="mnu_item">Configure Adapter</a></li>
                         </ul>
                         </li>
                         <li><a href="#" id="lnk_server_network_bridge">Bridge</a>
                         <ul>
-                           <li><a href="#" id="lnk_server_network_add_bridge">Add Bridge</a></li>
-                           <li><a href="#" id="lnk_server_network_delete_bridge">Delete Bridge</a></li>
-                           <li><a href="#" id="lnk_server_network_configure_bridge">Configure Bridge</a></li>
+                           <li><a href="#" id="lnk_server_network_add_bridge" class="mnu_item">Add Bridge</a></li>
+                           <li><a href="#" id="lnk_server_network_delete_bridge" class="mnu_item">Delete Bridge</a></li>
+                           <li><a href="#" id="lnk_server_network_configure_bridge" class="mnu_item">Configure Bridge</a></li>
                         </ul>
                         </li>
 
@@ -43,10 +43,10 @@
                   </li>
                </ul>
             </li>
-            <li><a href="#" id="lnk_del_server">Delete Server</a></li>
             % for my $plg_menu (@{ $plugin_menus }) {
             <%= $plg_menu %>
             % }
+            <li><a href="#" id="lnk_del_server" class="mnu_item">Delete Server</a></li>
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>
