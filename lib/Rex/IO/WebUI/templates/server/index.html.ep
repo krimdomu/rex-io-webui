@@ -127,6 +127,9 @@
                         <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
                      </td>
                   </tr>
+                  % for my $plg_general_information (@{ $plugin_general_information }) {
+                  <%= $plg_general_information %>
+                  % }
                </table>
 
             </div>
