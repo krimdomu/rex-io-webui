@@ -1,0 +1,40 @@
+<div class="portlet box grey">
+   <div class="portlet-title">
+      <h4>Service Module Administration</h4>
+   </div>
+   <div class="portlet-body">
+      <table class="server_statistic" border="0" width="100%">
+         <tr>
+            <td class="key" width="150">Running workers</td>
+            <td>1</td>
+         </tr>
+      </table>
+   </div>
+</div>
+
+<div class="portlet box grey">
+   <div class="portlet-title">
+      <h4>Current Service Jobs</h4>
+   </div>
+   <div class="portlet-body">
+      <table class="server_statistic" border="0" width="100%">
+         <tr>
+            <td class="key">demo12</td>
+            <td>common / setup</td>
+            <td width="150">pending</td>
+         </tr>
+         <tr>
+            <td class="key">demo13</td>
+            <td>common / setup</td>
+            <td width="150">success</td>
+         </tr>
+         <tr>
+            <td class="key">demo14</td>
+            <td>db_server / setup</td>
+            <td width="150">running</td>
+         </tr>
+      </table>
+   </div>
+</div>
+
+

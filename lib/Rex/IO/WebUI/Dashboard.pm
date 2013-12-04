@@ -36,7 +36,7 @@ sub index {
 sub view {
    my $self = shift;
 
-   my (@dashboard, @dashboard_stats);
+   my (@dashboard, @dashboard_stats, @dashboard_admin);
 
    # load dashboard (statistics) from plugins
 
@@ -52,10 +52,16 @@ sub view {
       if($template2) {
          push @dashboard_stats, $template2;
       }
+
+      my $template_admin = $self->render("$template_path/ext/dashboard_admin", partial => 1);
+      if($template_admin) {
+         push @dashboard_admin, $template_admin;
+      }
    }
 
    $self->stash(dashboard       => \@dashboard);
    $self->stash(dashboard_stats => \@dashboard_stats);
+   $self->stash(dashboard_admin => \@dashboard_admin);
 
    $self->render;
 }

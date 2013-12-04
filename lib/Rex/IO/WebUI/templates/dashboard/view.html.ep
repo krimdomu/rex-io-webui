@@ -70,6 +70,10 @@
             </div>
          </div>
 
+         % for my $pl_dash (@{ $dashboard_admin }) {
+            <%= $pl_dash %>
+         % }
+
       </div> <!-- tab-admin -->
 
 
