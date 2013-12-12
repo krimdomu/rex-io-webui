@@ -1,6 +1,6 @@
 % my $report_qry = rexio->call(GET => "1.0", "report", since => 86400);
 % my $reports = $report_qry->{data};
-% my $status = rexio->call(GET => "1.0", "report", monitor => undef);
+% my $status = rexio->call(GET => "1.0", "service", monitor => undef);
 <div class="portlet box grey">
    <div class="portlet-title">
       <h4>Service Module Administration</h4>
