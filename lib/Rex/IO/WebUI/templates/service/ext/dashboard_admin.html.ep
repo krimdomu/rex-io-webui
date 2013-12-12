@@ -27,6 +27,9 @@
       <table class="server_statistic" border="0" width="100%">
          % for my $report (@{ $reports }) {
          <tr>
+% use DateTime;
+% my $time = DateTime->from_epoch(epoch => $report->{date});
+            <td width="150"><%= $time->ymd %> <%= $time->hms %></td>
             <td class="key"><%= $report->{server_name} %></td>
             <td><%= $report->{service} %> / <%= $report->{task} %></td>
             <td width="150"><%= $report->{status} %></td>
