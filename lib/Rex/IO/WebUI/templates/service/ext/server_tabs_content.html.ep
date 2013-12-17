@@ -16,7 +16,6 @@
                      % for my $task (@task_list) {
                      % push(@task_ids, $task->{id});
                      <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
-                        <div style="float: right;">[ <a href="#">run</a> ]</div>
                         <%= $task->{service}->{service_name} %> / <%= $task->{task_name} %>
                      </li>
                      % }
@@ -43,7 +42,6 @@
                         %    next;
                         % }
                         <li srv_id="<%= param("id") %>" task_id="<%= $task->{id} %>">
-                           <div style="float: right;">[ <a href="#">run</a> ]</div>
                            <%= $service->{service_name} %> / <%= $task->{task_name} %>
                         </li>
                         % }
