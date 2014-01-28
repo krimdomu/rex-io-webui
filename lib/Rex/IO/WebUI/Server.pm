@@ -252,7 +252,7 @@ sub events {
    $sub->on(message => sub {
       my ($sub, $message, $channel) = @_;
 
-      my $ref = Mojo::JSON->decode($message);
+      my $ref = j($message);
 
       if($channel eq "rex_monitor") {
          $ref->{cmd} = "monitor";

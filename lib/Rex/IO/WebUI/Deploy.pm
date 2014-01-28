@@ -2,7 +2,7 @@ package Rex::IO::WebUI::Deploy;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
 
-use Mojo::JSON;
+use Mojo::JSON "j";
 
 # This action will render a template
 sub show_templates {

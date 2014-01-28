@@ -7,7 +7,7 @@
 
 package Rex::IO::WebUI::Monitoring;
 use Mojo::Base 'Mojolicious::Controller';
-use Mojo::JSON;
+use Mojo::JSON "j";
 use Data::Dumper;
 
 # This action will render a template
