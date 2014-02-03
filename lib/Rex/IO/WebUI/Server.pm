@@ -4,6 +4,7 @@ use Data::Dumper;
 
 use Mojo::Redis;
 use Mojo::UserAgent;
+use Mojo::JSON 'j';
 
 sub index {
    my ($self) = @_;

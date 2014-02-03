@@ -1,4 +1,7 @@
-% my $report_qry = rexio->call(GET => "1.0", "report", since => 86400);
+% my $report_qry;
+% if($self->has_plugin('Report')) {
+%    $report_qry = rexio->call(GET => "1.0", "report", since => 86400);
+% }
 % my $reports = $report_qry->{data};
 % my $status = rexio->call(GET => "1.0", "service", monitor => undef);
 <div class="portlet box grey">
@@ -18,6 +21,8 @@
       </table>
    </div>
 </div>
+
+% if($self->has_plugin('Report')) {
 
 <div class="portlet box grey">
    <div class="portlet-title">
@@ -39,4 +44,4 @@
    </div>
 </div>
 
-
+% }
