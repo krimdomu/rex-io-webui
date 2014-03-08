@@ -9,6 +9,7 @@ my %deps = (
                   'Mojo::Redis' => 0,
                   'Mojolicious::Plugin::Authentication' => 0,
                   'Text::Markdown' => 0,
+                  'DateTime' => 0,
 );
 
 WriteMakefile1(
@@ -48,4 +49,3 @@ sub WriteMakefile1 {  #Written by Alexandr Ciornii, version 0.21. Added by eumm-
 
    WriteMakefile(%params);
 }
-
