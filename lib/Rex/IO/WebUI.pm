@@ -11,182 +11,182 @@ our $VERSION = "0.4.0";
 
 # This method will run once at server start
 sub startup {
-   my $self = shift;
+  my $self = shift;
 
-   #######################################################################
-   # some helper functions
-   #######################################################################
-   $self->helper(get_cached => sub {
-      my ($self, $call, $args, $cache_key, $cb) = @_;
+  #######################################################################
+  # some helper functions
+  #######################################################################
+  $self->helper(get_cached => sub {
+    my ($self, $call, $args, $cache_key, $cb) = @_;
 
-      if(ref $args eq "CODE") { $cb = $args; $args = []; $cache_key = ""; };
-      if(ref $cache_key eq "CODE") { $cb = $cache_key; $cache_key = ""; }
+    if(ref $args eq "CODE") { $cb = $args; $args = []; $cache_key = ""; };
+    if(ref $cache_key eq "CODE") { $cb = $cache_key; $cache_key = ""; }
 
-      my $key = "webui:$call:$cache_key";
+    my $key = "webui:$call:$cache_key";
 
-      my $redis = Mojo::Redis->new(server => "localhost:6379");
-      $self->app->log->debug("try to render cached data...");
+    my $redis = Mojo::Redis->new(server => "localhost:6379");
+    $self->app->log->debug("try to render cached data...");
 
-      $redis->get($key, sub {
-         my ($redis, $val) = @_;
-         if(! $val) {
-            $self->app->log->debug("getting new $call data...");
-            $val = $self->rexio->$call(@{ $args });
-            $redis->set($key, encode_json($val));
-            $redis->expireat($key, time + ($self->config->{cache}->{$call} || 60));
-         }
-         else {
-            $val = decode_json($val);
-         }
-
-         $cb->($val);
-      });
-   });
-
-   $self->helper(clear_cache => sub {
-      my ($self, $call, $cache_key) = @_;
-      if(! defined $cache_key) { $cache_key = ""; }
-
-      my $redis = Mojo::Redis->new(server => "localhost:6379");
-      my $key = "webui:$call:$cache_key";
-      $redis->del($key);
-   });
-
-   $self->helper(has_plugin => sub {
-      my ($self, $plugin) = @_;
-      my @plugins = @{ $self->config->{plugins} }; 
-
-      for my $p (@plugins) {
-         if($p eq $plugin) {
-            return 1;
-         }
+    $redis->get($key, sub {
+      my ($redis, $val) = @_;
+      if(! $val) {
+        $self->app->log->debug("getting new $call data...");
+        $val = $self->rexio->$call(@{ $args });
+        $redis->set($key, encode_json($val));
+        $redis->expireat($key, time + ($self->config->{cache}->{$call} || 60));
+      }
+      else {
+        $val = decode_json($val);
       }
 
-      return 0;
-   });
+      $cb->($val);
+    });
+  });
 
-   $self->helper(flush_cache => sub {
-      my ($self) = @_;
-      my $redis = Mojo::Redis->new(server => "localhost:6379");
+  $self->helper(clear_cache => sub {
+    my ($self, $call, $cache_key) = @_;
+    if(! defined $cache_key) { $cache_key = ""; }
 
-      $self->rexio->clear_call_cache("LIST:*");
-      $self->rexio->clear_call_cache("GET:*");
-      $self->rexio->clear_call_cache("INFO:*");
+    my $redis = Mojo::Redis->new(server => "localhost:6379");
+    my $key = "webui:$call:$cache_key";
+    $redis->del($key);
+  });
 
-      $redis->keys("webui:*", sub {
-         my ($r, $keys) = @_;
+  $self->helper(has_plugin => sub {
+    my ($self, $plugin) = @_;
+    my @plugins = @{ $self->config->{plugins} }; 
 
-         for my $key (@{ $keys }) {
-            $redis->del($key);
-         }
-      });
-   });
+    for my $p (@plugins) {
+      if($p eq $plugin) {
+        return 1;
+      }
+    }
 
-   #######################################################################
-   # for the package
-   #######################################################################
+    return 0;
+  });
+
+  $self->helper(flush_cache => sub {
+    my ($self) = @_;
+    my $redis = Mojo::Redis->new(server => "localhost:6379");
+
+    $self->rexio->clear_call_cache("LIST:*");
+    $self->rexio->clear_call_cache("GET:*");
+    $self->rexio->clear_call_cache("INFO:*");
+
+    $redis->keys("webui:*", sub {
+      my ($r, $keys) = @_;
+
+      for my $key (@{ $keys }) {
+        $redis->del($key);
+      }
+    });
+  });
+
+  #######################################################################
+  # for the package
+  #######################################################################
  
-   # Switch to installable home directory
-   $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
+  # Switch to installable home directory
+  $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
 
-   # Switch to installable "public" directory
-   $self->static->paths->[0] = $self->home->rel_dir('public');
+  # Switch to installable "public" directory
+  $self->static->paths->[0] = $self->home->rel_dir('public');
 
-   # Switch to installable "templates" directory
-   $self->renderer->paths->[0] = $self->home->rel_dir('templates');
+  # Switch to installable "templates" directory
+  $self->renderer->paths->[0] = $self->home->rel_dir('templates');
 
-   #######################################################################
-   # Load configuration
-   #######################################################################
-   my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", getcwd() . "/webui.conf");
-   my $cfg;
-   for my $file (@cfg) {
-      if(-f $file) {
-         $cfg = $file;
-         last;
+  #######################################################################
+  # Load configuration
+  #######################################################################
+  my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", getcwd() . "/webui.conf");
+  my $cfg;
+  for my $file (@cfg) {
+    if(-f $file) {
+      $cfg = $file;
+      last;
+    }
+  }
+  print STDERR "CFG: $cfg\n";
+
+  #######################################################################
+  # Load plugins
+  #######################################################################
+  $self->plugin("Config", file => $cfg);
+  $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer");
+  $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::User");
+  $self->plugin("Authentication" => {
+    autoload_user => 1,
+    session_key  => $self->config->{session}->{key},
+    load_user    => sub {
+      my ($app, $uid) = @_;
+      my $user = $app->get_user($uid);
+      return $user;
+    },
+    validate_user => sub {
+      my ($app, $username, $password, $extra_data) = @_;
+      my $user_data = $app->rexio->auth($username, $password);
+
+      if($user_data) {
+        return $user_data->{id};
       }
-   }
-   print STDERR "CFG: $cfg\n";
 
-   #######################################################################
-   # Load plugins
-   #######################################################################
-   $self->plugin("Config", file => $cfg);
-   $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer");
-   $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::User");
-   $self->plugin("Authentication" => {
-      autoload_user => 1,
-      session_key   => $self->config->{session}->{key},
-      load_user     => sub {
-         my ($app, $uid) = @_;
-         my $user = $app->get_user($uid);
-         return $user;
-      },
-      validate_user => sub {
-         my ($app, $username, $password, $extra_data) = @_;
-         my $user_data = $app->rexio->auth($username, $password);
+      return;
+    },
+  });
 
-         if($user_data) {
-            return $user_data->{id};
-         }
+  #######################################################################
+  # Configure routing
+  #######################################################################
+  my $r = $self->routes;
 
-         return;
-      },
-   });
+  $r->get("/login")->to("dashboard#login");
+  $r->post("/login")->to("dashboard#login_do_auth");
 
-   #######################################################################
-   # Configure routing
-   #######################################################################
-   my $r = $self->routes;
-
-   $r->get("/login")->to("dashboard#login");
-   $r->post("/login")->to("dashboard#login_do_auth");
-
-   #my $r_auth = $r->route("/")->to(cb => sub {
-   #   my ($app) = @_;
+  #my $r_auth = $r->route("/")->to(cb => sub {
+  #  my ($app) = @_;
 #
-#      $app->redirect_to("/login") and return 0 unless($app->is_user_authenticated);
-#      return 1;
-#   });
+#    $app->redirect_to("/login") and return 0 unless($app->is_user_authenticated);
+#    return 1;
+#  });
 
-   my $r_auth = $r->bridge("/")->to("dashboard#check_login");
+  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
 
-   # Normal route to controller
-   $r_auth->get("/")->to("dashboard#index");
-   $r_auth->get("/dashboard")->to("dashboard#view");
-   $r_auth->post("/clear/cache")->to("server#clear_server_cache");
+  # Normal route to controller
+  $r_auth->get("/")->to("dashboard#index");
+  $r_auth->get("/dashboard")->to("dashboard#view");
+  $r_auth->post("/clear/cache")->to("server#clear_server_cache");
 
-   # search
-   $r_auth->get("/search")->to("search#index");
+  # search
+  $r_auth->get("/search")->to("search#index");
 
-   #######################################################################
-   # Load RexIO Plugins
-   #######################################################################
-   my @plugins = @{ $self->config->{plugins} }; 
-   for my $plugin (@plugins) {
-      my $klass = "Rex::IO::WebUI::$plugin";
-      eval "use $klass";
-      if($@) {
-         die("Error loading plugin $klass. $@");
-      }
+  #######################################################################
+  # Load RexIO Plugins
+  #######################################################################
+  my @plugins = @{ $self->config->{plugins} }; 
+  for my $plugin (@plugins) {
+    my $klass = "Rex::IO::WebUI::$plugin";
+    eval "use $klass";
+    if($@) {
+      die("Error loading plugin $klass. $@");
+    }
 
-      eval {
-         $klass->rexio_routes({
-            route => $r,
-            route_auth => $r_auth,
-         });
-      };
+    eval {
+      $klass->rexio_routes({
+        route => $r,
+        route_auth => $r_auth,
+      });
+    };
 
-      eval {
-         $klass->__register__({
-            route => $r,
-            route_auth => $r_auth,
-         });
-      };
+    eval {
+      $klass->__register__({
+        route => $r,
+        route_auth => $r_auth,
+      });
+    };
 
-      eval { $klass->__init__($self); };
-      if($@) { print STDERR "MOD/ERR: $@\n"; }
-   };
+    eval { $klass->__init__($self); };
+    if($@) { print STDERR "MOD/ERR: $@\n"; }
+  };
 }
 
 1;

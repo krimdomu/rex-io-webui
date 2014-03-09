@@ -4,8 +4,8 @@
  * Created for jquery.layout 
  *
  * Copyright (c) 2010 
- *   Fabrizio Balliano (http://www.fabrizioballiano.net)
- *   Kevin Dalman (http://allpro.net)
+ *  Fabrizio Balliano (http://www.fabrizioballiano.net)
+ *  Kevin Dalman (http://allpro.net)
  *
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
@@ -20,7 +20,7 @@
  */
 body {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
-	font-size:   100%;
+	font-size:  100%;
 	*font-size:  80%;
 }
 
@@ -33,9 +33,9 @@ body {
 	padding:	10px; 
 	overflow:	auto;
 	/* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
-	   otherwise you may get double-scrollbars - on the pane AND on the content-div
-	   - use ui-layout-wrapper class if pane has a content-div
-	   - use ui-layout-container if pane has an inner-layout
+	  otherwise you may get double-scrollbars - on the pane AND on the content-div
+	  - use ui-layout-wrapper class if pane has a content-div
+	  - use ui-layout-container if pane has an inner-layout
 	*/
 	}
 	/* (scrolling) content-div inside pane allows for fixed header(s) and/or footer(s) */
@@ -186,22 +186,22 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 label, input.text { display:block; }
 
 #table_entries tr td {
-   padding-top: 5px;
-   padding-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .row_selected {
-   border-top: 2px solid #000;
-   border-bottom: 2px solid #000;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
 }
 
 .row_selected td {
-   background-color: #0465B5 !important;
-   color: #fff;
-   padding-top: 3px !important;
-   padding-bottom: 3px !important;
+  background-color: #0465B5 !important;
+  color: #fff;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
 }
 
 .scrolling-tab-pane {
-   overflow: auto;
+  overflow: auto;
 }

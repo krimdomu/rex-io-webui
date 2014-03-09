@@ -1,73 +1,73 @@
 .control-label {
-   float: left;
-   width: 100px;
-   padding-top: 5px;
-   text-align: right;
+  float: left;
+  width: 100px;
+  padding-top: 5px;
+  text-align: right;
 }
 
 .control-row {
-   padding-bottom: 10px;
-   margin-right: 120px;
+  padding-bottom: 10px;
+  margin-right: 120px;
 }
 
 .controls {
-   margin-left: 120px;
+  margin-left: 120px;
 }
 
 .btn.green {
-   color: #fff;
-   text-shadow: none;
-   background-color: #215270;
+  color: #fff;
+  text-shadow: none;
+  background-color: #215270;
 }
 
 .btn {
-   background-color: #e5e5e5;
-   background-image: none;
-   filter: none;
-   border: 0;
-   box-shadow: none;
-   padding: 7px 14px;
-   text-shadow: none;
-   font-size: 14px;
-   color: #333333;
-   cursor: pointer;
-   outline: none;
-   -webkit-border-radius: 0 !important;
-   -moz-border-radius: 0 !important;
-   border-radius: 0 !important;   
+  background-color: #e5e5e5;
+  background-image: none;
+  filter: none;
+  border: 0;
+  box-shadow: none;
+  padding: 7px 14px;
+  text-shadow: none;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  outline: none;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;  
 }
 
 textarea,
 input[type=text], input[type=password] {
-   padding: 4px;
-   font-size: 12px;
-   border-radius: 0px;
-   border: 1px solid #888;
+  padding: 4px;
+  font-size: 12px;
+  border-radius: 0px;
+  border: 1px solid #888;
 }
 
 
 .standard-form {
-   margin-top: 15px;
-   border: 0px !important;
+  margin-top: 15px;
+  border: 0px !important;
 }
 
 .standard-form > label {
-   width: 100px;
-   padding-top: 5px;
-   padding-bottom: 5px;
-   display: block;
-   float: left;
+  width: 100px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: block;
+  float: left;
 }
 
 .standard-form > input,
 .standard-form > select {
-   display: block;
-   margin-bottom: 15px;
-   width: 200px;
+  display: block;
+  margin-bottom: 15px;
+  width: 200px;
 }
 
 .standard-form > select::after {
-   clear: both;
-   content: ""
+  clear: both;
+  content: ""
 }
 

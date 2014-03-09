@@ -2,36 +2,36 @@
  * default rules
  */
 html, * {
-   font-family: Verdana;
-   font-size: 0.95em;
+  font-family: Verdana;
+  font-size: 0.95em;
 }
 
 body {
-   /* background-color: #2e2e31; */
-   background-color: #111d25;
+  /* background-color: #2e2e31; */
+  background-color: #111d25;
 }
 
 .window {
-   border: 1px solid #ffffff;
-   position: absolute;
-   background-color: #dfdfdf;
-   height: 230px;
-   left: 50%;
-   margin: -115px 0 0 -110px;
-   position: absolute;
-   top: 50%;
-   width: 320px;
+  border: 1px solid #ffffff;
+  position: absolute;
+  background-color: #dfdfdf;
+  height: 230px;
+  left: 50%;
+  margin: -115px 0 0 -110px;
+  position: absolute;
+  top: 50%;
+  width: 320px;
 }
 
 .window .window_header {
-   background-color: #ffffff;
-   padding: 5px;
-   font-size: 15px;
+  background-color: #ffffff;
+  padding: 5px;
+  font-size: 15px;
 }
 
 .window .window_body {
-   padding-top: 50px;
-   padding-bottom: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 
