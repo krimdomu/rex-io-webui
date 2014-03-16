@@ -17,3 +17,5 @@ README
 *.json
 .sass-cache
 *.lock
+.carton/
+local
