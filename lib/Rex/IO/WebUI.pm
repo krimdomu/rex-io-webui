@@ -16,45 +16,9 @@ sub startup {
   #######################################################################
   # some helper functions
   #######################################################################
-  $self->helper(get_cached => sub {
-    my ($self, $call, $args, $cache_key, $cb) = @_;
-
-    if(ref $args eq "CODE") { $cb = $args; $args = []; $cache_key = ""; };
-    if(ref $cache_key eq "CODE") { $cb = $cache_key; $cache_key = ""; }
-
-    my $key = "webui:$call:$cache_key";
-
-    my $redis = Mojo::Redis->new(server => "localhost:6379");
-    $self->app->log->debug("try to render cached data...");
-
-    $redis->get($key, sub {
-      my ($redis, $val) = @_;
-      if(! $val) {
-        $self->app->log->debug("getting new $call data...");
-        $val = $self->rexio->$call(@{ $args });
-        $redis->set($key, encode_json($val));
-        $redis->expireat($key, time + ($self->config->{cache}->{$call} || 60));
-      }
-      else {
-        $val = decode_json($val);
-      }
-
-      $cb->($val);
-    });
-  });
-
-  $self->helper(clear_cache => sub {
-    my ($self, $call, $cache_key) = @_;
-    if(! defined $cache_key) { $cache_key = ""; }
-
-    my $redis = Mojo::Redis->new(server => "localhost:6379");
-    my $key = "webui:$call:$cache_key";
-    $redis->del($key);
-  });
-
   $self->helper(has_plugin => sub {
     my ($self, $plugin) = @_;
-    my @plugins = @{ $self->config->{plugins} }; 
+    my @plugins = @{ $self->config->{plugins} };
 
     for my $p (@plugins) {
       if($p eq $plugin) {
@@ -65,27 +29,10 @@ sub startup {
     return 0;
   });
 
-  $self->helper(flush_cache => sub {
-    my ($self) = @_;
-    my $redis = Mojo::Redis->new(server => "localhost:6379");
-
-    $self->rexio->clear_call_cache("LIST:*");
-    $self->rexio->clear_call_cache("GET:*");
-    $self->rexio->clear_call_cache("INFO:*");
-
-    $redis->keys("webui:*", sub {
-      my ($r, $keys) = @_;
-
-      for my $key (@{ $keys }) {
-        $redis->del($key);
-      }
-    });
-  });
-
   #######################################################################
   # for the package
   #######################################################################
- 
+
   # Switch to installable home directory
   $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
 
@@ -162,7 +109,7 @@ sub startup {
   #######################################################################
   # Load RexIO Plugins
   #######################################################################
-  my @plugins = @{ $self->config->{plugins} }; 
+  my @plugins = @{ $self->config->{plugins} };
   for my $plugin (@plugins) {
     my $klass = "Rex::IO::WebUI::$plugin";
     eval "use $klass";

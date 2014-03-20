@@ -11,60 +11,52 @@ sub index {
 
   $self->render_later;
 
-  #my $server = $self->rexio->get_server($self->param("id"));
-  #my $os_templates = $self->rexio->list_os_templates;
+  my $server = $self->rexio->get_server($self->param("id"));
+  my $os_templates = $self->rexio->list_os_templates;
+  $self->stash("server", $server);
+  $self->stash("os_templates", $os_templates);
 
-  $self->get_cached("get_server", [$self->param("id")], $self->param("id"), sub {
-    my ($server) = @_;
-    $self->stash("server", $server);
-    
-    $self->get_cached("list_os_templates", sub {
-      my ($os_list) = @_;
-      $self->stash("os_templates", $os_list);
+  my (@more_tabs, @more_content, @information_plugins, @plugin_menus, @plugin_filter, @plugin_general_information);
 
-      my (@more_tabs, @more_content, @information_plugins, @plugin_menus, @plugin_filter, @plugin_general_information);
+  # load server tabs from plugins
+  for my $plugin (@{ $self->config->{plugins} }) {
+    my $template_path = "\L$plugin";
+    my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
+    if($template_tab) {
+      push @more_tabs, $template_tab;
+    }
 
-      # load server tabs from plugins
-      for my $plugin (@{ $self->config->{plugins} }) {
-        my $template_path = "\L$plugin";
-        my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
-        if($template_tab) {
-          push @more_tabs, $template_tab;
-        }
+    my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
+    if($template_content) {
+      push @more_content, $template_content;
+    }
 
-        my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
-        if($template_content) {
-          push @more_content, $template_content;
-        }
+    my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
+    if($information_content) {
+      push @information_plugins, $information_content;
+    }
 
-        my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
-        if($information_content) {
-          push @information_plugins, $information_content;
-        }
+    my $menu_content = $self->render("$template_path/ext/server_menu", partial => 1);
+    if($menu_content) {
+      push @plugin_menus, $menu_content;
+    }
 
-        my $menu_content = $self->render("$template_path/ext/server_menu", partial => 1);
-        if($menu_content) {
-          push @plugin_menus, $menu_content;
-        }
-
-        my $gen_info_content = $self->render("$template_path/ext/server_general_information", partial => 1);
-        if($gen_info_content) {
-          push @plugin_general_information, $gen_info_content;
-        }
+    my $gen_info_content = $self->render("$template_path/ext/server_general_information", partial => 1);
+    if($gen_info_content) {
+      push @plugin_general_information, $gen_info_content;
+    }
 
 
-      }
+  }
 
-      $self->stash(plugin_tabs => \@more_tabs);
-      $self->stash(plugin_tab_content => \@more_content);
-      $self->stash(plugin_information_tab => \@information_plugins);
-      $self->stash(plugin_menus => \@plugin_menus);
-      $self->stash(plugin_filter => \@plugin_filter);
-      $self->stash(plugin_general_information => \@plugin_general_information);
+  $self->stash(plugin_tabs => \@more_tabs);
+  $self->stash(plugin_tab_content => \@more_content);
+  $self->stash(plugin_information_tab => \@information_plugins);
+  $self->stash(plugin_menus => \@plugin_menus);
+  $self->stash(plugin_filter => \@plugin_filter);
+  $self->stash(plugin_general_information => \@plugin_general_information);
 
-      $self->render;
-    });
-  });
+  $self->render;
 
 }
 
@@ -86,48 +78,37 @@ sub export {
 
   my $qry = "" . $self->req->query_params;
 
-  $self->render_later;
-
-  $self->get_cached("list_hosts", [$qry], $qry, sub {
-    my ($server_list) = @_;
-    $self->stash(entries => $server_list);
-    $self->render;
-  });
+  my $server_list = $self->rexio->list_hosts($qry);
+  $self->stash(entries => $server_list);
+  $self->render;
 }
 
 sub list {
   my ($self) = @_;
 
   my $qry = "" . $self->req->query_params;
-  $self->render_later;
 
-  $self->get_cached("list_hosts", [$qry], $qry, sub {
-    my ($server_list) = @_;
-    
-    $self->get_cached("list_os_templates", sub {
-      my ($os_list) = @_;
+  my $server_list = $self->rexio->list_hosts($qry);
+  my $os_list     = $self->rexio->list_os_templates();
 
-      my (@plugin_filter);
+  my (@plugin_filter);
 
-      for my $plugin (@{ $self->config->{plugins} }) {
+  for my $plugin (@{ $self->config->{plugins} }) {
 
-        my $template_path = "\L$plugin";
+    my $template_path = "\L$plugin";
 
-        my $filter_content = $self->render("$template_path/ext/search", partial => 1);
-        if($filter_content) {
-          push @plugin_filter, $filter_content;
-        }
+    my $filter_content = $self->render("$template_path/ext/search", partial => 1);
+    if($filter_content) {
+      push @plugin_filter, $filter_content;
+    }
 
-      }
+  }
 
-      $self->stash(entries     => $server_list);
-      $self->stash(os_templates  => $os_list);
-      $self->stash(plugin_filter => \@plugin_filter);
+  $self->stash(entries     => $server_list);
+  $self->stash(os_templates  => $os_list);
+  $self->stash(plugin_filter => \@plugin_filter);
 
-      $self->render;
-    });
-  });
-
+  $self->render;
 }
 
 sub add {
@@ -143,8 +124,6 @@ sub add_new {
   delete $json->{mac};
   my $ret = $self->rexio->add_server($mac, %{ $json });
 
-  $self->clear_cache("list_hosts");
-
   $self->render(json => $ret);
 }
 
@@ -154,7 +133,6 @@ sub del_server {
   my $srv_id = $self->param("id");
   my $ret = $self->rexio->del_server($srv_id);
 
-  $self->clear_cache("list_hosts");
   $self->render(json => $ret);
 }
 
@@ -162,7 +140,6 @@ sub update_server {
   my ($self) = @_;
 
   my $ret = $self->rexio->update_server($self->param("id"), %{ $self->req->json });
-  $self->flush_cache();
 
   $self->render(json => $ret);
 }
@@ -271,13 +248,6 @@ sub events {
       $ref->{cmd} = "jobqueue_output";
     }
 
-    if($channel eq "rex_io_cluster") {
-      if($ref->{cmd} eq "flush_cache") {
-        $self->app->log->debug("Flushing Cache...");
-        $self->flush_cache();
-      }
-    }
-
     $tx->send(Mojo::JSON->encode($ref));
   },
     error => sub {
@@ -333,7 +303,7 @@ sub del_group {
 sub add_server_to_group {
   my ($self) = @_;
   my $ret = $self->rexio->add_server_to_server_group($self->param("server_id"), $self->param("group_id"));
-  
+
   $self->render(json => $ret);
 }
 
@@ -359,7 +329,6 @@ sub update_network_adapter {
   $self->app->log->debug(Dumper($self->req->json));
 
   my $ref = $self->rexio->call(POST => "1.0", "hardware", hardware => $self->param("server_id"), network_adapter => $self->param("network_adapter_id"), ref => $self->req->json);
-  $self->flush_cache();
 
   $self->render(json => $ref);
 }
@@ -368,7 +337,6 @@ sub delete_network_adapter {
   my ($self) = @_;
 
   my $ref = $self->rexio->call(DELETE => "1.0", "hardware", hardware => $self->param("server_id"), network_adapter => $self->param("network_adapter_id"));
-  $self->flush_cache();
 
   $self->render(json => $ref);
 }
@@ -384,7 +352,6 @@ sub update_bridge {
   $self->app->log->debug(Dumper($self->req->json));
 
   my $ref = $self->rexio->call(POST => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"), ref => $self->req->json);
-  $self->flush_cache();
 
   $self->render(json => $ref);
 }
@@ -393,7 +360,6 @@ sub delete_bridge {
   my ($self) = @_;
 
   my $ref = $self->rexio->call(DELETE => "1.0", "hardware", hardware => $self->param("server_id"), bridge => $self->param("bridge_id"));
-  $self->flush_cache();
 
   $self->render(json => $ref);
 }
@@ -410,19 +376,7 @@ sub get_bridge {
   $self->render(json => $ref);
 }
 
-sub clear_server_cache {
-  my ($self) = @_;
-
-  my $ret = $self->rexio->call(POST => "1.0", "hardware", clear => "cache");
-
-  $self->flush_cache();
-
-  $self->render(json => $ret);
-}
-
-
-
-##### Rex.IO WebUI Plugin specific methods 
+##### Rex.IO WebUI Plugin specific methods
 sub rexio_routes {
   my ($self, $routes) = @_;
   my $r    = $routes->{route};
