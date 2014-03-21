@@ -16,25 +16,27 @@ sub startup {
   #######################################################################
   # some helper functions
   #######################################################################
-  $self->helper(has_plugin => sub {
-    my ($self, $plugin) = @_;
-    my @plugins = @{ $self->config->{plugins} };
+  $self->helper(
+    has_plugin => sub {
+      my ( $self, $plugin ) = @_;
+      my @plugins = @{ $self->config->{plugins} };
 
-    for my $p (@plugins) {
-      if($p eq $plugin) {
-        return 1;
+      for my $p (@plugins) {
+        if ( $p eq $plugin ) {
+          return 1;
+        }
       }
-    }
 
-    return 0;
-  });
+      return 0;
+    }
+  );
 
   #######################################################################
   # for the package
   #######################################################################
 
   # Switch to installable home directory
-  $self->home->parse(catdir(dirname(__FILE__), 'WebUI'));
+  $self->home->parse( catdir( dirname(__FILE__), 'WebUI' ) );
 
   # Switch to installable "public" directory
   $self->static->paths->[0] = $self->home->rel_dir('public');
@@ -45,41 +47,46 @@ sub startup {
   #######################################################################
   # Load configuration
   #######################################################################
-  my @cfg = ("/etc/rex/io/webui.conf", "/usr/local/etc/rex/io/webui.conf", getcwd() . "/webui.conf");
+  my @cfg = (
+    "/etc/rex/io/webui.conf",
+    "/usr/local/etc/rex/io/webui.conf",
+    getcwd() . "/webui.conf"
+  );
   my $cfg;
   for my $file (@cfg) {
-    if(-f $file) {
+    if ( -f $file ) {
       $cfg = $file;
       last;
     }
   }
-  print STDERR "CFG: $cfg\n";
 
   #######################################################################
   # Load plugins
   #######################################################################
-  $self->plugin("Config", file => $cfg);
+  $self->plugin( "Config", file => $cfg );
   $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::RexIOServer");
   $self->plugin("Rex::IO::WebUI::Mojolicious::Plugin::User");
-  $self->plugin("Authentication" => {
-    autoload_user => 1,
-    session_key  => $self->config->{session}->{key},
-    load_user    => sub {
-      my ($app, $uid) = @_;
-      my $user = $app->get_user($uid);
-      return $user;
-    },
-    validate_user => sub {
-      my ($app, $username, $password, $extra_data) = @_;
-      my $user_data = $app->rexio->auth($username, $password);
+  $self->plugin(
+    "Authentication" => {
+      autoload_user => 1,
+      session_key   => $self->config->{session}->{key},
+      load_user     => sub {
+        my ( $app, $uid ) = @_;
+        my $user = $app->get_user($uid);
+        return $user;
+      },
+      validate_user => sub {
+        my ( $app, $username, $password, $extra_data ) = @_;
+        my $user_data = $app->rexio->auth( $username, $password );
 
-      if($user_data) {
-        return $user_data->{id};
-      }
+        if ($user_data) {
+          return $user_data->{id};
+        }
 
-      return;
-    },
-  });
+        return;
+      },
+    }
+  );
 
   #######################################################################
   # Configure routing
@@ -89,8 +96,8 @@ sub startup {
   $r->get("/login")->to("dashboard#login");
   $r->post("/login")->to("dashboard#login_do_auth");
 
-  #my $r_auth = $r->route("/")->to(cb => sub {
-  #  my ($app) = @_;
+#my $r_auth = $r->route("/")->to(cb => sub {
+#  my ($app) = @_;
 #
 #    $app->redirect_to("/login") and return 0 unless($app->is_user_authenticated);
 #    return 1;
@@ -113,27 +120,25 @@ sub startup {
   for my $plugin (@plugins) {
     my $klass = "Rex::IO::WebUI::$plugin";
     eval "use $klass";
-    if($@) {
+    if ($@) {
       die("Error loading plugin $klass. $@");
     }
 
-    eval {
-      $klass->rexio_routes({
-        route => $r,
-        route_auth => $r_auth,
-      });
-    };
+    eval { $klass->rexio_routes( { route => $r, route_auth => $r_auth, } ); };
 
     eval {
-      $klass->__register__({
-        route => $r,
-        route_auth => $r_auth,
-      });
+      $klass->__register__(
+        {
+          route      => $r,
+          route_auth => $r_auth,
+          app        => $self,
+        }
+      );
     };
 
     eval { $klass->__init__($self); };
-    if($@) { print STDERR "MOD/ERR: $@\n"; }
-  };
+    if ($@) { print STDERR "MOD/ERR: $@\n"; }
+  }
 }
 
 1;
