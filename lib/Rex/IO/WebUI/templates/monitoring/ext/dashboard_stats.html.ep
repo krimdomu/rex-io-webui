@@ -1,8 +1,0 @@
-% my $alerts = rexio->list_alerts;
-
-<tr>
-   <td class="key">Alerts</td>
-   <td class="value" id="incident_counter"><%= scalar @{ $alerts } %></td>
-</tr>
-
-

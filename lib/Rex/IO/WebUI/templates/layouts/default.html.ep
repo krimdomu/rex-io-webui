@@ -5,19 +5,17 @@
 
     <title>Rex.IO - WebUI</title>
 
-    <script type="text/javascript" charset="utf-8" src="/js/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/jquery-ui-1.9.0.min.js"></script>
-    <!-- <script type="text/javascript" charset="utf-8" src="/js/jquery.layout.min.js"></script> -->
-    <script type="text/javascript" charset="utf-8" src="/js/raven-0.6.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-ui-1.9.0.min.js"></script>
 
     <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
-    <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/3rdparty/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/3rdparty/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/css/jquery.pnotify.default.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/3rdparty/jquery.pnotify.default.css" type="text/css" media="screen" charset="utf-8" />
     % for my $plg (@{config->{ plugins }}) {
       <link rel="stylesheet" href="/css/<%= lc($plg) %>.css" type="text/css" media="screen" charset="utf-8" />
     % }
@@ -97,13 +95,12 @@
   % }
   <script type="text/javascript" charset="utf-8" src="/js/dashboard.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.mini.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/smoothie.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/calculator.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/jquery.pnotify.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.selectBox.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/json2.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.jeditable.mini.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/smoothie.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.pnotify.js"></script>
 
 
 </html>
