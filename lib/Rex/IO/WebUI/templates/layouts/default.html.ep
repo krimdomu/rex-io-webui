@@ -1,107 +1,109 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8">
-   
-      <title>Rex.IO - WebUI</title>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-      <script type="text/javascript" charset="utf-8" src="/js/jquery-1.8.2.min.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/js/jquery-ui-1.9.0.min.js"></script>
-      <!-- <script type="text/javascript" charset="utf-8" src="/js/jquery.layout.min.js"></script> -->
-      <script type="text/javascript" charset="utf-8" src="/js/raven-0.6.min.js"></script>
+    <title>Rex.IO - WebUI</title>
 
-      <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
-      <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen" charset="utf-8" />
-      <link rel="stylesheet" href="/css/jquery.pnotify.default.css" type="text/css" media="screen" charset="utf-8" />
-      % for my $plg (@{config->{ plugins }}) {
-         <link rel="stylesheet" href="/css/<%= lc($plg) %>.css" type="text/css" media="screen" charset="utf-8" />
-      % }
-     
-   </head>
-   % my @server_plugins = @{ rexio->get_plugins };
-   <body>
+    <script type="text/javascript" charset="utf-8" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/jquery-ui-1.9.0.min.js"></script>
+    <!-- <script type="text/javascript" charset="utf-8" src="/js/jquery.layout.min.js"></script> -->
+    <script type="text/javascript" charset="utf-8" src="/js/raven-0.6.min.js"></script>
 
-      <div id="page_container" class="page-container">
+    <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
+    <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/jquery.pnotify.default.css" type="text/css" media="screen" charset="utf-8" />
+    % for my $plg (@{config->{ plugins }}) {
+      <link rel="stylesheet" href="/css/<%= lc($plg) %>.css" type="text/css" media="screen" charset="utf-8" />
+    % }
 
-         <div class="page-sidebar dark-background">
-            <div class="main-accordion">
+  </head>
+  % my @server_plugins = @{ rexio->get_plugins };
+  <body>
 
-               <div>
-                  <div class="search_box">
-                     <input type="text" id="server_search" name="server_search" value="" placeholder="Server Search..." />
-                  </div>
-               </div>
+    <div id="page_container" class="page-container">
 
-               <ul class="navul">
-                  <li class="active">
-                     <a href="#" class="dashboard-link">Dashboard</a>
-                  </li>
+      <div class="page-sidebar dark-background">
+        <div class="main-accordion">
 
-                  % for my $menu_entry (@{ $main_menu }) {
-                  <%= $menu_entry %>
-                  % }
-
-
-                  <!--
-                  <li class="has-sub">
-                     <a href="#" class="icon-arrow-left">Datacenter</a>
-                     <ul class="sub">
-                        <li><a href="#" class="users-users">List DCs</a></li>
-                        <li><a href="#" class="users-groups">Add DC</a></li>
-                     </ul>
-                  </li>
-                  -->
-
-               </ul>
-
+          <div>
+            <div class="search_box">
+              <input type="text" id="server_search" name="server_search" value="" placeholder="Server Search..." />
             </div>
+          </div>
 
-         </div> <!-- page_sidebar -->
+          <ul class="navul">
+            <li class="active">
+              <a href="#" class="dashboard-link">Dashboard</a>
+            </li>
 
-         <div id="content_area" class="page-content light-background">
+            % for my $menu_entry (@{ $main_menu }) {
+            <%= $menu_entry %>
+            % }
 
-            <div class="page-content-container">
-               Dashboard...
-            </div>
-         </div> <!-- content_area -->
 
-      </div> <!-- page container -->
+            <!--
+            <li class="has-sub">
+              <a href="#" class="icon-arrow-left">Datacenter</a>
+              <ul class="sub">
+                <li><a href="#" class="users-users">List DCs</a></li>
+                <li><a href="#" class="users-groups">Add DC</a></li>
+              </ul>
+            </li>
+            -->
 
-      <div id="message_area" class="message_area_down">
-         <a href="#" id="link_message_area_close" class="link_message_area_close"></a>
-         <div class="message_area_content">
-            <ul id="message_list" class="message_list">
-            </ul>
-         </div>
+          </ul>
+
+        </div>
+
+      </div> <!-- page_sidebar -->
+
+      <div id="content_area" class="page-content light-background">
+
+        <div class="page-content-container">
+          Dashboard...
+        </div>
+      </div> <!-- content_area -->
+
+    </div> <!-- page container -->
+
+    <div id="message_area" class="message_area_down">
+      <a href="#" id="link_message_area_close" class="link_message_area_close"></a>
+      <div class="message_area_content">
+        <ul id="message_list" class="message_list">
+        </ul>
       </div>
+    </div>
 
-   </body>
-   <script type="text/javascript" charset="utf-8">
-      /*$(document).ready(function() {
-         $("body").layout({
-         });
-      });*/
-   </script>
-   <script type="text/javascript" charset="utf-8" src="/js/debug.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
-   % for my $plg (@{config->{ plugins }}) {
-      <script type="text/javascript" charset="utf-8" src="/js/<%= lc($plg) %>.js"></script>
-   % }
-   <script type="text/javascript" charset="utf-8" src="/js/dashboard.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.mini.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/smoothie.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/calculator.js"></script>
-   <script type="text/javascript" charset="utf-8" src="/js/jquery.pnotify.js"></script>
+  </body>
+  <script type="text/javascript" charset="utf-8">
+    /*$(document).ready(function() {
+      $("body").layout({
+      });
+    });*/
+  </script>
+  <script type="text/javascript" charset="utf-8" src="/js/debug.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/rexio.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/ui.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
+  % for my $plg (@{config->{ plugins }}) {
+    <script type="text/javascript" charset="utf-8" src="/js/<%= lc($plg) %>.js"></script>
+  % }
+  <script type="text/javascript" charset="utf-8" src="/js/dashboard.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/jquery.selectBox.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/json2.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/jquery.jeditable.mini.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/smoothie.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/calculator.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/jquery.pnotify.js"></script>
 
 
 </html>

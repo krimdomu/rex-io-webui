@@ -59,7 +59,6 @@
 <!--    <li class=""><a href="#">foo</a></li>
 <li class="active"><a href="#">var</a></li> -->
     <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
-    <li id="li-tab-network" tab_id="network"><a id="link-tab-network" tab_id="network" href="#">Network</a></li>
     % for my $tab (@{ $plugin_tabs }) {
     <%= $tab %>
     % }
@@ -77,13 +76,13 @@
         </div>
         <div class="portlet-body">
           <p>
-            This seems to be a new system. To initialize it press the <i>initialize</i> button over here: 
+            This seems to be a new system. To initialize it press the <i>initialize</i> button over here:
             <button id="btn_initialize_server" srv_id="<%= $server->{id} %>">Initialize</button>
           </p>
         </div>
       </div>
       % }
- 
+
       <div class="portlet box grey">
         <div class="portlet-title">
           <h4>General Information</h4>
@@ -136,157 +135,12 @@
       </div>
 
 
-
-      <div class="portlet box grey">
-        <div class="portlet-title">
-          <h4>Hardware</h4>
-        </div>
-        <div class="portlet-body">
-
-          <table border="0" class="hardware_table" width="100%">
-            <tr>
-              <th width="20">&nbsp;</th>
-              <th width="100" align="left">Class</th>
-              <th align="left">Info</th>
-            </tr>
-
-            <% for my $cpu (@{ $server->{processors} }) { %>
-            <tr>
-              <td class="col-img icon-cpu td-icon">&nbsp;</td>
-              <td class="col-class">CPU</td>
-              <td class="col-info"><%= $cpu->{modelname} %> (<%= $cpu->{mhz} %> MHz)</td>
-            </tr>
-            <% } %>
-
-            <% for my $mem (@{ $server->{memories} }) { %>
-            <tr>
-              <td class="col-img icon-memory td-icon">&nbsp;</td>
-              <td class="col-class">Memory</td>
-              <td class="col-info"><%= $mem->{size} %> MB, <%= $mem->{type} %> <%= $mem->{speed} %></td>
-            </tr>
-            <% } %>
-
-            <% for my $hdd (@{ $server->{harddrives} }) { %>
-            <tr>
-              <td class="col-img icon-hdd td-icon">&nbsp;</td>
-              <td class="col-class">Harddrive</td>
-              <td class="col-info"><%= int($hdd->{size} / 1024) %> GB, <%= $hdd->{vendor} %>, Device: <%= $hdd->{devname} %></td>
-            </tr>
-            <% } %>
-
-            % for my $eth (@{ $server->{network_adapters} }) {
-            % next if ($eth->{virtual});
-            <tr>
-              <td class="col-img icon-eth td-icon">&nbsp;</td>
-              <td class="col-class">Network</td>
-              <td class="col-info"><%= $eth->{dev} %></td>
-            </tr>
-            % }
-
-          </table>
-          <table border="0">
-            % if(0 && $is_online) {
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-
-            <tr>
-              <td class="td-icon">&nbsp;</td>
-              <td>
-                <button id="reload_hw" class="grey" ip="<%= $agent_ip %>"><img src="/icons/reload.png" /><span style="float: right; margin-left: 8px;">Reload Hardware Information</span></button>
-              </td>
-            </tr>
-            % }
-
-          </table>
-
-
-        </div>
-      </div>
-
       % for my $pl_info (@{ $plugin_information_tab }) {
         <%= $pl_info %>
       % }
 
     </div>
 
-    <div id="tab-network" class="tab-pane" tab_id="network">
-
-      <div class="framebody">
-        <div class="left_frame">
-
-          <div class="portlet box grey">
-            <div class="portlet-title">
-              <h4>Network Devices</h4>
-            </div>
-            <div class="portlet-body table_no_bottom">
-
-              <table border="0" id="table_server_network_devices" style="width: 100%;">
-                <thead>
-                  <tr>
-                    <td>Name</td>
-                    <td>Mac</td>
-                    <td>IP</td>
-                    <td>Netmask</td>
-                  </tr>
-                </thead>
-                <tbody>
-                % my $nwas = rexio->call(LIST => "1.0", "hardware", hardware => $server->{id}, network_adapter => undef);
-                % for my $nwa (@{ $nwas->{data} }) {
-                  <tr dev="<%= $nwa->{dev} %>" dev_id="<%= $nwa->{id} %>">
-                    <td><%= $nwa->{dev} %></td>
-                    <td><%= $nwa->{mac} %></td>
-                    <td><%= $nwa->{ip} %></td>
-                    <td><%= $nwa->{netmask} %></td>
-                  </tr>
-                % }
-                </tbody>
-              </table>
-
-            </div>
-
-          </div>
-
-        </div> <!-- left frame -->
-
-        <div class="right_frame">
-
-          <div class="portlet box grey">
-            <div class="portlet-title">
-              <h4>Bridges</h4>
-            </div>
-            <div class="portlet-body table_no_bottom">
-
-              <table border="0" id="table_server_network_bridges" style="width: 100%;">
-                <thead>
-                  <tr>
-                    <td>Name</td>
-                    <td>IP</td>
-                    <td>Netmask</td>
-                    <td>Bridged Devices</td>
-                  </tr>
-                </thead>
-                <tbody>
-                % my $bridges = rexio->call(LIST => "1.0", "hardware", hardware => $server->{id}, bridge => undef);
-                % for my $br (@{ $bridges->{data} }) {
-                  <tr dev="<%= $br->{name} %>" dev_id="<%= $br->{id} %>">
-                    <td><%= $br->{name} %></td>
-                    <td><%= $br->{ip} %></td>
-                    <td><%= $br->{netmask} %></td>
-                    <td><%= join(", ", @{ $br->{devices} }) %></td>
-                  </tr>
-                % }
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-
-        </div>  <!-- right frame -->
-
-      </div> <!-- framebody -->
-
-    </div>  <!-- network tab -->
 
 
     % for my $tab_content (@{ $plugin_tab_content }) {
@@ -308,76 +162,6 @@
   </form>
 </div>
 
-<div id="configure_network_device" class="dialog-window" title="Configure Network Device">
-  <form>
-
-      <table border="0">
-        <tr>
-          <td>Bootdevice</td>
-          <td><input type="checkbox" name="nwa_boot" value="1" id="nwa_boot" /></td>
-        </tr>
-        % if (has_plugin('Dns')) {
-        <tr>
-          <td>Register DNS</td>
-          <td><input type="checkbox" name="nwa_dns" value="1" id="nwa_dns" /></td>
-        </tr>
-        % }
-        <tr>
-          <td>Name</td>
-          <td><input type="text" name="nwa_name" value="" id="nwa_name" /></td>
-        </tr>
-        <tr id="tr_mac">
-          <td>MAC</td>
-          <td><input type="text" name="nwa_mac" value="" id="nwa_mac" /></td>
-        </tr>
- 
-        <tr>
-          <td>Protocol</td>
-          <td>
-            <select name="nwa_proto" id="nwa_proto">
-              <option value="static">Static IP</option>
-              <option value="dhcp">Dynamic IP (DHCP)</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>IP</td>
-          <td><input type="text" name="nwa_ip" value="" id="nwa_ip" /></td>
-        </tr>
-        <tr>
-          <td>Netmask</td>
-          <td><input type="text" name="nwa_netmask" value="" id="nwa_netmask" /></td>
-        </tr>
-        <tr>
-          <td>Broadcast</td>
-          <td><input type="text" name="nwa_broadcast" value="" id="nwa_broadcast" /></td>
-        </tr>
-        <tr>
-          <td>Network</td>
-          <td><input type="text" name="nwa_network" value="" id="nwa_network" /></td>
-        </tr>
-        <tr>
-          <td>Gateway</td>
-          <td><input type="text" name="nwa_gateway" value="" id="nwa_gateway" /></td>
-        </tr>
-        <tr id="tr_bridge">
-          <td>Bridge</td>
-          <td>
-            <select name="nwa_bridge" id="nwa_bridge">
-              <option value="">No bridging</option>
-              % for my $br (@{ $bridges->{data} }) {
-              <option value="<%= $br->{id} %>"><%= $br->{name} %></option>
-              % }
-            </select>
-          </td>
-        </tr>
-
-
-      </table>
-
-  </form>
-</div>
-
 
 
 <div id="initialize_server" class="dialog-window" title="Initialize Server">
@@ -393,7 +177,7 @@
           <input type="text" name="wiz_s_name" id="wiz_s_name" class="text ui-widget-content ui-corner-all" />
         </div>
       </div>
- 
+
       <div class="portlet box grey">
         <div class="portlet-title">
           <h4>Network Information</h4>
@@ -427,9 +211,8 @@
           </table>
         </div>
       </div>
- 
+
 
     </fieldset>
   </form>
 </div>
-
