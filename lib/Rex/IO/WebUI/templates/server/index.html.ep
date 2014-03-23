@@ -21,26 +21,9 @@
         <li>
           <a href="#" id="lnk_configure_server">Configuration</a>
           <ul>
-            <li>
-              <a href="#" id="lnk_server_network">Network</a>
-              <ul>
-                <li><a href="#" id="lnk_server_network_adapter">Adapter</a>
-                <ul>
-                  <li><a href="#" id="lnk_server_network_add_adapter" class="mnu_item">Add Adapter</a></li>
-                  <li><a href="#" id="lnk_server_network_delete_adapter" class="mnu_item">Delete Adapter</a></li>
-                  <li><a href="#" id="lnk_server_network_configure_adapter" class="mnu_item">Configure Adapter</a></li>
-                </ul>
-                </li>
-                <li><a href="#" id="lnk_server_network_bridge">Bridge</a>
-                <ul>
-                  <li><a href="#" id="lnk_server_network_add_bridge" class="mnu_item">Add Bridge</a></li>
-                  <li><a href="#" id="lnk_server_network_delete_bridge" class="mnu_item">Delete Bridge</a></li>
-                  <li><a href="#" id="lnk_server_network_configure_bridge" class="mnu_item">Configure Bridge</a></li>
-                </ul>
-                </li>
-
-              </ul>
-            </li>
+            % for my $plg_menu_configuration (@{ $plugin_menu_configuration }) {
+            <%= $plg_menu_configuration %>
+            % }
           </ul>
         </li>
         % for my $plg_menu (@{ $plugin_menus }) {

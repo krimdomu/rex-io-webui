@@ -15,14 +15,14 @@ sub index {
     hardware => $self->param("id") );
 
   $self->app->log->debug("Got server data:");
-  $self->app->log->debug(Dumper($server));
+  $self->app->log->debug( Dumper($server) );
 
   my $os_templates = $self->rexio->list_os_templates;
   $self->stash( "server",       $server->{data} );
   $self->stash( "os_templates", $os_templates );
 
   my ( @more_tabs, @more_content, @information_plugins, @plugin_menus,
-    @plugin_filter, @plugin_general_information );
+    @plugin_filter, @plugin_general_information, @plugin_menu_configuration );
 
   # load server tabs from plugins
   for my $plugin ( @{ $self->config->{plugins} } ) {
@@ -52,6 +52,13 @@ sub index {
       push @plugin_menus, $menu_content;
     }
 
+    my $menu_configuration_content =
+      $self->render( "$template_path/ext/server_menu_configuration",
+      partial => 1 );
+    if ($menu_configuration_content) {
+      push @plugin_menu_configuration, $menu_configuration_content;
+    }
+
     my $gen_info_content =
       $self->render( "$template_path/ext/server_general_information",
       partial => 1 );
@@ -66,6 +73,7 @@ sub index {
   $self->stash( plugin_information_tab     => \@information_plugins );
   $self->stash( plugin_menus               => \@plugin_menus );
   $self->stash( plugin_filter              => \@plugin_filter );
+  $self->stash( plugin_menu_configuration  => \@plugin_menu_configuration );
   $self->stash( plugin_general_information => \@plugin_general_information );
 
   $self->render;
