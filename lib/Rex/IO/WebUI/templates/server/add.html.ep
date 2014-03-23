@@ -13,7 +13,7 @@
    </li>
 </ul>
 
-<form action="/server/new" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8">
    <table border="0" width="100%">
       <tr>
          <td style="width: 120px">Name:</td>
@@ -25,7 +25,7 @@
       </tr>
       <tr>
          <td>&nbsp;</td>
-         <td><button id="save_server" class="save_button">Save</button></td>
+         <td><button id="save_server" class="save_button rexio-ui-button" rexio-ui-click="server/add.click_save_server">Save</button></td>
       </tr>
    </table>
 

@@ -46,7 +46,7 @@
         % for my $plg_menu (@{ $plugin_menus }) {
         <%= $plg_menu %>
         % }
-        <li><a href="#" id="lnk_del_server" class="mnu_item">Delete Server</a></li>
+        <li><a href="#" rexio-ui-click="server/view.delete_server" class="mnu_item rexio-ui-link">Delete Server</a></li>
       </ul>
     </div>
     <a href="#" class="pull-menu"></a>
@@ -54,103 +54,95 @@
 
 </ul>
 
-<div class="tabbable">
-  <ul class="tabs tabs-top">
-<!--    <li class=""><a href="#">foo</a></li>
-<li class="active"><a href="#">var</a></li> -->
-    <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
+<div class="rexio-ui-tabs">
+  <ul>
+    <li><a href="#tab-info">Information</a></li>
     % for my $tab (@{ $plugin_tabs }) {
     <%= $tab %>
     % }
 
   </ul>
-  <div class="tab-content">
 
-    <div id="tab-info" class="tab-pane" tab_id="info">
+  <div id="tab-info" class="tab-pane" tab_id="info">
 
-      % if(0 && $server->{name} =~ m/^[a-f0-9]{2}\-[a-f0-9]{2}\-[a-f0-9]{2}\-/i) {
-      % # this might be a new system, display wizard
-      <div class="portlet box grey">
-        <div class="portlet-title">
-          <h4>New Server?</h4>
-        </div>
-        <div class="portlet-body">
-          <p>
-            This seems to be a new system. To initialize it press the <i>initialize</i> button over here:
-            <button id="btn_initialize_server" srv_id="<%= $server->{id} %>">Initialize</button>
-          </p>
-        </div>
+    <div class="portlet box grey">
+      <div class="portlet-title">
+        <h4>General Information</h4>
       </div>
-      % }
+      <div class="portlet-body">
 
-      <div class="portlet box grey">
-        <div class="portlet-title">
-          <h4>General Information</h4>
-        </div>
-        <div class="portlet-body">
-
-          <table border="0">
-            <tr>
-              % my $agent_ip;
-              % my $is_online = 0;
-              % for my $dev ( @{ $server->{network_adapters} } ) {
-              %  next unless $dev->{ip};
-              %  next if ($dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/);
-              %  my $check = rexio->is_online($dev->{ip});
-              %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
-              % }
-              <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />
-              <input type="hidden" name="txt_hostname" id="txt_hostname" value="<%= $server->{name} %>" />
-
-
-              <td class="col-info">Online Status:</td>
-              <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
-            </tr>
-            <tr>
-              <td class="col-info">Hostname:</td>
-              <td class="col-text"><%= $server->{name} %> <img class="edit-server-name" src="/icons/writing.png" /></td>
-            </tr>
-            <tr>
-              <td class="col-info">Operating System:</td>
-              <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
-            </tr>
-            <tr>
-              <td class="col-info">Current Boottype:</td>
-              <td class="col-text">
-                <select name="next_boot_target" id="next_boot_target">
-                  <% for my $os (@{ $os_templates }) { %>
-                  <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
-                  <% } %>
-                </select>
-                <button id="save_boot_target">Save</button>
-                <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
-              </td>
-            </tr>
-            % for my $plg_general_information (@{ $plugin_general_information }) {
-            <%= $plg_general_information %>
+        <table border="0">
+          <tr>
+            % my $agent_ip;
+            % my $is_online = 0;
+            % for my $dev ( @{ $server->{network_adapters} } ) {
+            %  next unless $dev->{ip};
+            %  next if ($dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/);
+            %  my $check = rexio->is_online($dev->{ip});
+            %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
             % }
-          </table>
+            <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />
+            <input type="hidden" name="txt_hostname" id="txt_hostname" value="<%= $server->{name} %>" />
 
-        </div>
+
+            <td class="col-info">Online Status:</td>
+            <td class="col-text"><% if($is_online) { %><font color="#31ae00">Online</font><% } else { %><font color="#cd0000">Offline</font><% } %></td>
+          </tr>
+          <tr>
+            <td class="col-info">Hostname:</td>
+            <td class="col-text"><%= $server->{name} %> <img class="edit-server-name rexio-ui-link" rexio-ui-click="server/view.rename_server" src="/icons/writing.png" /></td>
+          </tr>
+          <tr>
+            <td class="col-info">Operating System:</td>
+            <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
+          </tr>
+          <tr>
+            <td class="col-info">Current Boottype:</td>
+            <td class="col-text">
+              <select name="next_boot_target" id="next_boot_target">
+                <% for my $os (@{ $os_templates }) { %>
+                <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
+                <% } %>
+              </select>
+              <button id="save_boot_target" class="rexio-ui-button" rexio-ui-click="server/view.click_save_boot_target">Save</button>
+              <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
+            </td>
+          </tr>
+          % for my $plg_general_information (@{ $plugin_general_information }) {
+          <%= $plg_general_information %>
+          % }
+        </table>
+
       </div>
-
-
-      % for my $pl_info (@{ $plugin_information_tab }) {
-        <%= $pl_info %>
-      % }
-
     </div>
 
 
-
-    % for my $tab_content (@{ $plugin_tab_content }) {
-    <%= $tab_content %>
+    % for my $pl_info (@{ $plugin_information_tab }) {
+      <%= $pl_info %>
     % }
 
   </div>
+
+
+
+  % for my $tab_content (@{ $plugin_tab_content }) {
+  <%= $tab_content %>
+  % }
+
 </div>
 
-<div id="rename_server" class="dialog-window" title="Rename Server">
+<div id="rename_server"
+  class="dialog-window rexio-ui-dialog"
+  title="Rename Server"
+  rexio-dialog-auto-open="false"
+  rexio-dialog-height="300"
+  rexio-dialog-width="350"
+  rexio-dialog-modal="true"
+  rexio-dialog-button-ok-value="Rename"
+  rexio-dialog-button-cancel-value="Cancel"
+  rexio-dialog-button-ok-click="server/view.click_rename_server_ok"
+  rexio-dialog-button-cancel-click="server/view.click_rename_server_cancel"
+  >
   <p class="validateTips">Allowed Characters: A-Z, a-z, 0-9 and -</p>
 
   <form>
@@ -158,61 +150,6 @@
     <fieldset class="standard-form">
       <label for="name">Name</label>
       <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-    </fieldset>
-  </form>
-</div>
-
-
-
-<div id="initialize_server" class="dialog-window" title="Initialize Server">
-  <form>
-    <fieldset class="standard-form">
-
-      <div class="portlet box grey">
-        <div class="portlet-title">
-          <h4>Basic Information</h4>
-        </div>
-        <div class="portlet-body">
-          <label for="wiz_s_name">Name</label>
-          <input type="text" name="wiz_s_name" id="wiz_s_name" class="text ui-widget-content ui-corner-all" />
-        </div>
-      </div>
-
-      <div class="portlet box grey">
-        <div class="portlet-title">
-          <h4>Network Information</h4>
-        </div>
-        <div class="portlet-body">
-          <table border="0">
-            <tr>
-              <td><label for="wiz_s_dhcp">DHCP</label></td>
-              <td><input type="checkbox" name="wiz_s_dhcp" id="wiz_s_dhcp" class="text ui-widget-content ui-corner-all" value="dhcp" /></td>
-            </tr>
-            <tr>
-              <td><label for="wiz_s_ip">IP</label></td>
-              <td><input type="text" name="wiz_s_ip" id="wiz_s_ip" class="text ui-widget-content ui-corner-all" /></td>
-            </tr>
-            <tr>
-              <td><label for="wiz_s_netmask">Netmask</label></td>
-              <td><input type="text" name="wiz_s_netmask" id="wiz_s_netmask" class="text ui-widget-content ui-corner-all" /></td>
-            </tr>
-            <tr>
-              <td><label for="wiz_s_gateway">Gateway</label></td>
-              <td><input type="text" name="wiz_s_gateway" id="wiz_s_gateway" class="text ui-widget-content ui-corner-all" /></td>
-            </tr>
-            <tr>
-              <td><label for="wiz_s_network">Network</label></td>
-              <td><input type="text" name="wiz_s_network" id="wiz_s_network" class="text ui-widget-content ui-corner-all" /></td>
-            </tr>
-            <tr>
-              <td><label for="wiz_s_broadcast">Broadcast</label></td>
-              <td><input type="text" name="wiz_s_broadcast" id="wiz_s_broadcast" class="text ui-widget-content ui-corner-all" /></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-
     </fieldset>
   </form>
 </div>

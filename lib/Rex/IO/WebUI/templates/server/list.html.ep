@@ -26,7 +26,7 @@
    <% } %>
 
    <div class="filter_widget">
-      <button name="filter_now" id="filter_now">Filter</button>
+      <button name="filter_now" id="filter_now" class="rexio-ui-button" rexio-ui-click="server/list.click_filter_now">Filter</button>
    </div>
 
    <div class="filter_widget">
@@ -37,7 +37,7 @@
    <div class="clearfix"></div>
 </div>
 
-<table border="0" id="table_entries_server" style="width: 100%;">
+<table border="0" id="table_entries_server" class="rexio-ui-data-table" rexio-ui-minus-height="285" style="width: 100%;">
    <thead>
       <tr>
          <!--         <td style="width: 20px;"></td> -->
@@ -53,7 +53,7 @@
       <tr>
          <!--         <td><input class="bulk_checkbox" type="checkbox" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>" /></td> -->
          <td class="td_server_link" srv_id="<%= $entry->{id} %>">
-            <a href="#" class="server-link" srv_id="<%= $entry->{id} %>"><%= $entry->{name} %></a>
+            <a href="#" class="rexio-ui-link" srv_id="<%= $entry->{id} %>" rexio-ui-object="server/view"><%= $entry->{name} %></a>
             % for my $plugin (@{ $self->config->{plugins} }) {
             %= $self->render(lc($plugin) . '/ext/server_list_row_name', partial => 1, entry => $entry);
             % }
@@ -68,7 +68,7 @@
                <option <% if($os->{id} == $entry->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
             <% } %>
             </select>
-            <button class="save_button" srv_id="<%= $entry->{id} %>">Save</button>
+            <button class="save_button rexio-ui-button" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>" rexio-ui-click="server/list.click_save_button">Save</button>
          </td>
       </tr>
       % }

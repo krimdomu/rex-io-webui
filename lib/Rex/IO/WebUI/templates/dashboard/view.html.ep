@@ -14,7 +14,6 @@
 <div class="tabbable">
    <ul class="tabs tabs-top">
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
-      <li id="li-tab-admin" tab_id="admin" class=""><a id="link-tab-admin" tab_id="admin" href="#">Administration</a></li>
    </ul>
    <div class="tab-content">
 
@@ -54,32 +53,6 @@
 
       </div> <!-- tab-info -->
 
-      <div id="tab-admin" class="tab-pane" tab_id="admin">
-
-         <div class="portlet box grey">
-            <div class="portlet-title">
-               <h4>Administrative Tasks</h4>
-            </div>
-            <div class="portlet-body">
-               <table class="server_statistic" border="0" width="100%">
-                  <tr>
-                     <td class="key" width="150">Clear Cache:</td>
-                     <td class="value">If you think you see dead people: [<a href="#" id="lnk_clear_cache">x</a>]</td>
-                  </tr>
-               </table>
-            </div>
-         </div>
-
-         % for my $pl_dash (@{ $dashboard_admin }) {
-            <%= $pl_dash %>
-         % }
-
-      </div> <!-- tab-admin -->
-
-
-
    </div> <!-- tab-content -->
 
 </div>
-
-

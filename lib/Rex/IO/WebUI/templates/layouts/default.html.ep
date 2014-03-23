@@ -37,7 +37,7 @@
 
           <ul class="navul">
             <li class="active">
-              <a href="#" class="dashboard-link">Dashboard</a>
+              <a href="#" class="rexio-ui-link" rexio-ui-object="dashboard">Dashboard</a>
             </li>
 
             % for my $menu_entry (@{ $main_menu }) {
@@ -85,10 +85,13 @@
       });
     });*/
   </script>
-  <script type="text/javascript" charset="utf-8" src="/js/debug.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/rexio.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/mootools-core-1.4.5-full-nocompat-yc.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/ui/plugin.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/ui/prepare_widgets.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/ui/dialog.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/rexio.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/search.js"></script>
   % for my $plg (@{config->{ plugins }}) {
     <script type="text/javascript" charset="utf-8" src="/js/<%= lc($plg) %>.js"></script>

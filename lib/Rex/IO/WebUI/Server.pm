@@ -11,50 +11,62 @@ sub index {
 
   $self->render_later;
 
-  my $server = $self->rexio->get_server($self->param("id"));
-  my $os_templates = $self->rexio->list_os_templates;
-  $self->stash("server", $server);
-  $self->stash("os_templates", $os_templates);
+  my $server = $self->rexio->call( "GET", "1.0", "hardware",
+    hardware => $self->param("id") );
 
-  my (@more_tabs, @more_content, @information_plugins, @plugin_menus, @plugin_filter, @plugin_general_information);
+  $self->app->log->debug("Got server data:");
+  $self->app->log->debug(Dumper($server));
+
+  my $os_templates = $self->rexio->list_os_templates;
+  $self->stash( "server",       $server->{data} );
+  $self->stash( "os_templates", $os_templates );
+
+  my ( @more_tabs, @more_content, @information_plugins, @plugin_menus,
+    @plugin_filter, @plugin_general_information );
 
   # load server tabs from plugins
-  for my $plugin (@{ $self->config->{plugins} }) {
+  for my $plugin ( @{ $self->config->{plugins} } ) {
     my $template_path = "\L$plugin";
-    my $template_tab = $self->render("$template_path/ext/server_tabs", partial => 1);
-    if($template_tab) {
+    my $template_tab =
+      $self->render( "$template_path/ext/server_tabs", partial => 1 );
+    if ($template_tab) {
       push @more_tabs, $template_tab;
     }
 
-    my $template_content = $self->render("$template_path/ext/server_tabs_content", partial => 1);
-    if($template_content) {
+    my $template_content =
+      $self->render( "$template_path/ext/server_tabs_content", partial => 1 );
+    if ($template_content) {
       push @more_content, $template_content;
     }
 
-    my $information_content = $self->render("$template_path/ext/server_tabs_information", partial => 1);
-    if($information_content) {
+    my $information_content =
+      $self->render( "$template_path/ext/server_tabs_information",
+      partial => 1 );
+    if ($information_content) {
       push @information_plugins, $information_content;
     }
 
-    my $menu_content = $self->render("$template_path/ext/server_menu", partial => 1);
-    if($menu_content) {
+    my $menu_content =
+      $self->render( "$template_path/ext/server_menu", partial => 1 );
+    if ($menu_content) {
       push @plugin_menus, $menu_content;
     }
 
-    my $gen_info_content = $self->render("$template_path/ext/server_general_information", partial => 1);
-    if($gen_info_content) {
+    my $gen_info_content =
+      $self->render( "$template_path/ext/server_general_information",
+      partial => 1 );
+    if ($gen_info_content) {
       push @plugin_general_information, $gen_info_content;
     }
 
-
   }
 
-  $self->stash(plugin_tabs => \@more_tabs);
-  $self->stash(plugin_tab_content => \@more_content);
-  $self->stash(plugin_information_tab => \@information_plugins);
-  $self->stash(plugin_menus => \@plugin_menus);
-  $self->stash(plugin_filter => \@plugin_filter);
-  $self->stash(plugin_general_information => \@plugin_general_information);
+  $self->stash( plugin_tabs                => \@more_tabs );
+  $self->stash( plugin_tab_content         => \@more_content );
+  $self->stash( plugin_information_tab     => \@information_plugins );
+  $self->stash( plugin_menus               => \@plugin_menus );
+  $self->stash( plugin_filter              => \@plugin_filter );
+  $self->stash( plugin_general_information => \@plugin_general_information );
 
   $self->render;
 
@@ -63,23 +75,28 @@ sub index {
 sub set_next_boot {
   my ($self) = @_;
 
-  my $data = $self->rexio->set_next_boot(server => $self->param("server"), boot => $self->param("boot"));
-  $self->render(json => $data);
+  my $data = $self->rexio->set_next_boot(
+    server => $self->param("server"),
+    boot   => $self->param("boot")
+  );
+  $self->render( json => $data );
 }
 
 sub export {
   my ($self) = @_;
 
-  $self->res->headers->header("Content-Type" => "text/csv");
-  $self->res->headers->header("Content-Disposition" => "attachment; filename=export-serverlist.csv");
-  $self->res->headers->header("Content-Description" => "Server List in CSV Format");
-  $self->res->headers->header("Pragma" => "no-cache");
-  $self->res->headers->header("Expires" => 0);
+  $self->res->headers->header( "Content-Type" => "text/csv" );
+  $self->res->headers->header(
+    "Content-Disposition" => "attachment; filename=export-serverlist.csv" );
+  $self->res->headers->header(
+    "Content-Description" => "Server List in CSV Format" );
+  $self->res->headers->header( "Pragma"  => "no-cache" );
+  $self->res->headers->header( "Expires" => 0 );
 
   my $qry = "" . $self->req->query_params;
 
   my $server_list = $self->rexio->list_hosts($qry);
-  $self->stash(entries => $server_list);
+  $self->stash( entries => $server_list );
   $self->render;
 }
 
@@ -93,20 +110,21 @@ sub list {
 
   my (@plugin_filter);
 
-  for my $plugin (@{ $self->config->{plugins} }) {
+  for my $plugin ( @{ $self->config->{plugins} } ) {
 
     my $template_path = "\L$plugin";
 
-    my $filter_content = $self->render("$template_path/ext/search", partial => 1);
-    if($filter_content) {
+    my $filter_content =
+      $self->render( "$template_path/ext/search", partial => 1 );
+    if ($filter_content) {
       push @plugin_filter, $filter_content;
     }
 
   }
 
-  $self->stash(entries     => $server_list);
-  $self->stash(os_templates  => $os_list);
-  $self->stash(plugin_filter => \@plugin_filter);
+  $self->stash( entries       => $server_list );
+  $self->stash( os_templates  => $os_list );
+  $self->stash( plugin_filter => \@plugin_filter );
 
   $self->render;
 }
@@ -120,47 +138,63 @@ sub add_new {
   my ($self) = @_;
 
   my $json = $self->req->json;
-  my $mac = $json->{mac};
-  delete $json->{mac};
-  my $ret = $self->rexio->add_server($mac, %{ $json });
 
-  $self->render(json => $ret);
+  $self->app->log->debug("Adding new server.");
+  $self->app->log->debug( Dumper($json) );
+
+  my $ret = $self->rexio->call(
+    "POST", "1.0", "hardware",
+    hardware => undef,
+    ref      => $json->{data}
+  );
+
+  $self->app->log->debug( "Got server answer: " . Dumper($ret) );
+
+  $self->render( json => $ret );
 }
 
 sub del_server {
   my ($self) = @_;
 
   my $srv_id = $self->param("id");
-  my $ret = $self->rexio->del_server($srv_id);
 
-  $self->render(json => $ret);
+  $self->app->log->debug("Deleting server: $srv_id");
+
+  my $ret =
+    $self->rexio->call( "DELETE", "1.0", "hardware", hardware => $srv_id );
+
+  $self->app->log->debug( "Got server answer: " . Dumper($ret) );
+
+  $self->render( json => $ret );
 }
 
 sub update_server {
   my ($self) = @_;
 
-  my $ret = $self->rexio->update_server($self->param("id"), %{ $self->req->json });
+  my $ret = $self->rexio->call(
+    "POST", "1.0", "hardware",
+    hardware => $self->param("id"),
+    ref      => $self->req->json
+  );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
 
 sub trigger_inventory {
   my ($self) = @_;
 
-  my $ret = $self->rexio->trigger_inventory($self->param("ip"));
+  my $ret = $self->rexio->trigger_inventory( $self->param("ip") );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
 
 sub trigger_reboot {
   my ($self) = @_;
 
-  my $ret = $self->rexio->trigger_reboot($self->param("ip"));
+  my $ret = $self->rexio->trigger_reboot( $self->param("ip") );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
-
-
 
 sub bulk_view {
   my ($self) = @_;
@@ -169,116 +203,11 @@ sub bulk_view {
 
 sub run_command {
   my ($self) = @_;
-  $self->app->log->debug("Sending command to: " . $self->param("ip"));
-  $self->app->log->debug(Dumper($self->req->json));
-  $self->rexio->send_command_to($self->param("ip"), $self->req->json);
+  $self->app->log->debug( "Sending command to: " . $self->param("ip") );
+  $self->app->log->debug( Dumper( $self->req->json ) );
+  $self->rexio->send_command_to( $self->param("ip"), $self->req->json );
 
-  $self->render(json => {ok => Mojo::JSON->true});
-}
-
-sub messagebroker {
-  my ($self) = @_;
-
-  Mojo::IOLoop->stream($self->tx->connection)->timeout(300);
-  my $outer_tx   = $self->tx;
-
-  my $ua = Mojo::UserAgent->new;
-  $ua->websocket("ws://localhost:5000/messagebroker", sub {
-    my ($ua, $ua_tx) = @_;
-
-    $ua_tx->on(message => sub {
-      my ($tx, $msg) = @_;
-      $self->app->log->debug("Got messagebroker message (from server)");
-      $outer_tx->send($msg);
-    });
-
-    $self->on(message => sub {
-      my ($tx, $msg) = @_;
-      $self->app->log->debug("Got messagebroker message (from client): $msg");
-      $ua_tx->send($msg);
-    });
-
-  });
-
-  $self->on(finish => sub {
-    undef $ua;
-    undef $outer_tx;
-  });
-}
-
-sub events {
-  my ($self) = @_;
-
-  $self->app->log->debug("Client connected: " . $self->tx->remote_address);
-
-  Mojo::IOLoop->stream($self->tx->connection)->timeout(0);
-
-  my $tx   = $self->tx;
-  my $redis = Mojo::Redis->new(server => "localhost:6379");
-  $redis->timeout(0);
-  my $sub  = $redis->subscribe("rex_io_jobs", "rex_monitor", "rex_io_log", "rex_monitor:alerts", "rex_io_deploy", "rex_io_jobqueue_output", "rex_io_cluster");
-
-  $redis->on(
-    error => sub {
-      $self->app->log->debug("Got redis error");
-    },
-    finish => sub {
-      $self->app->log->debug("Got redis finish");
-    },
-  );
-
-  $sub->on(message => sub {
-    my ($sub, $message, $channel) = @_;
-
-    my $ref = j($message);
-
-    if($channel eq "rex_monitor") {
-      $ref->{cmd} = "monitor";
-    }
-
-    if($channel eq "rex_monitor:alerts") {
-      $ref->{cmd} = "alerts";
-    }
-
-    if($channel eq "rex_io_log") {
-      $ref->{cmd} = "logstream";
-    }
-
-    if($channel eq "rex_io_jobqueue_output") {
-      $ref->{cmd} = "jobqueue_output";
-    }
-
-    $tx->send(Mojo::JSON->encode($ref));
-  },
-    error => sub {
-      $self->app->log->debug("Got sub error");
-    },
-    finish => sub {
-      $self->app->log->debug("Got sub finish");
-    });
-
-  $self->on(finish => sub {
-    $self->app->log->debug("Client disconnected: " . $self->tx->remote_address);
-  });
-
-  $self->on(message => sub {
-    my ($tx, $message) = @_;
-    $self->app->log->debug("Websockt Message: $message");
-    $tx->send("Thanks for your message: " . $self->tx->remote_address);
-  });
-
-  $self->on(
-    error => sub {
-      $self->app->log->debug("Got ERROR!");
-    },
-  );
-
-  $self->on(finish => sub {
-    $self->app->log->debug("Got FINISH!");
-    undef $redis;
-    undef $sub;
-    undef $tx;
-  });
+  $self->render( json => { ok => Mojo::JSON->true } );
 }
 
 sub group {
@@ -288,32 +217,32 @@ sub group {
 
 sub add_group {
   my ($self) = @_;
-  my $ret = $self->rexio->add_server_group(%{ $self->req->json });
+  my $ret = $self->rexio->add_server_group( %{ $self->req->json } );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
 
 sub del_group {
   my ($self) = @_;
-  my $ret = $self->rexio->del_server_group($self->param("group_id"));
+  my $ret = $self->rexio->del_server_group( $self->param("group_id") );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
 
 sub add_server_to_group {
   my ($self) = @_;
-  my $ret = $self->rexio->add_server_to_server_group($self->param("server_id"), $self->param("group_id"));
+  my $ret = $self->rexio->add_server_to_server_group( $self->param("server_id"),
+    $self->param("group_id") );
 
-  $self->render(json => $ret);
+  $self->render( json => $ret );
 }
 
-
-
 ##### Rex.IO WebUI Plugin specific methods
-sub rexio_routes {
-  my ($self, $routes) = @_;
-  my $r    = $routes->{route};
-  my $r_auth = $routes->{route_auth};
+sub __register__ {
+  my ( $self, $opt ) = @_;
+  my $r      = $opt->{route};
+  my $r_auth = $opt->{route_auth};
+  my $app    = $opt->{app};
 
   $r->websocket("/server_events")->to("server#events");
   $r->websocket("/messagebroker")->to("server#messagebroker");
@@ -331,12 +260,22 @@ sub rexio_routes {
   $r_auth->get("/server_group")->to("server#group");
   $r_auth->post("/server_group")->to("server#add_group");
   $r_auth->delete("/server_group/:group_id")->to("server#del_group");
-  $r_auth->post("/server_group/server/:server_id/:group_id")->to("server#add_server_to_group");
+  $r_auth->post("/server_group/server/:server_id/:group_id")
+    ->to("server#add_server_to_group");
 
   # set next boot // todo: andere url
   $r_auth->post("/server/:server/boot/:boot")->to("server#set_next_boot");
   $r_auth->route("/server/#ip/command")->via("RUN")->to("server#run_command");
 
+  # new routes
+  $r_auth->post("/1.0/server/server/:server/boot/:boot")
+    ->to("server#set_next_boot");
+
+  $r_auth->post("/1.0/server/server/:id")->to("server#update_server");
+
+  $r_auth->delete("/1.0/server/server/:id")->to("server#del_server");
+
+  $r_auth->post("/1.0/server/server")->to("server#add_new");
 
 }
 
