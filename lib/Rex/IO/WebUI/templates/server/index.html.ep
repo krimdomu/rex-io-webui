@@ -61,7 +61,7 @@
             % for my $dev ( @{ $server->{network_adapters} } ) {
             %  next unless $dev->{ip};
             %  next if ($dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/);
-            %  my $check = rexio->is_online($dev->{ip});
+            %  my $check = rexio->call("GET", "1.0", "messagebroker", client => $dev->{ip}, online => undef);
             %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
             % }
             <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />

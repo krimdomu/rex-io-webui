@@ -9,7 +9,8 @@
 
 % my $server_count = rexio->get_server_count()->{count};
 % my $os_count     = rexio->get_operating_systems()->{count};
-% my $online       = scalar( @{ rexio->list_online_ips()->{data} } );
+% my $clients      = rexio->call("GET", "1.0", "messagebroker", client => undef);
+% my $online       = scalar @{ $clients->{data} };
 
 <div class="tabbable">
    <ul class="tabs tabs-top">
