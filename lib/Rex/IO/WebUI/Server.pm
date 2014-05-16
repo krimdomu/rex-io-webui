@@ -21,6 +21,22 @@ sub index {
   $self->stash( "server",       $server->{data} );
   $self->stash( "os_templates", $os_templates );
 
+  my $agent_ip;
+  my $is_online = 0;
+  for my $dev ( @{ $server->{data}->{network_adapters} } ) {
+    next unless $dev->{ip};
+    next if ( $dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/ );
+    my $check = $self->rexio->call(
+      "GET", "1.0", "messagebroker",
+      client => $dev->{ip},
+      online => undef
+    );
+    if ( $check->{ok} ) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
+  }
+
+  $self->stash( "agent_ip",  $agent_ip );
+  $self->stash( "is_online", $is_online );
+
   my ( @more_tabs, @more_content, @information_plugins, @plugin_menus,
     @plugin_filter, @plugin_general_information, @plugin_menu_configuration );
 

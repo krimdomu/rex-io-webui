@@ -10,6 +10,7 @@
    </li>
 </ul>
 
+<!--
 <div class="filter_bar">
    <div class="filter_widget">
       <label for="filter_name">Name:</label>
@@ -36,8 +37,9 @@
 
    <div class="clearfix"></div>
 </div>
+-->
 
-<table border="0" id="table_entries_server" class="rexio-ui-data-table" rexio-ui-minus-height="285" style="width: 100%;">
+<table border="0" id="table_entries_server" class="rexio-ui-data-table" rexio-ui-minus-height="235" style="width: 100%;">
    <thead>
       <tr>
          <!--         <td style="width: 20px;"></td> -->

@@ -56,14 +56,6 @@
 
         <table border="0">
           <tr>
-            % my $agent_ip;
-            % my $is_online = 0;
-            % for my $dev ( @{ $server->{network_adapters} } ) {
-            %  next unless $dev->{ip};
-            %  next if ($dev->{ip} =~ m/^127\./ && $dev->{dev} =~ m/^lo/);
-            %  my $check = rexio->call("GET", "1.0", "messagebroker", client => $dev->{ip}, online => undef);
-            %  if($check->{ok}) { $is_online = 1; $agent_ip = $dev->{ip}; last; }
-            % }
             <input type="hidden" name="agent_ip" id="agent_ip" value="<%= $agent_ip %>" />
             <input type="hidden" name="txt_hostname" id="txt_hostname" value="<%= $server->{name} %>" />
 
@@ -78,18 +70,6 @@
           <tr>
             <td class="col-info">Operating System:</td>
             <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
-          </tr>
-          <tr>
-            <td class="col-info">Current Boottype:</td>
-            <td class="col-text">
-              <select name="next_boot_target" id="next_boot_target">
-                <% for my $os (@{ $os_templates }) { %>
-                <option <% if($os->{id} == $server->{os_template}->{id}) { %>selected<% } %> value="<%= $os->{id} %>"><%= $os->{name} %></option>
-                <% } %>
-              </select>
-              <button id="save_boot_target" class="rexio-ui-button" rexio-ui-click="server/view.click_save_boot_target">Save</button>
-              <% if($is_online) { %><button id="reboot_system" class="grey" ip="<%= $agent_ip %>">Reboot</button><% } %>
-            </td>
           </tr>
           % for my $plg_general_information (@{ $plugin_general_information }) {
           <%= $plg_general_information %>
