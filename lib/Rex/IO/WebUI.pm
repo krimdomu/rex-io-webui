@@ -103,7 +103,7 @@ sub startup {
 #    return 1;
 #  });
 
-  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
+  my $r_auth = $r; # $r->bridge("/")->to("dashboard#check_login");
 
   # Normal route to controller
   $r_auth->get("/")->to("dashboard#index");

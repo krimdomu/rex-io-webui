@@ -10,7 +10,7 @@ sub index {
   # load navigation from plugins
   for my $plugin (@{ $self->config->{plugins} }) {
     my $template_path = "\L$plugin";
-    my $srv_mnu_template = $self->render("$template_path/ext/mainmenu_server", partial => 1);
+    my $srv_mnu_template = $self->render_to_string("$template_path/ext/mainmenu_server", partial => 1);
     if($srv_mnu_template) {
       push @main_menu_srv, $srv_mnu_template;
     }
@@ -20,7 +20,7 @@ sub index {
 
   for my $plugin (@{ $self->config->{plugins} }) {
     my $template_path = "\L$plugin";
-    my $template = $self->render("$template_path/ext/mainmenu", partial => 1);
+    my $template = $self->render_to_string("$template_path/ext/mainmenu", partial => 1);
     if($template) {
       push @main_menu, $template;
     }
@@ -29,7 +29,7 @@ sub index {
 
 
   $self->stash(main_menu => \@main_menu);
-  
+
   $self->render;
 }
 
@@ -43,17 +43,17 @@ sub view {
   # load dashboard from plugins
   for my $plugin (@{ $self->config->{plugins} }) {
     my $template_path = "\L$plugin";
-    my $template = $self->render("$template_path/ext/dashboard", partial => 1);
+    my $template = $self->render_to_string("$template_path/ext/dashboard", partial => 1);
     if($template) {
       push @dashboard, $template;
     }
 
-    my $template2 = $self->render("$template_path/ext/dashboard_stats", partial => 1);
+    my $template2 = $self->render_to_string("$template_path/ext/dashboard_stats", partial => 1);
     if($template2) {
       push @dashboard_stats, $template2;
     }
 
-    my $template_admin = $self->render("$template_path/ext/dashboard_admin", partial => 1);
+    my $template_admin = $self->render_to_string("$template_path/ext/dashboard_admin", partial => 1);
     if($template_admin) {
       push @dashboard_admin, $template_admin;
     }
@@ -63,7 +63,7 @@ sub view {
   $self->stash(dashboard_stats => \@dashboard_stats);
   $self->stash(dashboard_admin => \@dashboard_admin);
 
-  $self->render;
+  $self->render('dashboard/view', status => 200);
 }
 
 sub login {

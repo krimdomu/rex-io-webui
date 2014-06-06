@@ -44,39 +44,39 @@ sub index {
   for my $plugin ( @{ $self->config->{plugins} } ) {
     my $template_path = "\L$plugin";
     my $template_tab =
-      $self->render( "$template_path/ext/server_tabs", partial => 1 );
+      $self->render_to_string( "$template_path/ext/server_tabs", partial => 1 );
     if ($template_tab) {
       push @more_tabs, $template_tab;
     }
 
     my $template_content =
-      $self->render( "$template_path/ext/server_tabs_content", partial => 1 );
+      $self->render_to_string( "$template_path/ext/server_tabs_content", partial => 1 );
     if ($template_content) {
       push @more_content, $template_content;
     }
 
     my $information_content =
-      $self->render( "$template_path/ext/server_tabs_information",
+      $self->render_to_string( "$template_path/ext/server_tabs_information",
       partial => 1 );
     if ($information_content) {
       push @information_plugins, $information_content;
     }
 
     my $menu_content =
-      $self->render( "$template_path/ext/server_menu", partial => 1 );
+      $self->render_to_string( "$template_path/ext/server_menu", partial => 1 );
     if ($menu_content) {
       push @plugin_menus, $menu_content;
     }
 
     my $menu_configuration_content =
-      $self->render( "$template_path/ext/server_menu_configuration",
+      $self->render_to_string( "$template_path/ext/server_menu_configuration",
       partial => 1 );
     if ($menu_configuration_content) {
       push @plugin_menu_configuration, $menu_configuration_content;
     }
 
     my $gen_info_content =
-      $self->render( "$template_path/ext/server_general_information",
+      $self->render_to_string( "$template_path/ext/server_general_information",
       partial => 1 );
     if ($gen_info_content) {
       push @plugin_general_information, $gen_info_content;
@@ -130,7 +130,7 @@ sub list {
   my $qry = "" . $self->req->query_params;
 
   my $server_list = $self->rexio->list_hosts($qry);
-  my $os_list     = $self->rexio->list_os_templates();
+#  my $os_list     = $self->rexio->list_os_templates();
 
   my (@plugin_filter);
 
@@ -139,7 +139,7 @@ sub list {
     my $template_path = "\L$plugin";
 
     my $filter_content =
-      $self->render( "$template_path/ext/search", partial => 1 );
+      $self->render_to_string( "$template_path/ext/search", partial => 1 );
     if ($filter_content) {
       push @plugin_filter, $filter_content;
     }
@@ -147,7 +147,7 @@ sub list {
   }
 
   $self->stash( entries       => $server_list );
-  $self->stash( os_templates  => $os_list );
+#  $self->stash( os_templates  => $os_list );
   $self->stash( plugin_filter => \@plugin_filter );
 
   $self->render;
