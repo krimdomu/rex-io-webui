@@ -17,9 +17,7 @@ sub index {
   $self->app->log->debug("Got server data:");
   $self->app->log->debug( Dumper($server) );
 
-  my $os_templates = $self->rexio->list_os_templates;
-  $self->stash( "server",       $server->{data} );
-  $self->stash( "os_templates", $os_templates );
+  $self->stash( "server", $server->{data} );
 
   my $agent_ip;
   my $is_online = 0;
@@ -50,7 +48,8 @@ sub index {
     }
 
     my $template_content =
-      $self->render_to_string( "$template_path/ext/server_tabs_content", partial => 1 );
+      $self->render_to_string( "$template_path/ext/server_tabs_content",
+      partial => 1 );
     if ($template_content) {
       push @more_content, $template_content;
     }
@@ -96,41 +95,31 @@ sub index {
 
 }
 
-sub set_next_boot {
-  my ($self) = @_;
-
-  my $data = $self->rexio->set_next_boot(
-    server => $self->param("server"),
-    boot   => $self->param("boot")
-  );
-  $self->render( json => $data );
-}
-
-sub export {
-  my ($self) = @_;
-
-  $self->res->headers->header( "Content-Type" => "text/csv" );
-  $self->res->headers->header(
-    "Content-Disposition" => "attachment; filename=export-serverlist.csv" );
-  $self->res->headers->header(
-    "Content-Description" => "Server List in CSV Format" );
-  $self->res->headers->header( "Pragma"  => "no-cache" );
-  $self->res->headers->header( "Expires" => 0 );
-
-  my $qry = "" . $self->req->query_params;
-
-  my $server_list = $self->rexio->list_hosts($qry);
-  $self->stash( entries => $server_list );
-  $self->render;
-}
+# sub export {
+#   my ($self) = @_;
+#
+#   $self->res->headers->header( "Content-Type" => "text/csv" );
+#   $self->res->headers->header(
+#     "Content-Disposition" => "attachment; filename=export-serverlist.csv" );
+#   $self->res->headers->header(
+#     "Content-Description" => "Server List in CSV Format" );
+#   $self->res->headers->header( "Pragma"  => "no-cache" );
+#   $self->res->headers->header( "Expires" => 0 );
+#
+#   my $qry = "" . $self->req->query_params;
+#
+#   my $server_list = $self->rexio->list_hosts($qry);
+#   $self->stash( entries => $server_list );
+#   $self->render;
+# }
 
 sub list {
   my ($self) = @_;
 
   my $qry = "" . $self->req->query_params;
 
-  my $server_list = $self->rexio->list_hosts($qry);
-#  my $os_list     = $self->rexio->list_os_templates();
+  my $server_list =
+    $self->rexio->call( "GET", "1.0", "hardware", hardware => undef, ref => $qry );
 
   my (@plugin_filter);
 
@@ -146,8 +135,9 @@ sub list {
 
   }
 
-  $self->stash( entries       => $server_list );
-#  $self->stash( os_templates  => $os_list );
+  $self->stash( entries => $server_list );
+
+  #  $self->stash( os_templates  => $os_list );
   $self->stash( plugin_filter => \@plugin_filter );
 
   $self->render;
@@ -204,62 +194,62 @@ sub update_server {
   $self->render( json => $ret );
 }
 
-sub trigger_inventory {
-  my ($self) = @_;
+# sub trigger_inventory {
+#   my ($self) = @_;
+#
+#   my $ret = $self->rexio->trigger_inventory( $self->param("ip") );
+#
+#   $self->render( json => $ret );
+# }
+#
+# sub trigger_reboot {
+#   my ($self) = @_;
+#
+#   my $ret = $self->rexio->trigger_reboot( $self->param("ip") );
+#
+#   $self->render( json => $ret );
+# }
 
-  my $ret = $self->rexio->trigger_inventory( $self->param("ip") );
+# sub bulk_view {
+#   my ($self) = @_;
+#   $self->render;
+# }
 
-  $self->render( json => $ret );
-}
+# sub run_command {
+#   my ($self) = @_;
+#   $self->app->log->debug( "Sending command to: " . $self->param("ip") );
+#   $self->app->log->debug( Dumper( $self->req->json ) );
+#   $self->rexio->send_command_to( $self->param("ip"), $self->req->json );
+#
+#   $self->render( json => { ok => Mojo::JSON->true } );
+# }
 
-sub trigger_reboot {
-  my ($self) = @_;
-
-  my $ret = $self->rexio->trigger_reboot( $self->param("ip") );
-
-  $self->render( json => $ret );
-}
-
-sub bulk_view {
-  my ($self) = @_;
-  $self->render;
-}
-
-sub run_command {
-  my ($self) = @_;
-  $self->app->log->debug( "Sending command to: " . $self->param("ip") );
-  $self->app->log->debug( Dumper( $self->req->json ) );
-  $self->rexio->send_command_to( $self->param("ip"), $self->req->json );
-
-  $self->render( json => { ok => Mojo::JSON->true } );
-}
-
-sub group {
-  my ($self) = @_;
-  $self->render;
-}
-
-sub add_group {
-  my ($self) = @_;
-  my $ret = $self->rexio->add_server_group( %{ $self->req->json } );
-
-  $self->render( json => $ret );
-}
-
-sub del_group {
-  my ($self) = @_;
-  my $ret = $self->rexio->del_server_group( $self->param("group_id") );
-
-  $self->render( json => $ret );
-}
-
-sub add_server_to_group {
-  my ($self) = @_;
-  my $ret = $self->rexio->add_server_to_server_group( $self->param("server_id"),
-    $self->param("group_id") );
-
-  $self->render( json => $ret );
-}
+# sub group {
+#   my ($self) = @_;
+#   $self->render;
+# }
+#
+# sub add_group {
+#   my ($self) = @_;
+#   my $ret = $self->rexio->add_server_group( %{ $self->req->json } );
+#
+#   $self->render( json => $ret );
+# }
+#
+# sub del_group {
+#   my ($self) = @_;
+#   my $ret = $self->rexio->del_server_group( $self->param("group_id") );
+#
+#   $self->render( json => $ret );
+# }
+#
+# sub add_server_to_group {
+#   my ($self) = @_;
+#   my $ret = $self->rexio->add_server_to_server_group( $self->param("server_id"),
+#     $self->param("group_id") );
+#
+#   $self->render( json => $ret );
+# }
 
 ##### Rex.IO WebUI Plugin specific methods
 sub __register__ {
@@ -270,7 +260,7 @@ sub __register__ {
 
   $r->websocket("/server_events")->to("server#events");
   $r->websocket("/messagebroker")->to("server#messagebroker");
-  $r_auth->get("/server/export")->to("server#export");
+  #$r_auth->get("/server/export")->to("server#export");
   $r_auth->get("/server/new")->to("server#add");
   $r_auth->get("/server/bulk")->to("server#bulk_view");
   $r_auth->post("/server/new")->to("server#add_new");

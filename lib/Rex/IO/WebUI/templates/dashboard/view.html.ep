@@ -7,8 +7,8 @@
    </li>
 </ul>
 
-% my $server_count = rexio->get_server_count()->{count};
-% my $os_count     = rexio->get_operating_systems()->{count};
+% my $server_count = rexio->call("GET", "1.0", "hardware", hardware => undef, ref => {action => 'count'})->{count};
+% my $os_count     = rexio->call("GET", "1.0", "os", os => undef, ref => {action => 'count'})->{count};
 % my $clients      = rexio->call("GET", "1.0", "messagebroker", client => undef);
 % my $online       = scalar @{ $clients->{data} };
 
