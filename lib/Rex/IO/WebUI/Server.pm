@@ -188,7 +188,7 @@ sub update_server {
   my $ret = $self->rexio->call(
     "POST", "1.0", "hardware",
     hardware => $self->param("id"),
-    ref      => $self->req->json
+    ref      => $self->req->json->{data}
   );
 
   $self->render( json => $ret );
