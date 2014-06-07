@@ -28,8 +28,8 @@ sub register {
           protocol => 1,
           ssl      => $app->config->{server}->{ssl},
           endpoint => "https://"
-            . $app->config->{server}->{user} . ":"
-            . $app->config->{server}->{password} . '@'
+            . $self->session('user') . ":"
+            . $self->session('password') . '@'
             . $app->config->{server}->{url},
         );
       }
@@ -37,12 +37,12 @@ sub register {
         $cl = Rex::IO::Client->create(
           protocol => 1,
           endpoint => "http://"
-            . $app->config->{server}->{user} . ":"
-            . $app->config->{server}->{password} . '@'
+            . $self->session('user') . ":"
+            . $self->session('password') . '@'
             . $app->config->{server}->{url}
         );
       }
-      
+
       return $cl;
     }
   );

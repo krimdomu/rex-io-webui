@@ -72,15 +72,22 @@ sub startup {
       session_key   => $self->config->{session}->{key},
       load_user     => sub {
         my ( $app, $uid ) = @_;
-        my $user = $app->get_user($uid);
+        my $user =
+          $app->rexio->call( "GET", "1.0", "user", user => $uid )->{data};
         return $user;
       },
       validate_user => sub {
         my ( $app, $username, $password, $extra_data ) = @_;
-        my $user_data = $app->rexio->auth( $username, $password );
+        my $user_data = $app->rexio->call(
+          "POST", "1.0", "user",
+          login => undef,
+          ref   => { user => $username, password => $password }
+        );
 
-        if ($user_data) {
-          return $user_data->{id};
+        if ( $user_data->{ok} ) {
+          $app->session( user => $username );
+          $app->session( password => $password );
+          return $user_data->{data}->{id};
         }
 
         return;
@@ -103,7 +110,7 @@ sub startup {
 #    return 1;
 #  });
 
-  my $r_auth = $r; # $r->bridge("/")->to("dashboard#check_login");
+  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
 
   # Normal route to controller
   $r_auth->get("/")->to("dashboard#index");
