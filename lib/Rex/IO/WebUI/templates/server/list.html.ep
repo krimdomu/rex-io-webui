@@ -46,7 +46,9 @@
          <td>Name</td>
          <td>Boot MAC</td>
          <td>OS</td>
-         <td>State</td>
+         % for my $plugin (@{ $self->config->{plugins} }) {
+         %= $self->render_to_string(lc($plugin) . '/ext/server_list_add_row_title', partial => 1);
+         % }
       </tr>
    </thead>
    <tbody>
@@ -61,7 +63,9 @@
          </td>
          <td><%= $entry->{mac} %></td>
          <td><% if($entry->{os}->{name}) { %><%= $entry->{os}->{name} %> (<%= $entry->{os}->{version} %>) <% } else { %>UNKNOWN<% } %></td>
-         <td><%= $entry->{state} %></td>
+         % for my $plugin (@{ $self->config->{plugins} }) {
+         %= $self->render_to_string(lc($plugin) . '/ext/server_list_add_row_content', partial => 1, entry => $entry);
+         % }
       </tr>
       % }
    </tbody>
