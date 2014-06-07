@@ -30,7 +30,7 @@
             </tr>
          </thead>
          <tbody>
-            % my $entries = rexio->list_groups;
+            % my $entries = rexio->call("GET", "1.0", "group", group => undef)->{data};
             % foreach my $entry (@{ $entries }) {
             <tr group_id="<%= $entry->{id} %>">
                <td><div class="group_drag_user" group_id="<%= $entry->{id} %>"><%= $entry->{id} %></div></td>
@@ -48,7 +48,7 @@
             </tr>
          </thead>
          <tbody>
-            % my $entries = rexio->list_users;
+            % my $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
             % foreach my $entry (@{ $entries }) {
             <tr>
                <td><div class="user_hndl" user_name="<%= $entry->{name} %>" user_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>
@@ -70,5 +70,3 @@
       </fieldset>
    </form>
 </div>
-
-

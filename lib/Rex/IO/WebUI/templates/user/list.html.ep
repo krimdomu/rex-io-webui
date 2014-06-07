@@ -29,7 +29,7 @@
       </tr>
    </thead>
    <tbody>
-      % my $entries = rexio->list_users;
+      % my $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
       % foreach my $entry (@{ $entries }) {
       <tr user_id="<%= $entry->{id} %>">
          <td><%= $entry->{id} %></td>
@@ -53,5 +53,3 @@
       </fieldset>
    </form>
 </div>
-
-
