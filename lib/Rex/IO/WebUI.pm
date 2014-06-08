@@ -85,8 +85,9 @@ sub startup {
         );
 
         if ( $user_data->{ok} ) {
-          $app->session( user => $username );
-          $app->session( password => $password );
+          $app->session( user        => $username );
+          $app->session( password    => $password );
+          $app->session( permissions => $user_data->{data}->{permissions} );
           return $user_data->{data}->{id};
         }
 

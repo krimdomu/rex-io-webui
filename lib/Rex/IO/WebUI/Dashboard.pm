@@ -6,6 +6,8 @@ sub index {
   my $self = shift;
 
   my (@main_menu, @main_menu_srv);
+use Data::Dumper;
+print STDERR Dumper $self->session;
 
   # load navigation from plugins
   for my $plugin (@{ $self->config->{plugins} }) {

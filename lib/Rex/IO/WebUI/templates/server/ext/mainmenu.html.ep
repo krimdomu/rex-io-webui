@@ -1,11 +1,17 @@
+% if(has_permission('UI_SERVER')) {
 <li class="has-sub">
    <a href="#" class="icon-arrow-left">Server</a>
    <ul class="sub">
+     % if(has_permission('UI_LIST_SERVER')) {
       <li><a href="#" class="rexio-ui-link" rexio-ui-object="server/list">List Server</a></li>
+     % }
+     % if(has_permission('UI_ADD_SERVER')) {
       <li><a href="#" class="rexio-ui-link" rexio-ui-object="server/add">Add new Server</a></li>
+     % }
       <!--      <li><a href="#" class="server-group">Groups</a></li> -->
       <% for my $mnu (@{ $main_menu_srv }) { %>
       <%= $mnu %>
       <% } %>
    </ul>
 </li>
+% }

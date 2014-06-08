@@ -9,6 +9,10 @@ use Mojo::JSON 'j';
 sub index {
   my ($self) = @_;
 
+  if ( !$self->has_permission('UI_VIEW_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   $self->render_later;
 
   my $server = $self->rexio->call( "GET", "1.0", "hardware",
@@ -116,10 +120,17 @@ sub index {
 sub list {
   my ($self) = @_;
 
+  if ( !$self->has_permission('UI_LIST_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   my $qry = "" . $self->req->query_params;
 
-  my $server_list =
-    $self->rexio->call( "GET", "1.0", "hardware", hardware => undef, ref => $qry );
+  my $server_list = $self->rexio->call(
+    "GET", "1.0", "hardware",
+    hardware => undef,
+    ref      => $qry
+  );
 
   my (@plugin_filter);
 
@@ -145,11 +156,19 @@ sub list {
 
 sub add {
   my ($self) = @_;
+  if ( !$self->has_permission('UI_ADD_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   $self->render;
 }
 
 sub add_new {
   my ($self) = @_;
+
+  if ( !$self->has_permission('UI_ADD_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
 
   my $json = $self->req->json;
 
@@ -170,6 +189,10 @@ sub add_new {
 sub del_server {
   my ($self) = @_;
 
+  if ( !$self->has_permission('UI_DELETE_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   my $srv_id = $self->param("id");
 
   $self->app->log->debug("Deleting server: $srv_id");
@@ -184,6 +207,10 @@ sub del_server {
 
 sub update_server {
   my ($self) = @_;
+
+  if ( !$self->has_permission('UI_UPDATE_SERVER') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
 
   my $ret = $self->rexio->call(
     "POST", "1.0", "hardware",
@@ -260,6 +287,7 @@ sub __register__ {
 
   $r->websocket("/server_events")->to("server#events");
   $r->websocket("/messagebroker")->to("server#messagebroker");
+
   #$r_auth->get("/server/export")->to("server#export");
   $r_auth->get("/server/new")->to("server#add");
   $r_auth->get("/server/bulk")->to("server#bulk_view");

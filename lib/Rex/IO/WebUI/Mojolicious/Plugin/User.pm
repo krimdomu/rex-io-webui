@@ -26,6 +26,17 @@ sub register {
     }
   );
 
+  $app->helper(
+    has_permission => sub {
+      my ( $self, $perm ) = @_;
+      my ($has_perm) = grep { $_ eq $perm } @{ $self->session('permissions') };
+      if ($has_perm) {
+        return 1;
+      }
+      return 0;
+    }
+  );
+
 }
 
 1;
