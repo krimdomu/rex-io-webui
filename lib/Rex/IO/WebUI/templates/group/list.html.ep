@@ -48,7 +48,7 @@
             </tr>
          </thead>
          <tbody>
-            % my $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
+            % $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
             % foreach my $entry (@{ $entries }) {
             <tr>
                <td><div class="user_hndl" user_name="<%= $entry->{name} %>" user_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>

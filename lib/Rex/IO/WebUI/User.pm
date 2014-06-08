@@ -11,11 +11,21 @@ use Data::Dumper;
 # This action will render a template
 sub list {
   my ($self) = @_;
+
+  if ( !$self->has_permission('UI_USER_AND_GROUP') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   $self->render;
 }
 
 sub add {
   my ($self) = @_;
+
+  if ( !$self->has_permission('UI_USER_AND_GROUP') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   my $ret = $self->rexio->call(
     "POST", "1.0", "user",
     user => undef,
@@ -26,6 +36,11 @@ sub add {
 
 sub delete {
   my ($self) = @_;
+
+  if ( !$self->has_permission('UI_USER_AND_GROUP') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
   my $ret = $self->rexio->call( "DELETE", "1.0", "user",
     user => $self->param("user_id") );
   $self->render( json => $ret );
