@@ -11,8 +11,8 @@
    <li class="pull-right no-padding">
       <div class="dropdown-menu">
          <ul id="menu">
-            <li><a href="#" id="lnk_add_user">Add User</a></li>
-            <li><a href="#" id="lnk_del_user">Delete User</a></li>
+            <li><a href="#" id="lnk_add_user" rexio-ui-click="user/user.add_user_dialog" class="mnu_item rexio-ui-link">Add User</a></li>
+            <li><a href="#" id="lnk_del_user" rexio-ui-click="user/user.delete_user_dialog" class="mnu_item rexio-ui-link">Delete User</a></li>
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>
@@ -20,7 +20,12 @@
 </ul>
 
 
-<table border="0" id="table_entries_user" style="width: 100%;">
+<table border="0"
+  id="table_entries_user"
+  class="rexio-ui-data-table"
+  rexio-ui-minus-height="235"
+  rexio-ui-selectable="true"
+  style="width: 100%;">
    <thead>
       <tr>
          <td width="80">Uid</td>
@@ -31,7 +36,7 @@
    <tbody>
       % my $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
       % foreach my $entry (@{ $entries }) {
-      <tr user_id="<%= $entry->{id} %>">
+      <tr user_id="<%= $entry->{id} %>" user_name="<%= $entry->{name} %>">
          <td><%= $entry->{id} %></td>
          <td><%= $entry->{name} %></td>
          <td><%= $entry->{group}->{name} %></td>
@@ -40,7 +45,18 @@
    </tbody>
 </table>
 
-<div id="add_user" class="dialog-window" title="Add new User">
+<div id="add_user"
+  class="dialog-window rexio-ui-dialog"
+  title="Add new User"
+  rexio-dialog-auto-open="false"
+  rexio-dialog-height="300"
+  rexio-dialog-width="350"
+  rexio-dialog-modal="true"
+  rexio-dialog-button-ok-value="Create"
+  rexio-dialog-button-cancel-value="Cancel"
+  rexio-dialog-button-ok-click="user/user.click_create_user"
+  rexio-dialog-button-cancel-click="user/user.click_create_user_cancel"
+>
    <p class="validateTips">Add a new user</p>
 
    <form>

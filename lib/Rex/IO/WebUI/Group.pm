@@ -19,7 +19,7 @@ sub add {
   my $ret = $self->rexio->call(
     "POST", "1.0", "group",
     group => undef,
-    ref   => $self->req->json
+    ref   => $self->req->json->{data}
   );
   $self->render( json => $ret );
 }

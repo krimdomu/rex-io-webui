@@ -1,9 +1,9 @@
 % if(has_permission('UI_USER_AND_GROUP')) {
 <li class="has-sub">
-   <a href="#" class="icon-arrow-left">Users &amp; Groups</a>
+   <a href="#" class="mnu-icon-arrow-left mnu-item">Users &amp; Groups</a>
    <ul class="sub">
-      <li><a href="#" class="users-users">Users</a></li>
-      <li><a href="#" class="users-groups">Groups</a></li>
+      <li><a href="#" class="rexio-ui-link" rexio-ui-object="user/user">Users</a></li>
+      <li><a href="#" class="rexio-ui-link" rexio-ui-object="group/group">Groups</a></li>
    </ul>
 </li>
 % }

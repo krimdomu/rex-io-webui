@@ -1,3 +1,33 @@
+<li class="has-sub">
+  <a href="#" class="mnu-icon-arrow-left mnu-item">Server</a>
+  <ul class="sub">
+    <li>
+      <div id="server_menu">
+        <ul>
+        <li>Home</li>
+        <li class="isFolder isExpanded" title="Bookmarks">
+            Folder 1
+            <ul>
+               <li>Go to Google.com</li>
+               <li>Go to Yahoo.com</li>
+            </ul>
+        </li>
+        <li>
+            Node 1
+            <ul>
+                <li>Sub Node 1</li>
+                <li>Sub Node 2</li>
+                <li>Sub Node 3</li>
+            </ul>
+        </li>
+        <li>Node 2</li>
+    </ul>
+      </div>
+    </li>
+  </ul>
+</li>
+
+<!--
 % if(has_permission('UI_SERVER')) {
 <li class="has-sub">
    <a href="#" class="icon-arrow-left">Server</a>
@@ -8,10 +38,10 @@
      % if(has_permission('UI_ADD_SERVER')) {
       <li><a href="#" class="rexio-ui-link" rexio-ui-object="server/add">Add new Server</a></li>
      % }
-      <!--      <li><a href="#" class="server-group">Groups</a></li> -->
       <% for my $mnu (@{ $main_menu_srv }) { %>
       <%= $mnu %>
       <% } %>
    </ul>
 </li>
 % }
+-->

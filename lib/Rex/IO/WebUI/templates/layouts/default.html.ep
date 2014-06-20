@@ -7,9 +7,11 @@
 
     <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-ui-1.9.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.layout.min.js"></script>
 
     <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
     <link rel="stylesheet" href="/css/3rdparty/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/3rdparty/easytree/skin-lion/ui.easytree.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/js/3rdparty/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
@@ -24,68 +26,84 @@
   % my @server_plugins = @{ rexio->get_plugins };
   <body>
 
-    <div id="page_container" class="page-container">
+<div id="center_pane" class="ui-layout-center light-background">
 
-      <div class="page-sidebar dark-background">
-        <div class="main-accordion">
-
-          <div>
-            <div class="search_box">
-              <input type="text" id="server_search" name="server_search" value="" placeholder="Server Search..." />
-            </div>
-          </div>
-
-          <ul class="navul">
-            <li class="active">
-              <a href="#" class="rexio-ui-link" rexio-ui-object="dashboard">Dashboard</a>
-            </li>
-
-            % for my $menu_entry (@{ $main_menu }) {
-            <%= $menu_entry %>
-            % }
+  <div class="page-content-container">
+    Dashboard...
+  </div>
 
 
-            <!--
-            <li class="has-sub">
-              <a href="#" class="icon-arrow-left">Datacenter</a>
-              <ul class="sub">
-                <li><a href="#" class="users-users">List DCs</a></li>
-                <li><a href="#" class="users-groups">Add DC</a></li>
-              </ul>
-            </li>
-            -->
+</div>
 
-          </ul>
+<div class="ui-layout-north light-background top-header">
+  <h1>Rex.IO <small>Datacenter Automation</small></h1>
+</div>
 
-        </div>
+<div class="ui-layout-south light-background">
 
-      </div> <!-- page_sidebar -->
 
-      <div id="content_area" class="page-content light-background">
+Messages
 
-        <div class="page-content-container">
-          Dashboard...
-        </div>
-      </div> <!-- content_area -->
+</div>
+<!-- <div class="ui-layout-east light-background">
 
-    </div> <!-- page container -->
+</div> -->
 
-    <div id="message_area" class="message_area_down">
-      <a href="#" id="link_message_area_close" class="link_message_area_close"></a>
-      <div class="message_area_content">
-        <ul id="message_list" class="message_list">
-        </ul>
-      </div>
+<div class="ui-layout-west navigation-pane">
+
+
+<div class="main-accordion">
+
+  <!-- <div>
+    <div class="search_box">
+      <input type="text" id="server_search" name="server_search" value="" placeholder="Server Search..." />
     </div>
+  </div> -->
+
+  <ul class="navul">
+    <li class="active">
+      <a href="#" class="rexio-ui-link mnu-item" rexio-ui-object="dashboard">Dashboard</a>
+    </li>
+
+    % for my $menu_entry (@{ $main_menu }) {
+    <%= $menu_entry %>
+    % }
+
+
+    <!--
+    <li class="has-sub">
+      <a href="#" class="icon-arrow-left">Datacenter</a>
+      <ul class="sub">
+        <li><a href="#" class="users-users">List DCs</a></li>
+        <li><a href="#" class="users-groups">Add DC</a></li>
+      </ul>
+    </li>
+    -->
+
+  </ul>
+
+</div>
+
+
+</div>
+
+<!--
+<div id="page_container" class="page-container">
+
+  <div class="page-sidebar dark-background">
+
+  </div>
+
+  <div id="content_area" class="page-content light-background">
+
+  </div>
+
+</div>  -->
+
 
   </body>
-  <script type="text/javascript" charset="utf-8">
-    /*$(document).ready(function() {
-      $("body").layout({
-      });
-    });*/
-  </script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/mootools-core-1.4.5-full-nocompat-yc.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/easytree/jquery.easytree.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui/plugin.js"></script>
 
   <script type="text/javascript" charset="utf-8" src="/js/ui.js"></script>

@@ -11,9 +11,9 @@
    <li class="pull-right no-padding">
       <div class="dropdown-menu">
          <ul id="menu">
-            <li><a href="#" id="lnk_add_group">Add Group</a></li>
-            <li><a href="#" id="lnk_del_group">Delete Group</a></li>
-            <li><a href="#" id="lnk_show_user">Show Users</a></li>
+            <li><a href="#" id="lnk_add_group" rexio-ui-click="group/group.add_group_dialog" class="mnu_item rexio-ui-link">Add Group</a></li>
+            <li><a href="#" id="lnk_del_group" rexio-ui-click="group/group.delete_group_dialog" class="mnu_item rexio-ui-link">Delete Group</a></li>
+            <li><a href="#" id="lnk_show_user" rexio-ui-click="group/group.group_view_show_user" class="mnu_item rexio-ui-link">Show Users</a></li>
          </ul>
       </div>
       <a href="#" class="pull-menu"></a>
@@ -22,7 +22,11 @@
 
 <div class="framebody">
    <div class="left_frame">
-      <table border="0" id="table_entries_group" style="width: 100%;">
+      <table border="0" id="table_entries_group"
+      class="rexio-ui-data-table"
+      rexio-ui-minus-height="235"
+      rexio-ui-selectable="true"
+      style="width: 100%;">
          <thead>
             <tr>
                <td width="80">Gid</td>
@@ -32,7 +36,7 @@
          <tbody>
             % my $entries = rexio->call("GET", "1.0", "group", group => undef)->{data};
             % foreach my $entry (@{ $entries }) {
-            <tr group_id="<%= $entry->{id} %>">
+            <tr group_id="<%= $entry->{id} %>" group_name="<%= $entry->{name} %>">
                <td><div class="group_drag_user" group_id="<%= $entry->{id} %>"><%= $entry->{id} %></div></td>
                <td><div class="group_drag_user" group_id="<%= $entry->{id} %>"><%= $entry->{name} %></div></td>
             </tr>
@@ -41,7 +45,12 @@
       </table>
    </div>
    <div class="right_frame">
-      <table border="0" id="table_entries_user" style="width: 100%;">
+      <table border="0"
+         id="table_entries_user"
+         class="rexio-ui-data-table"
+         rexio-ui-minus-height="235"
+         rexio-ui-selectable="true"
+         style="width: 100%;">
          <thead>
             <tr>
                <td>Name</td>
@@ -60,7 +69,18 @@
    </div>
 </div>
 
-<div id="add_group" class="dialog-window" title="Add new Group">
+<div id="add_group"
+  class="dialog-window rexio-ui-dialog"
+  title="Add new Group"
+  rexio-dialog-auto-open="false"
+  rexio-dialog-height="300"
+  rexio-dialog-width="350"
+  rexio-dialog-modal="true"
+  rexio-dialog-button-ok-value="Create"
+  rexio-dialog-button-cancel-value="Cancel"
+  rexio-dialog-button-ok-click="group/group.click_create_group"
+  rexio-dialog-button-cancel-click="group/group.click_create_group_cancel"
+>
    <p class="validateTips">Add a new group</p>
 
    <form>
