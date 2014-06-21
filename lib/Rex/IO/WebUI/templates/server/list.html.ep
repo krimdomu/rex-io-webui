@@ -88,3 +88,23 @@
 </select>
 <button class="bulk_op_button">Run</button>
 -->
+
+<div id="add_server_group"
+  class="dialog-window rexio-ui-dialog"
+  title="Add Server Group"
+  rexio-dialog-auto-open="false"
+  rexio-dialog-height="200"
+  rexio-dialog-width="350"
+  rexio-dialog-modal="true"
+  rexio-dialog-button-ok-value="Add"
+  rexio-dialog-button-cancel-value="Cancel"
+  rexio-dialog-button-ok-click="server/list.click_add_server_group_ok"
+  rexio-dialog-button-cancel-click="server/list.click_add_server_group_cancel"
+  >
+  <form>
+    <fieldset class="standard-form">
+      <label for="server_group_name">Name</label>
+      <input type="text" name="server_group_name" id="server_group_name" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+  </form>
+</div>

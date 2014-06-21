@@ -27,6 +27,30 @@ sub get_node {
   $self->render( json => \@data );
 }
 
+sub add_group {
+  my ($self) = @_;
+
+  $self->app->log->debug( "Adding new group: " . $self->req->json->{name} );
+  my $ref = $self->rexio->call(
+    "POST", "1.0", "server_group_tree",
+    node => undef,
+    ref  => $self->req->json->{data}
+  );
+
+  $self->render( json => $ref );
+}
+
+sub delete_group {
+  my ($self) = @_;
+
+  $self->app->log->debug( "Deleting group: " . $self->param("node_id") );
+
+  my $ref = $self->rexio->call( "DELETE", "1.0", "server_group_tree",
+    node => $self->param("node_id") );
+
+  $self->render(json => $ref);
+}
+
 sub __register__ {
   my ( $self, $opt ) = @_;
   my $r      = $opt->{route};
@@ -35,6 +59,12 @@ sub __register__ {
 
   $r_auth->post("/1.0/server_group_tree/children/:node_id")
     ->to("server_group_tree#get_node");
+
+  $r_auth->post("/1.0/server_group_tree/node")
+    ->to("server_group_tree#add_group");
+
+  $r_auth->delete("/1.0/server_group_tree/node/:node_id")
+    ->to("server_group_tree#delete_group");
 }
 
 1;
