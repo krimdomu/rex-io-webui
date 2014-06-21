@@ -1,26 +1,13 @@
-<li class="has-sub">
+% my $root_node = rexio->call("GET", "1.0", "server_group_tree", "root" => undef)->{data};
+<li id="li_server" class="has-sub">
   <a href="#" class="mnu-icon-arrow-left mnu-item">Server</a>
   <ul class="sub">
     <li>
       <div id="server_menu">
         <ul>
-        <li>Home</li>
-        <li class="isFolder isExpanded" title="Bookmarks">
-            Folder 1
-            <ul>
-               <li>Go to Google.com</li>
-               <li>Go to Yahoo.com</li>
-            </ul>
+        <li id="tree_node_1" class="isFolder isLazy">
+          <%= $root_node->{name} %>
         </li>
-        <li>
-            Node 1
-            <ul>
-                <li>Sub Node 1</li>
-                <li>Sub Node 2</li>
-                <li>Sub Node 3</li>
-            </ul>
-        </li>
-        <li>Node 2</li>
     </ul>
       </div>
     </li>
