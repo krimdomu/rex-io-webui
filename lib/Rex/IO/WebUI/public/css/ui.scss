@@ -722,6 +722,15 @@ color: "";
  * popup windows
  */
 
+.easytree-container {
+  padding-bottom: 17px;
+}
+
+.easytree-focused span.easytree-selected .easytree-title,
+.easytree-focused span.easytree-active .easytree-title {
+	color: white;
+	background-color: $background;
+}
 .ui-widget {
   border-radius: 0px !important;
   padding: 0px !important;

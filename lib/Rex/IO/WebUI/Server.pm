@@ -126,10 +126,12 @@ sub list {
 
   my $qry = "" . $self->req->query_params;
 
+  $self->app->log->debug("Got query parameters: $qry");
+
   my $server_list = $self->rexio->call(
     "GET", "1.0", "hardware",
     hardware => undef,
-    ref      => $qry
+    ref      => $qry,
   );
 
   my (@plugin_filter);

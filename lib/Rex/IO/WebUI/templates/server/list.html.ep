@@ -56,7 +56,7 @@
       <tr>
          <!--         <td><input class="bulk_checkbox" type="checkbox" srv_id="<%= $entry->{id} %>" srv_name="<%= $entry->{name} %>" /></td> -->
          <td class="td_server_link" srv_id="<%= $entry->{id} %>">
-            <a href="#" class="rexio-ui-link" srv_id="<%= $entry->{id} %>" rexio-ui-object="server/view"><%= $entry->{name} || '<no name>' %></a>
+            <div class="server_hndl" server_name="<%= $entry->{name} %>" srv_id="<%= $entry->{id} %>"><a href="#" class="rexio-ui-link" srv_id="<%= $entry->{id} %>" rexio-ui-object="server/view"><%= $entry->{name} || '<no name>' %></a></div>
             % for my $plugin (@{ $self->config->{plugins} }) {
             %= $self->render_to_string(lc($plugin) . '/ext/server_list_row_name', partial => 1, entry => $entry);
             % }
