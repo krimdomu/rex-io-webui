@@ -2,12 +2,22 @@
 <h1 class="page-title">Server Overview<small>All your servers</small></h1>
 
 <ul class="breadcrumb">
-   <li>
-      Home &raquo;
-   </li>
-   <li>
-      Server
-   </li>
+  <li>
+    Home &raquo;
+  </li>
+  <li>
+    Server
+  </li>
+  <li class="pull-right no-padding">
+    <div class="dropdown-menu">
+      <ul id="menu">
+        <li><a href="#" id="lnk_add_server" rexio-ui-object="server/add" class="mnu_item rexio-ui-link">Add Server</a></li>
+        <li><a href="#" id="lnk_add_group" rexio-ui-click="server/list.add_group_dialog" class="mnu_item rexio-ui-link">Add Group</a></li>
+        <li><a href="#" id="lnk_del_group" rexio-ui-click="server/list.delete_group_dialog" class="mnu_item rexio-ui-link">Delete Group</a></li>
+      </ul>
+    </div>
+    <a href="#" class="pull-menu"></a>
+  </li>
 </ul>
 
 <!--
