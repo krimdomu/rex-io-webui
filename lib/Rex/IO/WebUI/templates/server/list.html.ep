@@ -13,6 +13,7 @@
       <ul id="menu">
         <li><a href="#" id="lnk_add_server" rexio-ui-object="server/add" class="mnu_item rexio-ui-link">Add Server</a></li>
         <li><a href="#" id="lnk_add_group" rexio-ui-click="server/list.add_group_dialog" class="mnu_item rexio-ui-link">Add Group</a></li>
+        <li><a href="#" id="lnk_edit_group" rexio-ui-click="server/list.edit_group_dialog" class="mnu_item rexio-ui-link">Edit Group</a></li>
         <li><a href="#" id="lnk_del_group" rexio-ui-click="server/list.delete_group_dialog" class="mnu_item rexio-ui-link">Delete Group</a></li>
       </ul>
     </div>
@@ -105,6 +106,14 @@
     <fieldset class="standard-form">
       <label for="server_group_name">Name</label>
       <input type="text" name="server_group_name" id="server_group_name" class="text ui-widget-content ui-corner-all" />
+
+      <label for="permission_set">Permission-Set</label>
+      <select name="permission_set" id="permission_set">
+      % my $permission_sets = rexio->call("GET", "1.0", "permission", set => undef)->{data};
+      % for my $p_set (@{ $permission_sets }) {
+        <option value="<%= $p_set->{id} %>"><%= $p_set->{name} %></option>
+      % }
+      </select>
     </fieldset>
   </form>
 </div>
