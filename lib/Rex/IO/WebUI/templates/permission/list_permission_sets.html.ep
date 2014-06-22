@@ -1,0 +1,108 @@
+% layout 'frame';
+<h1 class="page-title">Permission Sets<small>Manage permissions</small></h1>
+
+<ul class="breadcrumb">
+   <li>
+      Home &raquo;
+   </li>
+   <li>
+      Permissions
+   </li>
+   <li class="pull-right no-padding">
+      <div class="dropdown-menu" style="width: 165px;">
+         <ul id="menu" style="width: 165px !important;">
+            <li><a href="#" id="lnk_add_permission_set" rexio-ui-click="permission.add_permission_set_dialog" class="mnu_item rexio-ui-link">Add Permission Set</a></li>
+            <li><a href="#" id="lnk_del_permission_set" rexio-ui-click="permission.delete_permission_set_dialog" class="mnu_item rexio-ui-link">Delete Permission Set</a></li>
+            <li><a href="#" id="lnk_edit_permission_set" rexio-ui-click="permission.edit_permission_set_dialog" class="mnu_item rexio-ui-link">Edit Permission Set</a></li>
+         </ul>
+      </div>
+      <a href="#" class="pull-menu"></a>
+   </li>
+</ul>
+
+<table border="0"
+  id="table_entries_permission_sets"
+  class="rexio-ui-data-table"
+  rexio-ui-minus-height="235"
+  rexio-ui-selectable="true"
+  style="width: 100%;">
+   <thead>
+      <tr>
+         <td width="80">Id</td>
+         <td width="250">Name</td>
+         <td>Description</td>
+      </tr>
+   </thead>
+   <tbody>
+      % my $entries = rexio->call("GET", "1.0", "permission", set => undef)->{data};
+      % foreach my $entry (@{ $entries }) {
+      <tr set_id="<%= $entry->{id} %>" set_name="<%= $entry->{name} %>">
+         <td><%= $entry->{id} %></td>
+         <td><%= $entry->{name} %></td>
+         <td><%= $entry->{description} %></td>
+      </tr>
+      % }
+   </tbody>
+</table>
+
+<div id="add_permission_set"
+  class="dialog-window rexio-ui-dialog"
+  title="Add new Permission-Set"
+  rexio-dialog-auto-open="false"
+  rexio-dialog-height="500"
+  rexio-dialog-width="600"
+  rexio-dialog-modal="true"
+  rexio-dialog-button-ok-value="Ok"
+  rexio-dialog-button-cancel-value="Cancel"
+  rexio-dialog-button-ok-click="permission.click_create_permission_set_ok"
+  rexio-dialog-button-cancel-click="permission.click_create_permission_set_cancel"
+>
+   <p id="add_permission_set_teaser">Add new permission-set</p>
+
+  <form>
+    <fieldset class="standard-form">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+
+      <label for="description">Description</label>
+      <input type="text" name="description" id="description" class="text ui-widget-content ui-corner-all" value="" />
+
+      <p>Select the permissions for the set. Use Ctrl or Meta to select multiple permissions.</p>
+      <p>&nbsp;</p>
+
+      % my $user_entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
+      <div class="div_permission_user_list">
+        <ul class="permission_user_list rexio-ui-selectable"
+          rexio-selectable-on-selected="permission.onselected_permission_user_list"
+        >
+        % for my $user ( @{$user_entries} ) {
+          <li
+            user_id="<%= $user->{id} %>"
+            user_name="<%= $user->{name} %>">
+            <%= $user->{name} %>
+          </li>
+        % }
+        </ul>
+      </div>
+
+      % my $perm_types = rexio->call("GET", "1.0", "permission", type => undef)->{data};
+      <div class="div_all_permission_types">
+        <ul class="all_permission_types rexio-ui-selectable"
+          rexio-selectable-on-selected="permission.onselected_all_permission_types"
+        >
+        % for my $pt ( @{$perm_types} ) {
+          <li id="all_permission_types_entry_<%= $pt->{id} %>" class="all_permission_types_entry"
+            perm_type_id="<%= $pt->{id} %>"
+            perm_type_name="<%= $pt->{name} %>">
+            <%= $pt->{name} %>
+          </li>
+        % }
+        </ul>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
+
+
+<!-- end -->

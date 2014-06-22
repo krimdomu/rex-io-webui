@@ -69,6 +69,7 @@ sub rexio_routes {
 
   $r_auth->delete("/1.0/user/user/:user_id")->to("user#delete");
   $r_auth->delete("/1.0/group/group/:group_id")->to("group#delete");
+
 }
 
 1;

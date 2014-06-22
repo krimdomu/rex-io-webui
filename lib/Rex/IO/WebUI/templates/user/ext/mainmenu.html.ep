@@ -4,6 +4,7 @@
    <ul class="sub">
       <li><a href="#" class="rexio-ui-link" rexio-ui-object="user/user">Users</a></li>
       <li><a href="#" class="rexio-ui-link" rexio-ui-object="group/group">Groups</a></li>
+      <li><a href="#" class="rexio-ui-link" rexio-ui-object="permission">Permissions</a></li>
    </ul>
 </li>
 % }

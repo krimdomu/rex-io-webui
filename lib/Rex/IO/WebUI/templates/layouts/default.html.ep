@@ -6,11 +6,11 @@
     <title>Rex.IO - WebUI</title>
 
     <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-ui-1.9.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery-ui-1.10.4.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.layout.min.js"></script>
 
     <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
-    <link rel="stylesheet" href="/css/3rdparty/smoothness/jquery-ui-1.9.0.custom.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/css/3rdparty/smoothness/jquery-ui-1.10.4.custom.min.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/easytree/skin-lion/ui.easytree.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />

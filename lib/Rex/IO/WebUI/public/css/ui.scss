@@ -14,6 +14,8 @@ $border_color: #c3c3c3;
 $background_color_splitter: #efefef;
 $background_color_toggler: #bdbdbd;
 
+$selected_color: #ffb848;
+
 /*
  * default rules
  */
@@ -215,6 +217,14 @@ a:hover {
   background-color: #ffffff;
 }
 
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background-color: $selected_color !important;
+  // border: 0px;
+}
+
+button.ui-dialog-titlebar-close {
+  border: 0px !important;
+}
 
 /**
  * navigation ul
@@ -229,7 +239,7 @@ ul.navul > li {
   display: block;
   margin: 0;
   padding: 0;
-  bordeR: 0px;
+  border: 0px;
   line-height: 20px;
   list-style: none;
 }
@@ -494,8 +504,8 @@ table.dataTable {
 }
 
 .dropdown-menu ul > li > a:hover {
-  background-color: #ffb848 !important;
-  background: #ffb848 !important;
+  background-color: $selected_color !important;
+  background: $selected_color !important;
   padding: 5px !important;
   margin: 0px !important;
   margin-right: 5px !important;
@@ -536,7 +546,7 @@ ul.tabs-left li {
 }
 
 ul.tabs-left li.active {
-  border-left: 3px solid #ffb848  !important;
+  border-left: 3px solid $selected_color  !important;
   margin-right: -1px;
 }
 
@@ -581,7 +591,7 @@ ul.tabs-top::after {
 }
 
 ul.tabs-top li.active {
-  border-top: 3px solid #ffb848;
+  border-top: 3px solid $selected_color;
   margin-top: 0;
   position: relative;
 }
@@ -660,7 +670,7 @@ color: "";
 }
 
 .portlet.yellow {
-  background-color: #ffb848 !important;
+  background-color: $selected_color !important;
 }
 
 .portlet.box.grey {
@@ -743,7 +753,7 @@ color: "";
 
 .ui-widget-header {
   background-image: none;
-  background-color: #ffb848;
+  background-color: $selected_color;
 }
 
 .ui-button {
@@ -765,7 +775,7 @@ color: "";
 
 .row_selected,
 .row_selected > td {
-  background-color: #ffb848 !important;
+  background-color: $selected_color !important;
 }
 
 ul.service_list {
@@ -1100,7 +1110,7 @@ table.db_table_entries_incident tr:nth-child(odd) {
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
   margin-bottom: -1px;
   padding-bottom: 1px;
-  border-top: 3px solid #ffb848 !important;
+  border-top: 3px solid $selected_color !important;
   border-left: 1px solid $border_color !important;
   border-right: 1px solid $border_color !important;
 
@@ -1197,4 +1207,45 @@ div.jobqueue_log_line:nth-child(odd) {
 
 .dropdown-menu ul > li > a.mnu_item {
   padding-left: 21px !important;
+}
+
+.div_perm_checkbox {
+  float: left;
+  margin: 5px;
+  width: 260px;
+}
+
+.ui-selectee {
+  list-style-type: none;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 5px;
+}
+
+.ui-selected {
+  background-color: $selected_color;
+}
+
+.div_permission_user_list {
+  float: left;
+  height: 200px;
+  overflow: auto;
+  width: 250px;
+  background-color: $background_color_splitter;
+  border: 1px solid #000000;
+}
+
+.permission_user_list {
+}
+
+.div_all_permission_types {
+  height: 200px;
+  overflow: auto;
+  width: 250px;
+  margin-left: 260px;
+  background-color: $background_color_splitter;
+  border: 1px solid #000000;
+}
+
+.all_permission_types {
 }
