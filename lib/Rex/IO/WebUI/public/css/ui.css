@@ -133,6 +133,11 @@ a:hover {
   background-repeat: no-repeat;
   background-position: 4px 5px; }
 
+.li-icon {
+  background-repeat: no-repeat;
+  background-position: 4px 5px;
+  padding-left: 22px !important; }
+
 .icon-warning {
   background-image: url(/icons/warning-16x16.png); }
 
@@ -147,6 +152,12 @@ a:hover {
 
 .icon-eth {
   background-image: url(/icons/netdev.png); }
+
+.icon-user {
+  background-image: url(/icons/user.png); }
+
+.icon-group {
+  background-image: url(/icons/group.png); }
 
 .css_right {
   float: right; }

@@ -71,6 +71,7 @@
       <p>&nbsp;</p>
 
       % my $user_entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
+      % my $group_entries = rexio->call("GET", "1.0", "group", group => undef)->{data};
       <div class="div_permission_user_list">
         <ul class="permission_user_list rexio-ui-selectable"
           rexio-selectable-on-selected="permission.onselected_permission_user_list"
@@ -78,10 +79,23 @@
         % for my $user ( @{$user_entries} ) {
           <li
             user_id="<%= $user->{id} %>"
-            user_name="<%= $user->{name} %>">
+            user_name="<%= $user->{name} %>"
+            class="li-icon icon-user"
+          >
             <%= $user->{name} %>
           </li>
         % }
+
+        % for my $group ( @{$group_entries} ) {
+          <li
+            group_id="<%= $group->{id} %>"
+            group_name="<%= $group->{name} %>"
+            class="li-icon icon-group"
+          >
+            <%= $group->{name} %>
+          </li>
+        % }
+
         </ul>
       </div>
 
