@@ -1019,3 +1019,11 @@ div.jobqueue_log_line:nth-child(odd) {
   margin-left: 260px;
   background-color: #efefef;
   border: 1px solid #000000; }
+
+.div_logout_button {
+  float: right;
+  margin-top: -38px;
+  margin-right: 15px; }
+
+.logout_button {
+  background-color: #3f3f55 !important; }

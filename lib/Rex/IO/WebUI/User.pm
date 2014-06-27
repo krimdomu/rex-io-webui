@@ -46,6 +46,22 @@ sub delete {
   $self->render( json => $ret );
 }
 
+sub update {
+  my ($self) = @_;
+
+  if ( !$self->has_permission('UI_USER_AND_GROUP') ) {
+    return $self->render( text => 'No permission', status => 403 );
+  }
+
+  my $ret = $self->rexio->call(
+    "POST", "1.0", "user",
+    user => $self->param("user_id"),
+    ref  => $self->req->json->{data},
+  );
+
+  $self->render( json => $ret );
+}
+
 ##### Rex.IO WebUI Plugin specific methods
 sub rexio_routes {
   my ( $self, $routes ) = @_;
@@ -65,6 +81,7 @@ sub rexio_routes {
 
   # new routes
   $r_auth->post("/1.0/user/user")->to("user#add");
+  $r_auth->post("/1.0/user/user/:user_id")->to("user#update");
   $r_auth->post("/1.0/group/group")->to("group#add");
 
   $r_auth->delete("/1.0/user/user/:user_id")->to("user#delete");

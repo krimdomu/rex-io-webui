@@ -12,6 +12,7 @@
       <div class="dropdown-menu">
          <ul id="menu">
             <li><a href="#" id="lnk_add_user" rexio-ui-click="user/user.add_user_dialog" class="mnu_item rexio-ui-link">Add User</a></li>
+            <li><a href="#" id="lnk_edit_user" rexio-ui-click="user/user.edit_user_dialog" class="mnu_item rexio-ui-link">Edit User</a></li>
             <li><a href="#" id="lnk_del_user" rexio-ui-click="user/user.delete_user_dialog" class="mnu_item rexio-ui-link">Delete User</a></li>
          </ul>
       </div>
@@ -31,15 +32,21 @@
          <td width="80">Uid</td>
          <td width="250">Name</td>
          <td>Group</td>
+         <td>Permission-Set</td>
       </tr>
    </thead>
    <tbody>
       % my $entries = rexio->call("GET", "1.0", "user", user => undef)->{data};
       % foreach my $entry (@{ $entries }) {
-      <tr user_id="<%= $entry->{id} %>" user_name="<%= $entry->{name} %>">
+      <tr
+        user_id="<%= $entry->{id} %>"
+        user_name="<%= $entry->{name} %>"
+        group_id="<%= $entry->{group}->{id} %>"
+        permission_set_id="<%= $entry->{permission_set}->{id} %>">
          <td><%= $entry->{id} %></td>
          <td><%= $entry->{name} %></td>
          <td><%= $entry->{group}->{name} %></td>
+         <td><%= $entry->{permission_set}->{name} %></td>
       </tr>
       % }
    </tbody>
@@ -59,13 +66,35 @@
 >
    <p class="validateTips">Add a new user</p>
 
-   <form>
-      <fieldset class="standard-form">
-         <label for="name">Name</label>
-         <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" value="" />
+  <form autocomplete="off">
+    <fieldset class="standard-form">
+      <label for="user_name">Name</label>
+      <input type="text" name="user_name" id="user_name" class="text ui-widget-content ui-corner-all" value="" autocomplete="off" />
 
-         <label for="name">Password</label>
-         <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" value="" />
-      </fieldset>
-   </form>
+      <label for="user_password">Password</label>
+      <input type="password" name="user_password" id="user_password" class="text ui-widget-content ui-corner-all" value="" autocomplete="off" />
+
+      <label for="group_id">Group</label>
+      <select name="group_id"
+        id="group_id"
+      >
+        % my $groups = rexio->call("GET", "1.0", "group", group => undef)->{data};
+        % for my $group (@{ $groups }) {
+        <option value="<%= $group->{id} %>"><%= $group->{name} %></option>
+        % }
+      </select>
+
+      <label for="permission_set">Permission-Set</label>
+      <select name="permission_set"
+        id="permission_set"
+      >
+      % my $permission_sets = rexio->call("GET", "1.0", "permission", set => undef)->{data};
+      % for my $p_set (@{ $permission_sets }) {
+        <option value="<%= $p_set->{id} %>"><%= $p_set->{name} %></option>
+      % }
+      </select>
+
+
+    </fieldset>
+  </form>
 </div>

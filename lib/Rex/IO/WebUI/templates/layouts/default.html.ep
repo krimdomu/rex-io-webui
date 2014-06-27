@@ -37,6 +37,9 @@
 
 <div class="ui-layout-north light-background top-header">
   <h1>Rex.IO <small>Datacenter Automation</small></h1>
+  <div class="div_logout_button">
+    <button id="logout" class="logout_button rexio-ui-button" rexio-ui-click="dashboard.logout">Logout</button>
+  </div>
 </div>
 
 <div class="ui-layout-south light-background">

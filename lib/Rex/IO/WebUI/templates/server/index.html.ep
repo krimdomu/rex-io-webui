@@ -71,6 +71,21 @@
             <td class="col-info">Operating System:</td>
             <td class="col-text"><%= $server->{os}->{name} %> (<%= $server->{os}->{version} %>)</td>
           </tr>
+          <tr>
+            <td class="col-info">Permission-Set:</td>
+            <td class="col-text">
+              <select name="permission_set"
+                id="permission_set"
+                class="rexio-ui-select"
+                rexio-ui-on-change="server/view.update_permission_set"
+              >
+              % my $permission_sets = rexio->call("GET", "1.0", "permission", set => undef)->{data};
+              % for my $p_set (@{ $permission_sets }) {
+                <option value="<%= $p_set->{id} %>" <% if($server->{permission_set_id} == $p_set->{id}) { %>selected="selected"<% } %>><%= $p_set->{name} %></option>
+              % }
+              </select>
+            </td>
+          </tr>
           % for my $plg_general_information (@{ $plugin_general_information }) {
           <%= $plg_general_information %>
           % }
