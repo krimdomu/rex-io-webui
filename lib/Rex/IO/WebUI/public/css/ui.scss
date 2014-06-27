@@ -756,6 +756,12 @@ color: "";
 	color: white;
 	background-color: $background;
 }
+
+span.easytree-icon {
+  background-image: url('/icons/folder_open.png') !important;
+  background-position: 0px 3px !important;
+}
+
 .ui-widget {
   border-radius: 0px !important;
   padding: 0px !important;
