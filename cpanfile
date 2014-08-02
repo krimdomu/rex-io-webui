@@ -1,8 +1,11 @@
-requires 'Mojolicious', 4.19;
+#requires 'Mojolicious', 4.19;
+requires 'Mojolicious';
 requires 'Compress::Zlib';
 requires 'XML::Simple';
-requires 'Mojo::Redis', '>= 0.9903, < 0.9904';
-requires 'Mojolicious::Plugin::Authentication', 1.24;
+#requires 'Mojo::Redis', '>= 0.9903, < 0.9904';
+requires 'Mojo::Redis';
+#requires 'Mojolicious::Plugin::Authentication', 1.24;
+requires 'Mojolicious::Plugin::Authentication';
 requires 'Text::Markdown';
 requires 'DateTime';
 requires 'JSON::XS';

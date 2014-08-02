@@ -3,7 +3,7 @@
 use ExtUtils::MakeMaker;
 
 my %deps = (
-  'Mojolicious'                         => '3.90',
+  'Mojolicious'                         => 0,
   'Compress::Zlib'                      => 0,
   'XML::Simple'                         => 0,
   'Mojo::Redis'                         => 0,

@@ -31,8 +31,11 @@ sub register {
       my ( $self, $perm ) = @_;
       my ($has_perm) = grep { $_ eq $perm } @{ $self->session('permissions') };
       if ($has_perm) {
+        $app->log->debug("user has permission: $perm");
         return 1;
       }
+
+      $app->log->debug("user has NO permission: $perm");
       return 0;
     }
   );
