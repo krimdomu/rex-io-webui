@@ -7,11 +7,12 @@
    </li>
 </ul>
 
-% my $server_count = rexio->call("GET", "1.0", "hardware", hardware => undef, ref => {action => 'count'})->{count};
-% my $os_count     = rexio->call("GET", "1.0", "os", os => undef, ref => {action => 'count'})->{count};
-% my $clients      = rexio->call("GET", "1.0", "messagebroker", client => undef);
-% my $online       = scalar @{ $clients->{data} };
+%# my $server_count = rexio->call("GET", "1.0", "hardware", hardware => undef, ref => {action => 'count'})->{count};
+%# my $os_count     = rexio->call("GET", "1.0", "os", os => undef, ref => {action => 'count'})->{count};
+%# my $clients      = rexio->call("GET", "1.0", "messagebroker", client => undef);
+%# my $online       = scalar @{ $clients->{data} };
 
+<!--
 <div class="tabbable">
    <ul class="tabs tabs-top">
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
@@ -28,32 +29,33 @@
                <table class="server_statistic" border="0" width="100%">
                   <tr>
                      <td class="key" width="150">Count</td>
-                     <td class="value"><%= $server_count %></td>
+                     <td class="value"><%# $server_count %></td>
                   </tr>
                   <tr>
                      <td class="key">Operating Systems</td>
-                     <td class="value"><%= $os_count %></td>
+                     <td class="value"><%# $os_count %></td>
                   </tr>
 
                   <tr>
                      <td class="key">Online Servers</td>
-                     <td class="value"><%= $online %></td>
+                     <td class="value"><%# $online %></td>
                   </tr>
 
-                  % for my $pl_stats (@{ $dashboard_stats }) {
-                  <%= $pl_stats %>
-                  % }
+                  %# for my $pl_stats (@{ $dashboard_stats }) {
+                  %# <%= $pl_stats %>
+                  %# }
 
                </table>
             </div>
          </div>
 
-         % for my $pl_dash (@{ $dashboard }) {
-            <%= $pl_dash %>
-         % }
+         %# for my $pl_dash (@{ $dashboard }) {
+         %#   <%= $pl_dash %>
+         %# }
 
-      </div> <!-- tab-info -->
+      </div>
 
-   </div> <!-- tab-content -->
+   </div>
 
 </div>
+-->
