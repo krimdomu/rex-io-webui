@@ -25,7 +25,7 @@ sub list_permission_sets {
     return $self->render( text => 'No permission', status => 403 );
   }
 
-  $self->render;
+  $self->render("permission/list_permission_sets");
 }
 
 sub create_set {
@@ -88,18 +88,62 @@ sub update_set {
 }
 
 sub __register__ {
-  my ( $self, $opt ) = @_;
-  my $r      = $opt->{route};
-  my $r_auth = $opt->{route_auth};
-  my $app    = $opt->{app};
+  my ( $app ) = @_;
 
-  $r_auth->get("/permission/list_types")->to("permission#list_permission_sets");
-  $r_auth->get("/1.0/permission/set/:set_id")
-    ->to("permission#get_permission_set");
+  $app->register_url(
+    {
+      plugin => "permission",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/list_types",
+      root   => Mojo::JSON->false,
+      func   => \&list_permission_sets,
+    }
+  );
 
-  $r_auth->post("/1.0/permission/set")->to("permission#create_set");
-  $r_auth->post("/1.0/permission/set/:set_id")->to("permission#update_set");
-  $r_auth->delete("/1.0/permission/set/:set_id")->to("permission#delete_set");
+  $app->register_url(
+    {
+      plugin => "permission",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/set/:set_id",
+      api    => Mojo::JSON->true,
+      func   => \&get_permission_set,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "permission",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/set",
+      api    => Mojo::JSON->true,
+      func   => \&create_set,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "permission",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/set/:set_id",
+      api    => Mojo::JSON->true,
+      func   => \&update_set,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "permission",
+      meth   => "DELETE",
+      auth   => Mojo::JSON->true,
+      url    => "/set/:set_id",
+      api    => Mojo::JSON->true,
+      func   => \&delete_set,
+    }
+  );
 }
 
 1;

@@ -11,7 +11,7 @@ use Data::Dumper;
 # This action will render a template
 sub list {
   my ($self) = @_;
-  $self->render;
+  $self->render("group/list");
 }
 
 sub add {
@@ -39,6 +39,76 @@ sub add_user_to_group {
     user  => $self->param("user_id")
   );
   $self->render( json => $ret );
+}
+
+sub __register__ {
+  my ($app) = @_;
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/",
+      root   => Mojo::JSON->false,
+      func   => \&list,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/",
+      root   => Mojo::JSON->false,
+      func   => \&add,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/:group_id/user/:user_id",
+      root   => Mojo::JSON->false,
+      func   => \&add_user_to_group,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "DELETE",
+      auth   => Mojo::JSON->true,
+      url    => "/:group_id",
+      root   => Mojo::JSON->false,
+      func   => \&delete,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/group",
+      api    => Mojo::JSON->true,
+      func   => \&add,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "group",
+      meth   => "DELETE",
+      auth   => Mojo::JSON->true,
+      url    => "/group/:group_id",
+      api    => Mojo::JSON->true,
+      func   => \&delete,
+    }
+  );
 }
 
 1;

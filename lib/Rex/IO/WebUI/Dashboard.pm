@@ -31,7 +31,7 @@ sub index {
 
   $self->stash( main_menu => \@main_menu );
 
-  $self->render;
+  $self->render("dashboard/index");
 }
 
 sub view {
@@ -74,7 +74,7 @@ sub view {
 
 sub login {
   my ($self) = @_;
-  $self->render;
+  $self->render("dashboard/login");
 }
 
 sub ctrl_logout {
@@ -99,6 +99,66 @@ sub check_login {
   $self->redirect_to("/login") and return 0
     unless ( $self->is_user_authenticated );
   return 1;
+}
+
+sub __register__ {
+  my ($app) = @_;
+  $app->log->debug("Loading Dashboard Plugin.");
+
+  $app->register_url(
+    {
+      plugin => "dashboard",
+      meth   => "GET",
+      auth   => Mojo::JSON->false,
+      url    => "/login",
+      root   => Mojo::JSON->true,
+      func   => \&login,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "dashboard",
+      meth   => "POST",
+      auth   => Mojo::JSON->false,
+      url    => "/login",
+      root   => Mojo::JSON->true,
+      func   => \&login_do_auth,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "dashboard",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/",
+      root   => Mojo::JSON->true,
+      func   => \&index,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "dashboard",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/dashboard",
+      root   => Mojo::JSON->true,
+      func   => \&view,
+    }
+  );
+
+  $app->register_url(
+    {
+      plugin => "dashboard",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/logout",
+      root   => Mojo::JSON->true,
+      func   => \&ctrl_logout,
+    }
+  );
 }
 
 1;

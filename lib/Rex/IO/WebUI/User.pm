@@ -16,7 +16,7 @@ sub list {
     return $self->render( text => 'No permission', status => 403 );
   }
 
-  $self->render;
+  $self->render("user/list");
 }
 
 sub add {
@@ -62,30 +62,63 @@ sub update {
   $self->render( json => $ret );
 }
 
-##### Rex.IO WebUI Plugin specific methods
-sub rexio_routes {
-  my ( $self, $routes ) = @_;
-  my $r      = $routes->{route};
-  my $r_auth = $routes->{route_auth};
+sub __register__ {
+  my ($app) = @_;
 
-  $r_auth->get("/user")->to("user#list");
+  $app->register_url(
+    {
+      plugin => "user",
+      meth   => "GET",
+      auth   => Mojo::JSON->true,
+      url    => "/",
+      root   => Mojo::JSON->false,
+      func   => \&list,
+    }
+  );
 
-  #  $r_auth->post("/user")->to("user#add");
-  $r_auth->delete("/user/:user_id")->to("user#delete");
+  $app->register_url(
+    {
+      plugin => "user",
+      meth   => "DELETE",
+      auth   => Mojo::JSON->true,
+      url    => "/:user_id",
+      root   => Mojo::JSON->false,
+      func   => \&delete,
+    }
+  );
 
-  $r_auth->get("/group")->to("group#list");
-  $r_auth->post("/group")->to("group#add");
-  $r_auth->post("/group/:group_id/user/:user_id")
-    ->to("group#add_user_to_group");
-  $r_auth->delete("/group/:group_id")->to("group#delete");
+  $app->register_url(
+    {
+      plugin => "user",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/user",
+      api    => Mojo::JSON->true,
+      func   => \&add,
+    }
+  );
 
-  # new routes
-  $r_auth->post("/1.0/user/user")->to("user#add");
-  $r_auth->post("/1.0/user/user/:user_id")->to("user#update");
-  $r_auth->post("/1.0/group/group")->to("group#add");
+  $app->register_url(
+    {
+      plugin => "user",
+      meth   => "POST",
+      auth   => Mojo::JSON->true,
+      url    => "/user/:user_id",
+      api    => Mojo::JSON->true,
+      func   => \&update,
+    }
+  );
 
-  $r_auth->delete("/1.0/user/user/:user_id")->to("user#delete");
-  $r_auth->delete("/1.0/group/group/:group_id")->to("group#delete");
+  $app->register_url(
+    {
+      plugin => "user",
+      meth   => "DELETE",
+      auth   => Mojo::JSON->true,
+      url    => "/user/:user_id",
+      api    => Mojo::JSON->true,
+      func   => \&delete,
+    }
+  );
 
 }
 

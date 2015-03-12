@@ -6,16 +6,24 @@ use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 use Data::Dumper;
 use JSON::XS;
+use IPC::Shareable;
 
 our $VERSION = "0.4.0";
+
+my $shared_data_handler;
+my %shared_data;
 
 # This method will run once at server start
 sub startup {
   my $self = shift;
 
+  my $r      = $self->routes;
+  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
+
   #######################################################################
   # some helper functions
   #######################################################################
+
   $self->helper(
     has_plugin => sub {
       my ( $self, $plugin ) = @_;
@@ -28,6 +36,73 @@ sub startup {
       }
 
       return 0;
+    }
+  );
+
+  $shared_data_handler = tie %shared_data, "IPC::Shareable", undef,
+    { destroy => 1 };
+  $self->helper(
+    shared_data_tx => sub {
+      my ( $self, $code ) = @_;
+      $shared_data_handler->shlock();
+      $code->();
+      $shared_data_handler->shunlock();
+    }
+  );
+  $self->helper(
+    shared_data => sub {
+      my ( $self, $key, $value ) = @_;
+      if ($value) {
+        $shared_data{$key} = $value;
+      }
+      else {
+        if ($key) {
+          return $shared_data{$key};
+        }
+        else {
+          return %shared_data;
+        }
+      }
+    }
+  );
+
+  $self->helper(
+    register_url => sub {
+      my ( $self, $config ) = @_;
+
+      my $plugin_name = $config->{plugin};
+      my $r           = $self->app->routes;
+
+      my $meth_case = "\L$config->{meth}";
+      if ( $meth_case eq "get"
+        || $meth_case eq "post"
+        || $meth_case eq "put"
+        || $meth_case eq "delete" )
+      {
+        my $plugin_action_url = "/$plugin_name$config->{url}";
+        if($config->{root}) {
+          $plugin_action_url = $config->{url};
+        }
+
+        if($config->{api}) {
+          $plugin_action_url = "/1.0$plugin_action_url";
+        }
+
+        if ( $config->{auth} ) {
+          $r_auth->$meth_case($plugin_action_url)->to(
+            "plugin#call_plugin",
+            plugin => $plugin_name,
+            config => $config
+          );
+        }
+        else {
+          $r->$meth_case($plugin_action_url)->to(
+            "plugin#call_plugin",
+            plugin => $plugin_name,
+            config => $config
+          );
+        }
+      }
     }
   );
 
@@ -99,10 +174,7 @@ sub startup {
   #######################################################################
   # Configure routing
   #######################################################################
-  my $r = $self->routes;
 
-  $r->get("/login")->to("dashboard#login");
-  $r->post("/login")->to("dashboard#login_do_auth");
 
 #my $r_auth = $r->route("/")->to(cb => sub {
 #  my ($app) = @_;
@@ -111,16 +183,12 @@ sub startup {
 #    return 1;
 #  });
 
-  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
-
   # Normal route to controller
-  $r_auth->get("/")->to("dashboard#index");
-  $r_auth->get("/dashboard")->to("dashboard#view");
-  $r_auth->get("/logout")->to("dashboard#ctrl_logout");
-  $r_auth->post("/clear/cache")->to("server#clear_server_cache");
 
-  # search
-  $r_auth->get("/search")->to("search#index");
+  $r_auth->get("/plugins")->to("plugin#list");
+
+#$r->post("/1.0/plugin/plugin")->over( authenticated => 1 )->to("plugin#register");
+  $r->post("/1.0/plugin/plugin")->to("plugin#register");
 
   #######################################################################
   # Load RexIO Plugins
@@ -133,20 +201,14 @@ sub startup {
       die("Error loading plugin $klass. $@");
     }
 
-    eval { $klass->rexio_routes( { route => $r, route_auth => $r_auth, } ); };
-
     eval {
-      $klass->__register__(
-        {
-          route      => $r,
-          route_auth => $r_auth,
-          app        => $self,
-        }
-      );
-    };
-
-    eval { $klass->__init__($self); };
-    if ($@) { print STDERR "MOD/ERR: $@\n"; }
+      no strict 'refs';
+      *{ "${klass}::__register__" }->($self);
+      #$klass->__register__($self);
+      1;
+    } or do {
+      $self->log->error("Error calling $klass\->__register__(): $@");
+    }
   }
 }
 
