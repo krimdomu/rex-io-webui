@@ -64,9 +64,6 @@ Messages
   </div> -->
 
   <ul class="navul">
-    <li class="active">
-      <a href="#" class="rexio-ui-link mnu-item" rexio-ui-object="dashboard">Dashboard</a>
-    </li>
 
     % for my $menu_entry (@{ $main_menu }) {
     <%= $menu_entry %>

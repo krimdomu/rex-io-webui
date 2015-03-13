@@ -17,8 +17,8 @@ my %shared_data;
 sub startup {
   my $self = shift;
 
-  my $r      = $self->routes;
-  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
+  my $r = $self->routes;    #->under("/")->to("plugin#before_plugin");
+  my $r_auth = $r->under("/")->to("dashboard#check_login");
 
   #######################################################################
   # some helper functions
@@ -67,10 +67,39 @@ sub startup {
   );
 
   $self->helper(
+    register_plugin => sub {
+      my ( $self, $config ) = @_;
+
+      $self->shared_data_tx(
+        sub {
+          my $current_hooks = $self->shared_data("plugin_hooks");
+          for my $plugin_name ( keys %{ $config->{plugin_hooks} } ) {
+            for my $plugin_action (
+              keys %{ $config->{plugin_hooks}->{$plugin_name} } )
+            {
+              push @{ $current_hooks->{$plugin_name}->{$plugin_action} },
+                @{ $config->{plugin_hooks}->{$plugin_name}->{$plugin_action} };
+            }
+          }
+          $self->shared_data( "plugin_hooks", $current_hooks );
+
+          my $loaded_plugins        = $self->shared_data("loaded_plugins");
+          my %merged_loaded_plugins = (
+            %{ $loaded_plugins || {} },
+            $config->{plugin_name} => $config->{config}
+          );
+          $self->shared_data( "loaded_plugins", \%merged_loaded_plugins );
+        }
+      );
+    }
+  );
+
+  $self->helper(
     register_url => sub {
       my ( $self, $config ) = @_;
 
       my $plugin_name = $config->{plugin};
+      my $action_name = $config->{action};
       my $r           = $self->app->routes;
 
       my $meth_case = "\L$config->{meth}";
@@ -80,27 +109,41 @@ sub startup {
         || $meth_case eq "delete" )
       {
         my $plugin_action_url = "/$plugin_name$config->{url}";
-        if($config->{root}) {
+        if ( $config->{root} ) {
           $plugin_action_url = $config->{url};
         }
 
-        if($config->{api}) {
+        if ( $config->{api} ) {
           $plugin_action_url = "/1.0$plugin_action_url";
         }
 
+        ( $config->{controller} ) = caller(1);
         if ( $config->{auth} ) {
-          $r_auth->$meth_case($plugin_action_url)->to(
+          my $r_under = $r_auth->under($plugin_action_url)->to(
+            "plugin#before_plugin",
+            plugin => $plugin_name,
+            symbol => $action_name,
+            config => $config
+          );
+          $r_under->$meth_case('/')->to(
             "plugin#call_plugin",
             plugin => $plugin_name,
             config => $config
           );
         }
         else {
-          $r->$meth_case($plugin_action_url)->to(
+          my $r_under = $r->under($plugin_action_url)->to(
+            "plugin#before_plugin",
+            plugin => $plugin_name,
+            symbol => $action_name,
+            config => $config
+          );
+          $r_under->$meth_case('/')->to(
             "plugin#call_plugin",
             plugin => $plugin_name,
             config => $config
           );
+
         }
       }
     }
@@ -175,7 +218,6 @@ sub startup {
   # Configure routing
   #######################################################################
 
-
 #my $r_auth = $r->route("/")->to(cb => sub {
 #  my ($app) = @_;
 #
@@ -203,12 +245,13 @@ sub startup {
 
     eval {
       no strict 'refs';
-      *{ "${klass}::__register__" }->($self);
+      *{"${klass}::__register__"}->($self);
+
       #$klass->__register__($self);
       1;
     } or do {
       $self->log->error("Error calling $klass\->__register__(): $@");
-    }
+      }
   }
 }
 

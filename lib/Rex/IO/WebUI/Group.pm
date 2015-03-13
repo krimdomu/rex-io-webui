@@ -51,7 +51,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/",
       root   => Mojo::JSON->false,
-      func   => \&list,
+      action => "list",
     }
   );
 
@@ -62,7 +62,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/",
       root   => Mojo::JSON->false,
-      func   => \&add,
+      action => "add",
     }
   );
 
@@ -73,7 +73,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/:group_id/user/:user_id",
       root   => Mojo::JSON->false,
-      func   => \&add_user_to_group,
+      action => "add_user_to_group",
     }
   );
 
@@ -84,7 +84,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/:group_id",
       root   => Mojo::JSON->false,
-      func   => \&delete,
+      action => "delete",
     }
   );
 
@@ -95,7 +95,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/group",
       api    => Mojo::JSON->true,
-      func   => \&add,
+      action => "add",
     }
   );
 
@@ -106,7 +106,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/group/:group_id",
       api    => Mojo::JSON->true,
-      func   => \&delete,
+      action => "delete",
     }
   );
 }

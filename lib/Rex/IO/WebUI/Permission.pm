@@ -97,7 +97,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/list_types",
       root   => Mojo::JSON->false,
-      func   => \&list_permission_sets,
+      action => "list_permission_sets",
     }
   );
 
@@ -108,7 +108,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/set/:set_id",
       api    => Mojo::JSON->true,
-      func   => \&get_permission_set,
+      action => "get_permission_set",
     }
   );
 
@@ -119,7 +119,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/set",
       api    => Mojo::JSON->true,
-      func   => \&create_set,
+      action => "create_set",
     }
   );
 
@@ -130,7 +130,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/set/:set_id",
       api    => Mojo::JSON->true,
-      func   => \&update_set,
+      action => "update_set",
     }
   );
 
@@ -141,7 +141,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/set/:set_id",
       api    => Mojo::JSON->true,
-      func   => \&delete_set,
+      action => "delete_set",
     }
   );
 }

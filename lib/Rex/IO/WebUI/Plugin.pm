@@ -35,42 +35,52 @@ sub register {
 
   my $plugin_methods = $ref->{methods};
 
-  my $r      = $self->app->routes;
-  my $r_auth = $r->bridge("/")->to("dashboard#check_login");
-
   for my $meth ( @{$plugin_methods} ) {
     $meth->{plugin} = $plugin_name;
     $self->register_url($meth);
   }
 
-  my %plugin_hooks = ();
-  for my $hook ( @{ $ref->{hooks} } ) {
-    push @{ $plugin_hooks{ $hook->{plugin} }->{ $hook->{action} } },
-      {
-      plugin_name => $plugin_name,
-      location    => $hook->{location},
-      };
-  }
+  my $config = {
+    config      => $ref,
+    plugin_name => $plugin_name,
+  };
 
-  $self->shared_data_tx(
-    sub {
-      my $current_hooks = $self->shared_data("plugin_hooks");
-      for my $plugin_name ( keys %plugin_hooks ) {
-        for my $plugin_action ( keys %{ $plugin_hooks{$plugin_name} } ) {
-          push @{ $current_hooks->{$plugin_name}->{$plugin_action} },
-            @{ $plugin_hooks{$plugin_name}->{$plugin_action} };
-        }
-      }
-      $self->shared_data( "plugin_hooks", $current_hooks );
-
-      my $loaded_plugins = $self->shared_data("loaded_plugins");
-      my %merged_loaded_plugins =
-        ( %{ $loaded_plugins || {} }, $plugin_name => $ref );
-      $self->shared_data( "loaded_plugins", \%merged_loaded_plugins );
-    }
-  );
+  $self->register_plugin($config);
 
   $self->render( json => { ok => Mojo::JSON->true } );
+}
+
+sub before_plugin {
+  my $self = shift;
+  $self->app->log->debug("(before_plugin) Checking to run plugin code...");
+
+  $self->app->log->debug(
+    "(before_plugin) Calling controller: " . $self->param("plugin") );
+  $self->app->log->debug(
+    "(before_plugin) Calling action: " . $self->param("symbol") );
+
+  my %shared_data = $self->shared_data();
+  $self->app->log->debug( "(before_plugin)" . Dumper( \%shared_data ) );
+
+  for my $plugin ( keys %{ $shared_data{loaded_plugins} } ) {
+    if ( exists $shared_data{loaded_plugins}->{$plugin}->{hooks}->{consume} ) {
+      for my $hook (
+        @{ $shared_data{loaded_plugins}->{$plugin}->{hooks}->{consume} } )
+      {
+        if ( $hook->{plugin} eq $self->param("plugin")
+          && $hook->{action} eq $self->param("symbol") )
+        {
+          if ( exists $hook->{call} ) {
+            no strict 'refs';
+            my $hook_function = $hook->{call};
+            *{"$hook_function"}->($self);
+          }
+        }
+      }
+    }
+  }
+
+  return 1;
 }
 
 sub call_plugin {
@@ -85,8 +95,13 @@ sub call_plugin {
   my %shared_data = $self->shared_data();
   $self->app->log->debug( Dumper( \%shared_data ) );
 
-  if ( exists $config->{func} ) {
-    $config->{func}->($self);
+  if ( exists $config->{action} ) {
+    my $action_func = "$config->{controller}::$config->{action}";
+    {
+      no strict 'refs';
+      $self->app->log->debug("Calling: $action_func");
+      *{"$action_func"}->($self);
+    }
   }
 
   if ( exists $config->{location} ) {

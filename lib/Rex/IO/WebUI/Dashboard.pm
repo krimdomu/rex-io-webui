@@ -1,35 +1,16 @@
 package Rex::IO::WebUI::Dashboard;
 use Mojo::Base 'Mojolicious::Controller';
+use Data::Dumper;
 
 # This action will render a template
 sub index {
   my $self = shift;
 
-  my ( @main_menu, @main_menu_srv );
+  my $main_menu = $self->stash("main_menu") || [];
+  unshift @{$main_menu},
+    $self->render_to_string( "dashboard/ext/mainmenu", partial => 1 );
 
-  # load navigation from plugins
-  for my $plugin ( @{ $self->config->{plugins} } ) {
-    my $template_path = "\L$plugin";
-    my $srv_mnu_template =
-      $self->render_to_string( "$template_path/ext/mainmenu_server",
-      partial => 1 );
-    if ($srv_mnu_template) {
-      push @main_menu_srv, $srv_mnu_template;
-    }
-  }
-
-  $self->stash( main_menu_srv => \@main_menu_srv );
-
-  for my $plugin ( @{ $self->config->{plugins} } ) {
-    my $template_path = "\L$plugin";
-    my $template =
-      $self->render_to_string( "$template_path/ext/mainmenu", partial => 1 );
-    if ($template) {
-      push @main_menu, $template;
-    }
-  }
-
-  $self->stash( main_menu => \@main_menu );
+  $self->stash( main_menu => $main_menu );
 
   $self->render("dashboard/index");
 }
@@ -105,6 +86,15 @@ sub __register__ {
   my ($app) = @_;
   $app->log->debug("Loading Dashboard Plugin.");
 
+  my $config = {
+    config       => {
+      name  => "dashboard",
+    },
+    plugin_name => "dashboard",
+  };
+
+  $app->register_plugin($config);
+
   $app->register_url(
     {
       plugin => "dashboard",
@@ -112,7 +102,7 @@ sub __register__ {
       auth   => Mojo::JSON->false,
       url    => "/login",
       root   => Mojo::JSON->true,
-      func   => \&login,
+      action => "login",
     }
   );
 
@@ -123,7 +113,7 @@ sub __register__ {
       auth   => Mojo::JSON->false,
       url    => "/login",
       root   => Mojo::JSON->true,
-      func   => \&login_do_auth,
+      action => "login_do_auth",
     }
   );
 
@@ -134,7 +124,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/",
       root   => Mojo::JSON->true,
-      func   => \&index,
+      action => "index",
     }
   );
 
@@ -145,7 +135,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/dashboard",
       root   => Mojo::JSON->true,
-      func   => \&view,
+      action => "view",
     }
   );
 
@@ -156,7 +146,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/logout",
       root   => Mojo::JSON->true,
-      func   => \&ctrl_logout,
+      action => "ctrl_logout",
     }
   );
 }

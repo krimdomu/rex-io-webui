@@ -62,8 +62,38 @@ sub update {
   $self->render( json => $ret );
 }
 
+sub mainmenu {
+  my $self = shift;
+  $self->app->log->debug("User: rendering main menu");
+
+  my $main_menu = $self->stash("main_menu") || [];
+  push @{$main_menu},
+    $self->render_to_string( "user/ext/mainmenu", partial => 1 );
+
+  $self->stash( main_menu => $main_menu );
+}
+
 sub __register__ {
   my ($app) = @_;
+
+  my $config = {
+    plugin_hooks => {},
+    config       => {
+      name  => "user",
+      hooks => {
+        consume => [
+          {
+            plugin => "dashboard",
+            action => "index",
+            call   => "Rex::IO::WebUI::User::mainmenu",
+          }
+        ]
+      }
+    },
+    plugin_name => "user",
+  };
+
+  $app->register_plugin($config);
 
   $app->register_url(
     {
@@ -72,7 +102,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/",
       root   => Mojo::JSON->false,
-      func   => \&list,
+      action => "list",
     }
   );
 
@@ -83,7 +113,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/:user_id",
       root   => Mojo::JSON->false,
-      func   => \&delete,
+      action => "delete",
     }
   );
 
@@ -94,7 +124,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/user",
       api    => Mojo::JSON->true,
-      func   => \&add,
+      action => "add",
     }
   );
 
@@ -105,7 +135,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/user/:user_id",
       api    => Mojo::JSON->true,
-      func   => \&update,
+      action => "update",
     }
   );
 
@@ -116,7 +146,7 @@ sub __register__ {
       auth   => Mojo::JSON->true,
       url    => "/user/:user_id",
       api    => Mojo::JSON->true,
-      func   => \&delete,
+      action => "delete",
     }
   );
 
