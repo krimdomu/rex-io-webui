@@ -117,6 +117,7 @@ sub startup {
           $plugin_action_url = "/1.0$plugin_action_url";
         }
 
+        # plugin urls
         ( $config->{controller} ) = caller(1);
         if ( $config->{auth} ) {
           my $r_under = $r_auth->under($plugin_action_url)->to(

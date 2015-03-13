@@ -12,50 +12,29 @@
 %# my $clients      = rexio->call("GET", "1.0", "messagebroker", client => undef);
 %# my $online       = scalar @{ $clients->{data} };
 
-<!--
 <div class="tabbable">
    <ul class="tabs tabs-top">
       <li id="li-tab-info" tab_id="info" class="active"><a id="link-tab-info" tab_id="info" href="#">Information</a></li>
+      % for my $tab (@{ $tabs }) {
+      <li id="li-tab-<%= $tab->{id} %>" tab_id="<%= $tab->{id} %>" class=""><a id="link-tab-<%= $tab->{id} %>" tab_id="<%= $tab->{id} %>" href="#"><%= $tab->{caption} %></a></li>
+      % }
    </ul>
    <div class="tab-content">
 
       <div id="tab-info" class="tab-pane" tab_id="info">
 
-         <div class="portlet box grey">
-            <div class="portlet-title">
-               <h4>Server Statistics</h4>
-            </div>
-            <div class="portlet-body">
-               <table class="server_statistic" border="0" width="100%">
-                  <tr>
-                     <td class="key" width="150">Count</td>
-                     <td class="value"><%# $server_count %></td>
-                  </tr>
-                  <tr>
-                     <td class="key">Operating Systems</td>
-                     <td class="value"><%# $os_count %></td>
-                  </tr>
-
-                  <tr>
-                     <td class="key">Online Servers</td>
-                     <td class="value"><%# $online %></td>
-                  </tr>
-
-                  %# for my $pl_stats (@{ $dashboard_stats }) {
-                  %# <%= $pl_stats %>
-                  %# }
-
-               </table>
-            </div>
-         </div>
-
-         %# for my $pl_dash (@{ $dashboard }) {
-         %#   <%= $pl_dash %>
-         %# }
+        % for my $tab_info_droplet (@{ $tab_info }) {
+          <%= $tab_info_droplet %>
+        % }
 
       </div>
+
+      % for my $tab (@{ $tabs }) {
+      <div id="tab-<%= $tab->{id} %>" class="tab-pane" tab_id="<%= $tab->{id} %>">
+        <%== $tab->{content} %>
+      </div>
+      % }
 
    </div>
 
 </div>
--->

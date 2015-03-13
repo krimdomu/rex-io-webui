@@ -18,37 +18,11 @@ sub index {
 sub view {
   my $self = shift;
 
-  my ( @dashboard, @dashboard_stats, @dashboard_admin );
+  my $tab_info_droplets = $self->stash("tab_info") || [];
+  $self->stash( tab_info => $tab_info_droplets );
 
-  # load dashboard (statistics) from plugins
-
-  # load dashboard from plugins
-  for my $plugin ( @{ $self->config->{plugins} } ) {
-    my $template_path = "\L$plugin";
-    my $template =
-      $self->render_to_string( "$template_path/ext/dashboard", partial => 1 );
-    if ($template) {
-      push @dashboard, $template;
-    }
-
-    my $template2 =
-      $self->render_to_string( "$template_path/ext/dashboard_stats",
-      partial => 1 );
-    if ($template2) {
-      push @dashboard_stats, $template2;
-    }
-
-    my $template_admin =
-      $self->render_to_string( "$template_path/ext/dashboard_admin",
-      partial => 1 );
-    if ($template_admin) {
-      push @dashboard_admin, $template_admin;
-    }
-  }
-
-  $self->stash( dashboard       => \@dashboard );
-  $self->stash( dashboard_stats => \@dashboard_stats );
-  $self->stash( dashboard_admin => \@dashboard_admin );
+  my $tabs = $self->stash("tabs") || [];
+  $self->stash( tabs => $tabs );
 
   $self->render( 'dashboard/view', status => 200 );
 }
