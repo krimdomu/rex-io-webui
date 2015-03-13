@@ -83,10 +83,13 @@ sub before_plugin {
 
             my $meth = $self->req->method;
             $self->app->log->debug("(before_plugin) Requested Method: $meth");
-            my $tx =
-              $ua->build_tx(
-              $meth => $backend_url => { "Accept" => "application/json" } =>
-                json => $self->req->json );
+
+            my $tx   = $ua->build_tx(
+              $meth => $backend_url => {
+                "Accept"            => "application/json",
+                "X-Rex-Permissions" => join( ",", @{ $self->session("permissions") } )
+              } => json => $self->req->json
+            );
 
             my $res_tx = $ua->start($tx);
             if ( $res_tx->success ) {
@@ -144,10 +147,12 @@ sub call_plugin {
     $self->app->log->debug("Backend-URL: $backend_url");
 
     my $meth = $self->req->method;
-    my $tx =
-      $ua->build_tx(
-      $meth => $backend_url => { "Accept" => "application/json" } => json =>
-        $self->req->json );
+    my $tx   = $ua->build_tx(
+      $meth => $backend_url => {
+        "Accept"            => "application/json",
+        "X-Rex-Permissions" => join( ",", @{ $self->session("permissions") } )
+      } => json => $self->req->json
+    );
 
     my $tx_res = $ua->start($tx);
     if ( $tx_res->success ) {
@@ -167,7 +172,7 @@ sub call_plugin {
       delete $response_headers->{'Transfer-Encoding'};
       delete $response_headers->{'Upgrade'};
 
-      for my $header ( keys %{ $response_headers } ) {
+      for my $header ( keys %{$response_headers} ) {
         $self->res->headers->add(
           $header => $tx_res->res->headers->to_hash()->{$header} );
       }
