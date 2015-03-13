@@ -62,6 +62,7 @@ sub before_plugin {
   my %shared_data = $self->shared_data();
   $self->app->log->debug( "(before_plugin)" . Dumper( \%shared_data ) );
 
+  my %ret;
   for my $plugin ( keys %{ $shared_data{loaded_plugins} } ) {
     if ( exists $shared_data{loaded_plugins}->{$plugin}->{hooks}->{consume} ) {
       for my $hook (
@@ -73,11 +74,17 @@ sub before_plugin {
           if ( exists $hook->{call} ) {
             no strict 'refs';
             my $hook_function = $hook->{call};
-            *{"$hook_function"}->($self);
+            %ret = *{"$hook_function"}->($self);
           }
         }
       }
     }
+  }
+
+  for my $key ( keys %ret ) {
+    my $current_data = $self->stash($key) || [];
+    push @{$current_data}, $ret{$key};
+    $self->stash( $key, $current_data );
   }
 
   return 1;

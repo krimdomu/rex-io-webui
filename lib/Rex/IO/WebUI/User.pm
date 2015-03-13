@@ -65,12 +65,7 @@ sub update {
 sub mainmenu {
   my $self = shift;
   $self->app->log->debug("User: rendering main menu");
-
-  my $main_menu = $self->stash("main_menu") || [];
-  push @{$main_menu},
-    $self->render_to_string( "user/ext/mainmenu", partial => 1 );
-
-  $self->stash( main_menu => $main_menu );
+  return (main_menu => $self->render_to_string( "user/ext/mainmenu", partial => 1 ));
 }
 
 sub __register__ {
