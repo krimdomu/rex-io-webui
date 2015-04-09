@@ -150,7 +150,10 @@ sub call_plugin {
     my $tx   = $ua->build_tx(
       $meth => $backend_url => {
         "Accept"            => "application/json",
-        "X-Rex-Permissions" => join( ",", @{ $self->session("permissions") } )
+        "X-RexIO-Permissions" => join( ",", @{ $self->session("permissions") } ),
+        "X-RexIO-User" => $self->session("user"),
+        "X-RexIO-Password" => $self->session("password"),
+        "X-RexIO-Server" => $self->config->{server}->{url},
       } => json => $self->req->json
     );
 
