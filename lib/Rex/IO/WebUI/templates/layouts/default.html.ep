@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="/css/3rdparty/easytree/skin-lion/ui.easytree.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.9.4/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.10.6/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/3rdparty/DataTables-1.10.6/media/css/jquery.dataTables_themeroller.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/jquery.pnotify.default.css" type="text/css" media="screen" charset="utf-8" />
     % for my $plg (@{config->{ plugins }}) {
@@ -121,7 +121,7 @@ Messages
   <script type="text/javascript" charset="utf-8" src="/js/deploy/template.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.selectBox.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/json2.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/DataTables-1.10.6/media/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.jeditable.mini.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/smoothie.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jquery.pnotify.js"></script>

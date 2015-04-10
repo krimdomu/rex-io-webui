@@ -24,7 +24,7 @@
    <div class="left_frame">
       <table border="0" id="table_entries_group"
       class="rexio-ui-data-table"
-      rexio-ui-minus-height="235"
+      rexio-ui-minus-height="250"
       rexio-ui-selectable="true"
       style="width: 100%;">
          <thead>
@@ -48,7 +48,7 @@
       <table border="0"
          id="table_entries_user"
          class="rexio-ui-data-table"
-         rexio-ui-minus-height="235"
+         rexio-ui-minus-height="250"
          rexio-ui-selectable="true"
          style="width: 100%;">
          <thead>

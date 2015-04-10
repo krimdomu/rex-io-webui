@@ -23,7 +23,7 @@
 <table border="0"
   id="table_entries_permission_sets"
   class="rexio-ui-data-table"
-  rexio-ui-minus-height="235"
+  rexio-ui-minus-height="250"
   rexio-ui-selectable="true"
   style="width: 100%;">
    <thead>
