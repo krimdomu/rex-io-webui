@@ -2,9 +2,9 @@
 <li class="has-sub">
    <a href="#" class="mnu-icon-arrow-left mnu-item">Users &amp; Groups</a>
    <ul class="sub">
-      <li><a href="#" class="rexio-ui-link" rexio-ui-object="user/user">Users</a></li>
-      <li><a href="#" class="rexio-ui-link" rexio-ui-object="group/group">Groups</a></li>
-      <li><a href="#" class="rexio-ui-link" rexio-ui-object="permission">Permissions</a></li>
+      <li><a href="#/user/user">Users</a></li>
+      <li><a href="#/group/group">Groups</a></li>
+      <li><a href="#/permission">Permissions</a></li>
    </ul>
 </li>
 % }

@@ -117,6 +117,8 @@ sub startup {
           $plugin_action_url = "/1.0$plugin_action_url";
         }
 
+        $self->app->log->debug("Registering URL: $plugin_action_url");
+
         # plugin urls
         ( $config->{controller} ) = caller(1);
         if ( $config->{auth} ) {

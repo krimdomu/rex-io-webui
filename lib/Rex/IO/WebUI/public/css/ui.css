@@ -1042,3 +1042,19 @@ div.jobqueue_log_line:nth-child(odd) {
 
 .logout_button {
   background-color: #3f3f55 !important; }
+
+table.info_table {
+  width: 100%;
+}
+
+table.info_table td {
+  padding: 5px;
+}
+
+table.info_table td.col-info {
+  width: 150px;
+}
+
+table.info_table tr:nth-child(odd) {
+  background-color: #efefef;
+}
