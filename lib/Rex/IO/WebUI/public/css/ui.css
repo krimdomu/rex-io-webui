@@ -1047,14 +1047,21 @@ table.info_table {
   width: 100%;
 }
 
-table.info_table td {
+table.info_table td,
+table.info_table th {
   padding: 5px;
+}
+
+table.info_table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #efefef;
 }
 
 table.info_table td.col-info {
   width: 150px;
 }
 
-table.info_table tr:nth-child(odd) {
+table.info_table tr:nth-child(even) {
   background-color: #efefef;
 }
