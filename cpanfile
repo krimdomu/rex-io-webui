@@ -9,3 +9,4 @@ requires 'Mojolicious::Plugin::Authentication';
 requires 'Text::Markdown';
 requires 'DateTime';
 requires 'JSON::XS';
+requires 'Rex::IO::Client';

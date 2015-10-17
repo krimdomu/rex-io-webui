@@ -19,3 +19,4 @@ README
 *.lock
 .carton/
 local
+*~

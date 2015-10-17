@@ -1,32 +1,60 @@
-use Rex -feature => ['0.44'];
-use Rex::FS::Watch;
+#
+# (c) Jan Gehring <jan.gehring@gmail.com>
+#
+# vim: set ts=2 sw=2 tw=0:
+# vim: set expandtab:
+# vim: set ft=perl:
 
-group dev => '172.16.120.143';
+use Rex -feature => ['1.0', 'no_path_cleanup'];
+use Rex::Ext::ParamLookup;
+use Rex::Lang::Perl::Carton;
 
-user "root";
-password "box";
+task "setup", sub {
 
-task "watch", sub {
-  watch { directory => '.', task => 'upload', latency => 2 };
+  my $rexio_server   = param_lookup "rexio_server", "127.0.0.1:5000";
+  
+  my $log_file = param_lookup "log_file", "log/webui.log";
+
+  file "webui.conf",
+    content => template('@webui.conf.tpl'),
+    mode    => '0640';
+
+  #carton "-install";
+
 };
 
-task "upload", group => "dev", sub {
-  my $param = shift;
-  my $project_dir = "/opt/rex.io/software/rex-io-webui";
-
-  for my $event (@{ $param->{changed} }) {
-    print ">> $event->{relative_path} ($event->{event})\n";
-    if($event->{event} eq 'deleted') {
-      rm "$project_dir/$event->{relative_path}"    if($event->{type} eq 'file');
-      rmdir "$project_dir/$event->{relative_path}" if($event->{type} eq 'dir');
-    }
-    else {
-      file "$project_dir/$event->{relative_path}",
-        source =>  $event->{path}                  if($event->{type} eq "file");
-
-      mkdir "$project_dir/$event->{relative_path}" if($event->{type} eq "dir");
-    }
-  }
-
-  service "rex-io-webui" => "restart";
+task "upgrade", sub {
+  carton -exec => "bin/database.pl --cmd upgrade";
 };
+
+1;
+
+
+__DATA__
+
+@webui.conf.tpl
+{
+   server => {
+      url      => "<%= $rexio_server %>",
+
+      #ssl => {
+      #   key => "/Users/jan/temp/rexssl/ca/private/test.key",
+      #   cert => "/Users/jan/temp/rexssl/ca/certs/test.crt",
+      #   ca => "/Users/jan/temp/rexssl/ca/certs/ca.crt",
+      #},
+   },
+
+   session => {
+      key => "Rex.IO.WebUI",
+   },
+
+   plugins => [
+      # basic plugins
+      "Dashboard",
+      "Permission",
+      "User",
+      "Group",
+   ],
+
+};
+@end
