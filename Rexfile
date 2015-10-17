@@ -23,9 +23,6 @@ task "setup", sub {
 
 };
 
-task "upgrade", sub {
-  carton -exec => "bin/database.pl --cmd upgrade";
-};
 
 1;
 
