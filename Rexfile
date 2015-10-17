@@ -19,7 +19,7 @@ task "setup", sub {
     content => template('@webui.conf.tpl'),
     mode    => '0640';
 
-  #carton "-install";
+  carton "-install";
 
 };
 
