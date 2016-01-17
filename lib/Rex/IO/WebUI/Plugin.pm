@@ -59,13 +59,14 @@ sub before_plugin {
   $self->app->log->debug(
     "(before_plugin) Calling action: " . $self->param("symbol") );
 
-  my %shared_data = $self->shared_data();
-  $self->app->log->debug( "(before_plugin)" . Dumper( \%shared_data ) );
+  #my %shared_data = $self->shared_data();
+  #$self->app->log->debug( "(before_plugin)" . Dumper( \%shared_data ) );
+  my $loaded_plugins = $self->shared_data("loaded_plugins");
 
-  for my $plugin ( keys %{ $shared_data{loaded_plugins} } ) {
-    if ( exists $shared_data{loaded_plugins}->{$plugin}->{hooks}->{consume} ) {
+  for my $plugin ( keys %{ $loaded_plugins } ) {
+    if ( exists $loaded_plugins->{$plugin}->{hooks}->{consume} ) {
       for my $hook (
-        @{ $shared_data{loaded_plugins}->{$plugin}->{hooks}->{consume} } )
+        @{ $loaded_plugins->{$plugin}->{hooks}->{consume} } )
       {
         my %ret;
         if ( $hook->{plugin} eq $self->param("plugin")
@@ -129,8 +130,8 @@ sub call_plugin {
   my $config = $self->param("config");
   $self->app->log->debug( Dumper($config) );
 
-  my %shared_data = $self->shared_data();
-  $self->app->log->debug( Dumper( \%shared_data ) );
+  #my %shared_data = $self->shared_data();
+  #$self->app->log->debug( Dumper( \%shared_data ) );
 
   if ( exists $config->{action} ) {
     my $action_func = "$config->{controller}::$config->{action}";

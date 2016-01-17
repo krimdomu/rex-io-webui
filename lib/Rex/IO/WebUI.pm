@@ -6,9 +6,20 @@ use File::Spec::Functions 'catdir';
 use Cwd 'getcwd';
 use Data::Dumper;
 use JSON::XS;
-use IPC::Shareable;
+use Carp;
+use Redis::DistLock;
 
-our $VERSION = "0.4.0";
+has redis => sub {
+  my ($self) = @_;
+  state $redis ||= Redis->new( server => $self->config->{redis}->{server} );
+};
+
+has shared_config => sub {
+  my ($self) = @_;
+  state $rd ||= Redis::DistLock->new( servers => [ $self->config->{redis}->{server} ] );
+};
+
+our $VERSION = "0.6.0";
 
 my $shared_data_handler;
 my %shared_data;
@@ -23,6 +34,9 @@ sub startup {
   #######################################################################
   # some helper functions
   #######################################################################
+
+  $self->helper( shared_config => sub { $self->app->shared_config } );
+  $self->helper( redis => sub { $self->app->redis } );
 
   $self->helper(
     has_plugin => sub {
@@ -39,28 +53,35 @@ sub startup {
     }
   );
 
-  $shared_data_handler = tie %shared_data, "IPC::Shareable", undef,
-    { destroy => 1 };
   $self->helper(
     shared_data_tx => sub {
       my ( $self, $code ) = @_;
-      $shared_data_handler->shlock();
+      my $mutex = $self->shared_config->lock("rexio_webui_shared_config", $self->config->{redis}->{lock_ttl} || 10);
       $code->();
-      $shared_data_handler->shunlock();
+      $self->shared_config->release($mutex);
     }
   );
   $self->helper(
     shared_data => sub {
       my ( $self, $key, $value ) = @_;
       if ($value) {
-        $shared_data{$key} = $value;
+        $self->redis->set( "/rexio/webui/$key" => JSON::XS::encode_json($value) );
       }
       else {
         if ($key) {
-          return $shared_data{$key};
+          my $ret;
+          eval {
+            $ret =
+              JSON::XS::decode_json( $self->redis->get("/rexio/webui/$key") );
+            1;
+          } or do {
+            $ret = {};
+          };
+
+          return $ret;
         }
         else {
-          return %shared_data;
+          confess "Illegal call to shared_data.\nError: $@\n";
         }
       }
     }
