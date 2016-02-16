@@ -65,14 +65,14 @@ sub startup {
     shared_data => sub {
       my ( $self, $key, $value ) = @_;
       if ($value) {
-        $self->redis->set( "/rexio/webui/$key" => JSON::XS::encode_json($value) );
+        $self->redis->set( "/rexio/webui/$key" => Mojo::JSON::encode_json($value) );
       }
       else {
         if ($key) {
           my $ret;
           eval {
             $ret =
-              JSON::XS::decode_json( $self->redis->get("/rexio/webui/$key") );
+              Mojo::JSON::decode_json( $self->redis->get("/rexio/webui/$key") );
             1;
           } or do {
             $ret = {};
