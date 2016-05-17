@@ -63,11 +63,9 @@ sub before_plugin {
   #$self->app->log->debug( "(before_plugin)" . Dumper( \%shared_data ) );
   my $loaded_plugins = $self->shared_data("loaded_plugins");
 
-  for my $plugin ( keys %{ $loaded_plugins } ) {
+  for my $plugin ( keys %{$loaded_plugins} ) {
     if ( exists $loaded_plugins->{$plugin}->{hooks}->{consume} ) {
-      for my $hook (
-        @{ $loaded_plugins->{$plugin}->{hooks}->{consume} } )
-      {
+      for my $hook ( @{ $loaded_plugins->{$plugin}->{hooks}->{consume} } ) {
         my %ret;
         if ( $hook->{plugin} eq $self->param("plugin")
           && $hook->{action} eq $self->param("symbol") )
@@ -85,10 +83,14 @@ sub before_plugin {
             my $meth = $self->req->method;
             $self->app->log->debug("(before_plugin) Requested Method: $meth");
 
-            my $tx   = $ua->build_tx(
+            my $tx = $ua->build_tx(
               $meth => $backend_url => {
-                "Accept"            => "application/json",
-                "X-Rex-Permissions" => join( ",", @{ $self->session("permissions") } )
+                "Accept" => "application/json",
+                "X-RexIO-Permissions" =>
+                  join( ",", @{ $self->session("permissions") } ),
+                "X-RexIO-User"     => $self->session("user"),
+                "X-RexIO-Password" => $self->session("password"),
+                "X-RexIO-Server"   => $self->config->{server}->{url},
               } => json => $self->req->json
             );
 
@@ -166,11 +168,12 @@ sub call_plugin {
     my $meth = $self->req->method;
     my $tx   = $ua->build_tx(
       $meth => $backend_url => {
-        "Accept"            => "application/json",
-        "X-RexIO-Permissions" => join( ",", @{ $self->session("permissions") } ),
-        "X-RexIO-User" => $self->session("user"),
+        "Accept" => "application/json",
+        "X-RexIO-Permissions" =>
+          join( ",", @{ $self->session("permissions") } ),
+        "X-RexIO-User"     => $self->session("user"),
         "X-RexIO-Password" => $self->session("password"),
-        "X-RexIO-Server" => $self->config->{server}->{url},
+        "X-RexIO-Server"   => $self->config->{server}->{url},
       } => json => $self->req->json
     );
 

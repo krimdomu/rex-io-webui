@@ -11,6 +11,9 @@ body {
   display: block;
   font-size: 12px; }
 
+.light-background {
+  background-color: #efefef; }
+
 .page-container {
   background-color: #1f202d;
   display: block; }
@@ -179,7 +182,7 @@ a:hover {
   width: 100%;
   border-bottom-width: 1px !important;
   border-right-width: 0 !important;
-  margin: 0 -1px 0.2em 0; }
+  margin: 0 -1px .2em 0; }
 
 .ui-tabs-vertical .ui-tabs-nav li a {
   display: block; }
@@ -301,7 +304,8 @@ ul.sub > li > a:hover {
   background-image: url(/icons/arrow-left.png); }
 
 .mnu-icon-arrow-down {
-  background-image: url(/icons/arrow-down.png); }
+  background-image: url(/icons/arrow-down.png);
+  background-repeat: no-repeat; }
 
 .mnu-icon-arrow-up {
   background-image: url(/icons/arrow-up.png); }
@@ -1043,25 +1047,4 @@ div.jobqueue_log_line:nth-child(odd) {
 .logout_button {
   background-color: #3f3f55 !important; }
 
-table.info_table {
-  width: 100%;
-}
-
-table.info_table td,
-table.info_table th {
-  padding: 5px;
-}
-
-table.info_table th {
-  font-weight: bold;
-  text-align: left;
-  background-color: #efefef;
-}
-
-table.info_table td.col-info {
-  width: 150px;
-}
-
-table.info_table tr:nth-child(even) {
-  background-color: #efefef;
-}
+/*# sourceMappingURL=ui.css.map */

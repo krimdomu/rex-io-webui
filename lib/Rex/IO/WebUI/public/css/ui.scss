@@ -5,6 +5,8 @@ $navi_hover_green: #293943;
 $background_blue: #1f202d;
 $navi_hover_blue: #272939;
 
+$background_light: #efefef;
+
 $background: $background_blue;
 $navi_hover: $navi_hover_blue;
 
@@ -29,6 +31,10 @@ body {
   background-color: $background;
   display: block;
   font-size: 12px;
+}
+
+.light-background {
+  background-color: $background_light;
 }
 
 .page-container {
@@ -354,6 +360,7 @@ ul.sub > li > a:hover {
 
 .mnu-icon-arrow-down {
   background-image: url(/icons/arrow-down.png);
+  background-repeat: no-repeat;
 }
 
 .mnu-icon-arrow-up {

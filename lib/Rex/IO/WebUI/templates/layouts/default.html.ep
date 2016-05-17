@@ -11,7 +11,7 @@
 
     <!-- <link rel="stylesheet" href="/css/layout-default.css" type="text/css" media="screen" charset="utf-8" /> -->
     <link rel="stylesheet" href="/css/3rdparty/smoothness/jquery-ui-1.10.4.custom.min.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/css/3rdparty/easytree/skin-lion/ui.easytree.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/js/3rdparty/jstree/themes/default/style.min.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/css/3rdparty/jquery.selectBox.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/js/3rdparty/DataTables-1.10.6/media/css/jquery.dataTables.css" type="text/css" media="screen" charset="utf-8" />
@@ -69,17 +69,6 @@ Messages
     <%= $menu_entry %>
     % }
 
-
-    <!--
-    <li class="has-sub">
-      <a href="#" class="icon-arrow-left">Datacenter</a>
-      <ul class="sub">
-        <li><a href="#" class="users-users">List DCs</a></li>
-        <li><a href="#" class="users-groups">Add DC</a></li>
-      </ul>
-    </li>
-    -->
-
   </ul>
 
 </div>
@@ -103,13 +92,14 @@ Messages
 
   </body>
   <script type="text/javascript" charset="utf-8" src="/js/3rdparty/mootools-core-1.4.5-full-nocompat-yc.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/easytree/jquery.easytree.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/3rdparty/jstree/jstree.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui/plugin.js"></script>
 
   <script type="text/javascript" charset="utf-8" src="/js/ui.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui/prepare_widgets.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui/dialog.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/ui/datatables.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/ui/tree.js"></script>
 
   <script type="text/javascript" charset="utf-8" src="/js/rexio.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/base.js"></script>
