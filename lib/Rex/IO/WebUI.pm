@@ -214,8 +214,12 @@ sub startup {
       session_key   => $self->config->{session}->{key},
       load_user     => sub {
         my ( $app, $uid ) = @_;
+        if($app->session("user")) {
+          return $app->session("user");
+        }
         my $user =
           $app->rexio->call( "GET", "1.0", "user", user => $uid )->{data};
+        $app->session("user", $user);
         return $user;
       },
       validate_user => sub {

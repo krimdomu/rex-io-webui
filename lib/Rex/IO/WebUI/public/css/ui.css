@@ -1047,4 +1047,7 @@ div.jobqueue_log_line:nth-child(odd) {
 .logout_button {
   background-color: #3f3f55 !important; }
 
+.btn-primary {
+  background-color: #5b809f; }
+
 /*# sourceMappingURL=ui.css.map */
