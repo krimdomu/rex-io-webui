@@ -11,8 +11,8 @@ body {
   display: block;
   font-size: 12px; }
 
-.light-background {
-  background-color: #efefef; }
+.nav-light-background {
+  background-color: #efefef !important; }
 
 .page-container {
   background-color: #1f202d;
@@ -1047,7 +1047,11 @@ div.jobqueue_log_line:nth-child(odd) {
 .logout_button {
   background-color: #3f3f55 !important; }
 
+.btn-bar {
+  margin-top: 7px;
+  margin-bottom: 7px; }
+
 .btn-primary {
-  background-color: #5b809f; }
+  background-color: #5b809f !important; }
 
 /*# sourceMappingURL=ui.css.map */

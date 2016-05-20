@@ -33,8 +33,8 @@ body {
   font-size: 12px;
 }
 
-.light-background {
-  background-color: $background_light;
+.nav-light-background {
+  background-color: $background_light !important;
 }
 
 .page-container {
@@ -1289,8 +1289,13 @@ div.jobqueue_log_line:nth-child(odd) {
 }
 
 
+.btn-bar {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
 .btn {}
 
 .btn-primary {
-  background-color: #5b809f;
+  background-color: #5b809f !important;
 }
